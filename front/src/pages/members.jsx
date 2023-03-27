@@ -1,12 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
 import Head from "next/head";
-import { subDays, subHours } from "date-fns";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Box, Button, Container, Stack, SvgIcon, Typography } from "@mui/material";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { MembersTable } from "src/sections/member/members-table";
 import { MembersSearch } from "src/sections/member/members-search";
-import { applyPagination } from "src/utils/apply-pagination";
 
 const data = [
   {
@@ -215,16 +212,6 @@ const Page = () => {
                 <Typography variant="h4">Members</Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <Button
-                  startIcon={
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  }
-                  variant="contained"
-                >
-                  Add
-                </Button>
                 <MembersSearch />
               </Stack>
             </Stack>

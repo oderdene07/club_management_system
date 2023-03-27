@@ -1,16 +1,26 @@
 import { neutral } from "@/theme/colors";
 import { getInitials } from "@/utils/get-initials";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import {
+  CalendarDaysIcon,
+  DevicePhoneMobileIcon,
+  EnvelopeIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { Avatar, Button, Card, Divider, Modal, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+
+const iconStyles = {
+  width: 24,
+  height: 24,
+  color: neutral[400],
+  marginRight: 12,
+};
 
 export const MemberModal = (props) => {
   const { selectedMember, isModalVisible, handleCloseModal } = props;
 
   const fullName = selectedMember ? `${selectedMember.first_name} ${selectedMember.last_name}` : "";
-  const dateJoined = selectedMember
-    ? new Date(selectedMember.date_joined).toLocaleDateString()
-    : "";
+  const dateJoined = selectedMember ? new Date(selectedMember.date_joined).toDateString() : "";
 
   return (
     <Modal
@@ -46,7 +56,7 @@ export const MemberModal = (props) => {
           </Button>
         </Box>
         {selectedMember ? (
-          <Stack spacing={3}>
+          <Stack spacing={4}>
             <Stack display="flex" alignItems="center">
               <Avatar
                 src={selectedMember.profile_picture}
@@ -65,13 +75,22 @@ export const MemberModal = (props) => {
             <Typography color={neutral[700]} variant="h6">
               Member Info
             </Typography>
-            <Stack spacing={2}>
-              <Typography variant="body2">Email: {selectedMember.email}</Typography>
-              <Typography variant="body2">Phone: {selectedMember.phone_number}</Typography>
-              <Typography variant="body2">Date Joined: {dateJoined}</Typography>
+            <Stack spacing={3}>
+              <Stack direction="row" alignItems="center">
+                <EnvelopeIcon style={iconStyles} />
+                <Typography variant="body2">{selectedMember.email}</Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center">
+                <DevicePhoneMobileIcon style={iconStyles} />
+                <Typography variant="body2"> {selectedMember.phone_number}</Typography>
+              </Stack>
+              <Stack direction="row" alignItems="center">
+                <CalendarDaysIcon style={iconStyles} />
+                <Typography variant="body2"> {dateJoined}</Typography>
+              </Stack>
             </Stack>
             <Divider sx={{ borderColor: "neutral.200" }} />
-            <Stack spacing={2}>
+            <Stack spacing={3}>
               <Typography color={neutral[700]} variant="h6">
                 Bio
               </Typography>

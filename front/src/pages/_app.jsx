@@ -32,12 +32,14 @@ const App = (props) => {
 
       <AuthProvider>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AuthConsumer>
-            {(auth) =>
-              auth.isLoading ? <SplashScreen /> : getLayout(<Component {...pageProps} />)
-            }
-          </AuthConsumer>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CssBaseline />
+            <AuthConsumer>
+              {(auth) =>
+                auth.isLoading ? <SplashScreen /> : getLayout(<Component {...pageProps} />)
+              }
+            </AuthConsumer>
+          </LocalizationProvider>
         </ThemeProvider>
       </AuthProvider>
     </CacheProvider>

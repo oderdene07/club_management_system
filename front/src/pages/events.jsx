@@ -25,7 +25,8 @@ const data = [
     id: "1",
     title: "Tech MeetUp Vol 1",
     location: "New York, USA",
-    date: "2021-09-24 10:00:00",
+    startDate: "2021-09-24 10:00:00",
+    endDate: "2021-09-24 11:00:00",
     description:
       "Dropbox is a file hosting service that offers cloud storage, file synchronization, a personal cloud.",
     image: "/assets/products/product-1.png",
@@ -34,7 +35,8 @@ const data = [
     id: "2",
     title: "Tech MeetUp Vol 6",
     location: "San Francisco, USA",
-    date: "2021-09-24 10:00:00",
+    startDate: "2021-09-24 10:00:00",
+    endDate: "2021-09-24 11:00:00",
     description:
       "Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.",
     image: "/assets/products/product-2.png",
@@ -43,7 +45,8 @@ const data = [
     id: "3",
     title: "Tech MeetUp Vol 7",
     location: "San Francisco, USA",
-    date: "2021-09-24 10:00:00",
+    startDate: "2021-09-24 10:00:00",
+    endDate: "2021-09-24 11:00:00",
     description:
       "Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.",
     image: "/assets/products/product-6.png",
@@ -52,7 +55,8 @@ const data = [
     id: "4",
     title: "Tech MeetUp Vol 8",
     location: "San Francisco, USA",
-    date: "2021-09-24 10:00:00",
+    startDate: "2021-09-24 10:00:00",
+    endDate: "2021-09-24 11:00:00",
     description: "Lyft is an on-demand transportation event based in San Francisco, California.",
     image: "/assets/products/product-4.png",
   },
@@ -60,7 +64,8 @@ const data = [
     id: "5",
     title: "Tech MeetUp Vol 9",
     location: "San Francisco, USA",
-    date: "2021-09-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "GitHub is a web-based hosting service for version control of code using Git.",
     image: "/assets/products/product-5.png",
   },
@@ -68,7 +73,8 @@ const data = [
     id: "7",
     title: "Tech MeetUp Vol 1",
     location: "San Francisco, USA",
-    date: "2023-05-25 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "Lyft is an on-demand transportation event based in San Francisco, California.",
     image: "/assets/products/product-4.png",
   },
@@ -76,7 +82,8 @@ const data = [
     id: "8",
     title: "Tech MeetUp Vol 2",
     location: "San Francisco, USA",
-    date: "2023-04-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "GitHub is a web-based hosting service for version control of code using Git.",
     image: "/assets/products/product-5.png",
   },
@@ -84,7 +91,8 @@ const data = [
     id: "9",
     title: "Tech MeetUp Vol 3",
     location: "San Francisco, USA",
-    date: "2023-09-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description:
       "Squarespace provides software as a service for website building and hosting. Headquartered in NYC.",
     image: "/assets/products/product-6.png",
@@ -93,7 +101,8 @@ const data = [
     id: "10",
     title: "Tech MeetUp Vol 4",
     location: "San Francisco, USA",
-    date: "2023-05-25 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "Lyft is an on-demand transportation event based in San Francisco, California.",
     image: "/assets/products/product-4.png",
   },
@@ -101,7 +110,8 @@ const data = [
     id: "11",
     title: "Tech MeetUp Vol 5",
     location: "San Francisco, USA",
-    date: "2023-04-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "GitHub is a web-based hosting service for version control of code using Git.",
     image: "/assets/products/product-5.png",
   },
@@ -109,7 +119,8 @@ const data = [
     id: "12",
     title: "Tech MeetUp Vol 6",
     location: "San Francisco, USA",
-    date: "2023-09-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description:
       "Squarespace provides software as a service for website building and hosting. Headquartered in NYC.",
     image: "/assets/products/product-6.png",
@@ -118,7 +129,8 @@ const data = [
     id: "13",
     title: "Tech MeetUp Vol 8",
     location: "San Francisco, USA",
-    date: "2023-05-25 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "Lyft is an on-demand transportation event based in San Francisco, California.",
     image: "/assets/products/product-4.png",
   },
@@ -126,7 +138,8 @@ const data = [
     id: "14",
     title: "Tech MeetUp Vol 9",
     location: "San Francisco, USA",
-    date: "2023-04-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description: "GitHub is a web-based hosting service for version control of code using Git.",
     image: "/assets/products/product-5.png",
   },
@@ -134,12 +147,15 @@ const data = [
     id: "15",
     title: "Tech MeetUp Vol 10",
     location: "San Francisco, USA",
-    date: "2023-09-24 10:00:00",
+    startDate: "2024-09-24 10:00:00",
+    endDate: "2024-09-24 11:00:00",
     description:
       "Squarespace provides software as a service for website building and hosting. Headquartered in NYC.",
     image: "/assets/products/product-6.png",
   },
 ];
+
+const rowsPerPage = 8;
 
 function a11yProps(index) {
   return {
@@ -150,10 +166,10 @@ function a11yProps(index) {
 
 function tabEvents(data, tab) {
   if (tab === 0) {
-    return data.filter((event) => new Date(event.date) > new Date());
+    return data.filter((event) => new Date(event.startDate) > new Date());
   }
   if (tab === 1) {
-    return data.filter((event) => new Date(event.date) < new Date());
+    return data.filter((event) => new Date(event.startDate) < new Date());
   }
 }
 
@@ -178,8 +194,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
 
   const currentTabEvents = tabEvents(data, tab);
-  const count = Math.ceil(currentTabEvents.length / 6);
-  const events = usePagination(currentTabEvents, 6);
+  const count = Math.ceil(currentTabEvents.length / rowsPerPage);
+  const events = usePagination(currentTabEvents, rowsPerPage);
 
   const handleChangeTab = (event, newValue) => {
     setTab(newValue);
@@ -231,7 +247,7 @@ const Page = () => {
             <TabPanel key={t} tab={tab} index={t}>
               <Grid container spacing={3}>
                 {events.currentData().map((event) => (
-                  <Grid xs={12} sm={6} md={4} lg={4} xl={3} key={event.id}>
+                  <Grid xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
                     <EventCard event={event} />
                   </Grid>
                 ))}

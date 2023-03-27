@@ -6,7 +6,7 @@ import { useCallback, useMemo, useState } from "react";
 import { MemberModal } from "./members-modal";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 
-const rowsPerPage = 14;
+const rowsPerPage = 12;
 
 export const MembersTable = ({ members }) => {
   const [rows, setRows] = useState(members);
@@ -53,7 +53,8 @@ export const MembersTable = ({ members }) => {
       {
         field: "full_name",
         headerName: "Full name",
-        width: 250,
+        flex: 1,
+        minWidth: 270,
         renderCell: (params) => (
           <>
             <Avatar
@@ -62,56 +63,80 @@ export const MembersTable = ({ members }) => {
             >
               {getInitials(`${params.row.first_name} ${params.row.last_name}`)}
             </Avatar>
-            <Typography>
-              {params.row.first_name} {params.row.last_name}
-            </Typography>
+            {params.row.first_name} {params.row.last_name}
           </>
         ),
       },
       {
         field: "email",
         headerName: "Email",
-        width: 250,
+        flex: 1,
+        minWidth: 270,
       },
       {
         field: "phone_number",
         headerName: "Phone Number",
-        width: 140,
+        flex: 1,
+        minWidth: 150,
       },
       {
         field: "occupation",
         headerName: "Occupation",
-        width: 150,
+        flex: 1,
+        minWidth: 200,
       },
       {
         field: "role",
         headerName: "Role",
-        width: 120,
+        flex: 1,
+        minWidth: 150,
       },
       {
         field: "date_joined",
         headerName: "Date Joined",
-        width: 150,
+        flex: 1,
+        minWidth: 150,
         valueGetter: (params) => new Date(params.row.date_joined).toDateString(),
       },
       {
         field: "actions",
         type: "actions",
-        width: 80,
+        width: 50,
         getActions: (params) => [
           <GridActionsCellItem
             key={params.id}
-            icon={<TrashIcon />}
-            label="Delete"
-            onClick={deleteUser(params.id)}
+            icon={
+              <ShieldCheckIcon
+                style={{
+                  color: "#605BFF",
+                  width: "28px",
+                }}
+              />
+            }
+            label="Toggle Admin"
             showInMenu
+            onClick={toggleAdmin(params.id)}
+            sx={{
+              color: "primary.main",
+            }}
           />,
           <GridActionsCellItem
             key={params.id}
-            icon={<ShieldCheckIcon />}
-            label="Toggle Admin"
-            onClick={toggleAdmin(params.id)}
+            icon={
+              <TrashIcon
+                style={{
+                  color: "#F04438",
+                  width: "28px",
+                }}
+              />
+            }
+            label="Delete"
             showInMenu
+            onClick={deleteUser(params.id)}
+            sx={{
+              mt: 1,
+              color: "error.main",
+            }}
           />,
         ],
       },
@@ -121,8 +146,10 @@ export const MembersTable = ({ members }) => {
 
   return (
     <Card>
-      <Box sx={{ height: 110 + rowsPerPage * 52 + "px", mx: 3 }}>
+      <Box mx={3}>
         <DataGrid
+          autoHeight
+          disableRowSelectionOnClick
           rows={rows}
           columns={columns}
           initialState={{
@@ -133,8 +160,13 @@ export const MembersTable = ({ members }) => {
             },
           }}
           pageSizeOptions={[rowsPerPage]}
-          disableRowSelectionOnClick
+          loading={rows.length === 0}
           onRowClick={(event) => handleMemberClick(event.row)}
+          sx={{
+            "& .MuiDataGrid-row:hover": {
+              cursor: "pointer",
+            },
+          }}
         />
       </Box>
       <MemberModal
