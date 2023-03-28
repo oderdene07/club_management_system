@@ -39,16 +39,19 @@ export const AccountPopover = (props) => {
       </Box>
       <Divider />
       <MenuList
-        disablePadding
         dense
         sx={{
-          p: "8px",
-          "& > *": {
-            borderRadius: 1,
-          },
+          p: 1,
         }}
       >
-        <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+        <MenuItem
+          sx={{
+            color: "primary.main",
+          }}
+          onClick={handleSignOut}
+        >
+          Sign out
+        </MenuItem>
       </MenuList>
     </Popover>
   );
