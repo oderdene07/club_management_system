@@ -192,6 +192,10 @@ const data = [
 ];
 
 const Page = () => {
+  const handleSearch = (value) => {
+    console.log(value);
+  };
+
   return (
     <>
       <Head>
@@ -211,7 +215,7 @@ const Page = () => {
                 <Typography variant="h4">Members</Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <MembersSearch />
+                <MembersSearch onChange={(value) => handleSearch(value)} />
               </Stack>
             </Stack>
             <MembersTable members={data} />
