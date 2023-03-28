@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { SettingsForm } from "src/sections/settings/settings-form";
+import { SettingsForm } from "@/components/settings/settings-form";
 
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 
 const Page = () => (
   <>

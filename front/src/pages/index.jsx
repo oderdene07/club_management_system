@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { Box, Container, Unstable_Grid2 as Grid } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
-import { OverviewEvents } from "src/sections/overview/overview-events";
-import { OverviewTotalMembers } from "src/sections/overview/overview-total-members";
-import { OverviewEventsList } from "@/sections/overview/overview-events-list";
-import { OverviewNewsList } from "@/sections/overview/overview-news-list";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { OverviewEvents } from "@/components/overview/overview-events";
+import { OverviewTotalMembers } from "@/components/overview/overview-total-members";
+import { OverviewEventsList } from "@/components/overview/overview-events-list";
+import { OverviewNewsList } from "@/components/overview/overview-news-list";
 
 const eventsData = [
   {

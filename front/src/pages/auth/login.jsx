@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Alert, Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
-import { useAuth } from "src/hooks/use-auth";
-import { Layout as AuthLayout } from "src/layouts/auth/layout";
+import { useAuth } from "@/hooks/use-auth";
+import { Layout as AuthLayout } from "@/layouts/auth/layout";
 
 const Page = () => {
   const router = useRouter();
@@ -70,7 +70,7 @@ const Page = () => {
               </Typography>
             </Stack>
 
-            <form noValidate onSubmit={formik.handleSubmit}>
+            <form autoComplete="off" noValidate onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <TextField
                   error={!!(formik.touched.email && formik.errors.email)}

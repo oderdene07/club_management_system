@@ -11,7 +11,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { usePopover } from "src/hooks/use-popover";
+import { usePopover } from "@/hooks/use-popover";
 import { AccountPopover } from "./account-popover";
 import { useAuth } from "@/hooks/use-auth";
 

@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
-import { MembersTable } from "src/sections/member/members-table";
-import { MembersSearch } from "src/sections/member/members-search";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { MembersTable } from "@/components/member/members-table";
+import { MembersSearch } from "@/components/member/members-search";
 
 const data = [
   {

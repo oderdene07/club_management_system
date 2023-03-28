@@ -12,13 +12,13 @@ import {
   Typography,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
-import { EventCard } from "src/sections/events/events-card";
-import { EventsSearch } from "@/sections/events/events-search";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { EventCard } from "@/components/events/events-card";
+import { EventsSearch } from "@/components/events/events-search";
 import { TabContext } from "@mui/lab";
 import { useState } from "react";
 import usePagination from "@/components/pagination";
-import { EventModal } from "@/sections/events/event-modal";
+import { EventModal } from "@/components/events/event-modal";
 
 const data = [
   {

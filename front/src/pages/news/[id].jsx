@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Box, Container, Stack, Typography, CardMedia, Button } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 
@@ -48,6 +48,10 @@ const Page = () => {
                   }}
                 />
               }
+              onClick={() => {
+                console.log("Edit");
+                router.push(`/news/edit/${id}`);
+              }}
             >
               Edit
             </Button>

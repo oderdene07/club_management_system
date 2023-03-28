@@ -10,8 +10,8 @@ import {
   Typography,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
-import { NewsCard } from "src/sections/news/news-card";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { NewsCard } from "@/components/news/news-card";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import usePagination from "@/components/pagination";

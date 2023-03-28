@@ -15,21 +15,32 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { NewsForm } from "@/components/news/news-form";
 
+const news = {
+  id: "1",
+  title:
+    "Өндөр барилга дээр гэмтсэн хүнд нисдэг тэргээр эмнэлгийн тусламж үзүүлэх сургуулилалт боллоо",
+  content:
+    "Тэрбээр 'Өндөр барилга дээр ажиллаж буй краннистын биеийн байдал муудсан үед хэрхэн тусламж үзүүлэх талаар сургуулилалт хийж байна. Энэ тохиолдолд иргэнийг өндрөөс буулгах боломжгүй учир аврах ангийнхан эмнэлгийн тусламжийг нисдэг тэргээр ирж үзүүлэх юм. Энэ бол бодит биш. Дадлага сургуулилалт' хэмээн ярилаа. ",
+  image: "/assets/products/product-1.png",
+  createdAt: "2021-09-24 10:00:00",
+  creator: "H.ЭРХБАЯР",
+};
+
 const Page = () => {
   const router = useRouter();
 
   const [values, setValues] = useState({
-    title: "",
-    content: "",
-    image: "",
-    creator: "",
+    title: news.title,
+    content: news.content,
+    image: news.image,
+    creator: news.creator,
   });
 
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
       console.log("submit", values);
-      router.push("/news");
+      router.back();
     },
     [values, router]
   );
@@ -62,7 +73,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Add News</title>
+        <title>Edit News</title>
       </Head>
       <Box
         component="main"
@@ -75,7 +86,7 @@ const Page = () => {
         <Container maxWidth="lg">
           <form autoComplete="off">
             <Card>
-              <CardHeader title="Add News" />
+              <CardHeader title="Edit News" />
               <CardContent>
                 <NewsForm
                   values={values}
@@ -86,7 +97,7 @@ const Page = () => {
               <Divider sx={{ borderColor: "primary.light" }} />
               <CardActions sx={{ padding: 3, justifyContent: "flex-end" }}>
                 <Stack direction="row" spacing={2}>
-                  <Button onClick={() => router.push("/news")} variant="outlined">
+                  <Button onClick={() => router.back()} variant="outlined">
                     Close
                   </Button>
                   <Button onClick={handleSubmit} variant="contained">

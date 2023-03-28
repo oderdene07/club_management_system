@@ -20,7 +20,7 @@ export const SettingsForm = () => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <Card>
         <CardHeader subheader="Manage the web contents" title="Web Content" />
         <Divider />

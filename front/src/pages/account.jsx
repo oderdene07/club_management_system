@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/overview/layout";
-import { AccountProfile } from "src/sections/account/account-profile";
-import { AccountProfileDetails } from "src/sections/account/account-profile-details";
-import { AccountPassword } from "@/sections/account/account-password";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { AccountProfile } from "@/components/account/account-profile";
+import { AccountProfileDetails } from "@/components/account/account-profile-details";
+import { AccountPassword } from "@/components/account/account-password";
 
 const Page = () => (
   <>

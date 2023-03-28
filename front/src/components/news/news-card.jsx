@@ -16,7 +16,9 @@ export const NewsCard = (props) => {
 
   const href = {
     pathname: "/news/[id]",
-    query: { id: newsItem.id },
+    query: {
+      id: newsItem.id,
+    },
   };
 
   const router = useRouter();
@@ -24,7 +26,6 @@ export const NewsCard = (props) => {
   const handleClick = (e) => {
     e.preventDefault();
     router.push(href);
-    console.log(href);
   };
 
   return (
@@ -40,7 +41,7 @@ export const NewsCard = (props) => {
         },
       }}
     >
-      <Link href={href.pathname} onClick={handleClick} underline="none">
+      <Link onClick={handleClick} underline="none">
         <Box
           sx={{
             display: "flex",

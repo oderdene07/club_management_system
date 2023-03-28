@@ -28,7 +28,7 @@ export const AccountPassword = () => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form autoComplete="off" onSubmit={handleSubmit}>
       <Card>
         <CardHeader subheader="Update password" title="Password" />
         <Divider />
@@ -36,6 +36,7 @@ export const AccountPassword = () => {
           <Stack spacing={3} sx={{ maxWidth: 400 }}>
             <TextField
               fullWidth
+              autoComplete="off"
               label="Password"
               name="password"
               onChange={handleChange}
@@ -44,6 +45,7 @@ export const AccountPassword = () => {
             />
             <TextField
               fullWidth
+              autoComplete="off"
               label="Password (Confirm)"
               name="confirm"
               onChange={handleChange}
