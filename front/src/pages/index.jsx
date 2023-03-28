@@ -203,10 +203,10 @@ const Page = () => {
       >
         <Container maxWidth="xl">
           <Grid container spacing={5}>
-            <Grid xs={12} sm={6} lg={6}>
+            <Grid xs={12} sm={6} md={4}>
               <OverviewEvents value="9" />
             </Grid>
-            <Grid xs={12} sm={6} lg={6}>
+            <Grid xs={12} sm={6} md={4}>
               <OverviewTotalMembers value="32" />
             </Grid>
             <Grid xs={12}>

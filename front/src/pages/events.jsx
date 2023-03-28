@@ -211,6 +211,10 @@ const Page = () => {
     events.jump(newPage);
   };
 
+  const handleSearch = (value) => {
+    console.log(value);
+  };
+
   return (
     <>
       <Head>
@@ -248,7 +252,11 @@ const Page = () => {
                   />
                 </>
               )}
-              <EventsSearch />
+              <EventsSearch
+                onChange={(value) => {
+                  handleSearch(value);
+                }}
+              />
             </Stack>
           </Stack>
           <Stack alignItems="center">
