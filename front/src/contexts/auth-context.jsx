@@ -83,6 +83,7 @@ export const AuthProvider = (props) => {
         avatar: "/assets/avatars/avatar-anika-visser.png",
         name: "Anika Visser",
         email: "anika.visser@devias.io",
+        role: "admin",
       };
 
       dispatch({

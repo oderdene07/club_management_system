@@ -3,6 +3,7 @@ import { Box, Container, Stack, Typography, CardMedia, Button } from "@mui/mater
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
+import { useAuth } from "@/contexts/auth-context";
 
 const news = {
   id: "1",
@@ -23,6 +24,7 @@ const dateFormat = (date) => {
 const Page = () => {
   const router = useRouter();
   const { id } = router.query;
+  const isAdmin = useAuth().user?.role === "admin";
 
   return (
     <>
@@ -38,41 +40,43 @@ const Page = () => {
         }}
       >
         <Container maxWidth="md">
-          <Stack spacing={2} direction="row" justifyContent="flex-end">
-            <Button
-              variant="outlined"
-              startIcon={
-                <PencilIcon
-                  style={{
-                    width: 20,
-                  }}
-                />
-              }
-              onClick={() => {
-                console.log("Edit");
-                router.push(`/news/edit/${id}`);
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={
-                <TrashIcon
-                  style={{
-                    width: 20,
-                  }}
-                />
-              }
-              onClick={() => {
-                console.log("Delete");
-                router.push("/news");
-              }}
-            >
-              Delete
-            </Button>
-          </Stack>
+          {isAdmin && (
+            <Stack spacing={2} direction="row" justifyContent="flex-end">
+              <Button
+                variant="outlined"
+                startIcon={
+                  <PencilIcon
+                    style={{
+                      width: 20,
+                    }}
+                  />
+                }
+                onClick={() => {
+                  console.log("Edit");
+                  router.push(`/news/edit/${id}`);
+                }}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={
+                  <TrashIcon
+                    style={{
+                      width: 20,
+                    }}
+                  />
+                }
+                onClick={() => {
+                  console.log("Delete");
+                  router.push("/news");
+                }}
+              >
+                Delete
+              </Button>
+            </Stack>
+          )}
           <Stack mt={2} spacing={2}>
             <Typography variant="h5">{news.title}</Typography>
             <Typography variant="subtitle2">

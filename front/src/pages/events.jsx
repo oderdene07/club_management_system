@@ -19,6 +19,7 @@ import { TabContext } from "@mui/lab";
 import { useState } from "react";
 import usePagination from "@/components/pagination";
 import { EventModal } from "@/components/events/event-modal";
+import { useAuth } from "@/contexts/auth-context";
 
 const data = [
   {
@@ -190,6 +191,8 @@ function TabPanel(props) {
 }
 
 const Page = () => {
+  const isAdmin = useAuth().user?.role === "admin";
+
   const [tab, setTab] = useState(0);
   const [page, setPage] = useState(1);
 
@@ -226,21 +229,25 @@ const Page = () => {
               <Typography variant="h4">Events</Typography>
             </Stack>
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Button
-                startIcon={
-                  <SvgIcon fontSize="small">
-                    <PlusIcon />
-                  </SvgIcon>
-                }
-                variant="contained"
-                onClick={() => setIsModalVisible(true)}
-              >
-                Add
-              </Button>
-              <EventModal
-                isModalVisible={isModalVisible}
-                handleCloseModal={() => setIsModalVisible(false)}
-              />
+              {isAdmin && (
+                <>
+                  <Button
+                    startIcon={
+                      <SvgIcon fontSize="small">
+                        <PlusIcon />
+                      </SvgIcon>
+                    }
+                    variant="contained"
+                    onClick={() => setIsModalVisible(true)}
+                  >
+                    Add
+                  </Button>
+                  <EventModal
+                    isModalVisible={isModalVisible}
+                    handleCloseModal={() => setIsModalVisible(false)}
+                  />{" "}
+                </>
+              )}
               <EventsSearch />
             </Stack>
           </Stack>

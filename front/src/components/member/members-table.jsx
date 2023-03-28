@@ -5,10 +5,13 @@ import { ShieldCheckIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useCallback, useMemo, useState } from "react";
 import { MemberModal } from "./members-modal";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import { useAuth } from "@/contexts/auth-context";
 
 const rowsPerPage = 12;
 
 export const MembersTable = ({ members }) => {
+  const isAdmin = useAuth().user?.role === "admin";
+
   const [rows, setRows] = useState(members);
 
   const [selectedMember, setSelectedMember] = useState(null);
@@ -86,17 +89,17 @@ export const MembersTable = ({ members }) => {
         minWidth: 200,
       },
       {
-        field: "role",
-        headerName: "Role",
-        flex: 1,
-        minWidth: 150,
-      },
-      {
         field: "date_joined",
         headerName: "Date Joined",
         flex: 1,
         minWidth: 150,
         valueGetter: (params) => new Date(params.row.date_joined).toDateString(),
+      },
+      {
+        field: "role",
+        headerName: "Role",
+        flex: 1,
+        minWidth: 150,
       },
       {
         field: "actions",
@@ -151,7 +154,7 @@ export const MembersTable = ({ members }) => {
           autoHeight
           disableRowSelectionOnClick
           rows={rows}
-          columns={columns}
+          columns={isAdmin ? columns : columns.filter((col) => col.field !== "actions")}
           initialState={{
             pagination: {
               paginationModel: {

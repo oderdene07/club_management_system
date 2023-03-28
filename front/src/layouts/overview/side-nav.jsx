@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import { Box, CardMedia, Divider, Drawer, Stack, useMediaQuery } from "@mui/material";
 import { items } from "./config";
 import { SideNavItem } from "./side-nav-item";
+import { useAuth } from "@/contexts/auth-context";
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const isAdmin = useAuth().user?.role === "admin";
 
   const content = (
     <Box
@@ -45,7 +47,9 @@ export const SideNav = (props) => {
         >
           {items.map((item) => {
             const active = item.path ? pathname === item.path : false;
-
+            if (item.path === "/settings" && !isAdmin) {
+              return null;
+            }
             return (
               <SideNavItem
                 active={active}

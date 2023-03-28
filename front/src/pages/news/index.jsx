@@ -15,6 +15,7 @@ import { NewsCard } from "@/components/news/news-card";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import usePagination from "@/components/pagination";
+import { useAuth } from "@/contexts/auth-context";
 
 const data = [
   {
@@ -109,6 +110,7 @@ const Page = () => {
   const router = useRouter();
 
   const [page, setPage] = useState(1);
+  const isAdmin = useAuth().user?.role === "admin";
 
   const count = Math.ceil(data.length / rowsPerPage);
   const news = usePagination(data, rowsPerPage);
@@ -137,19 +139,21 @@ const Page = () => {
                 <Typography variant="h4">News</Typography>
               </Stack>
 
-              <Button
-                startIcon={
-                  <SvgIcon fontSize="small">
-                    <PlusIcon />
-                  </SvgIcon>
-                }
-                variant="contained"
-                onClick={() => {
-                  router.push("/news/add");
-                }}
-              >
-                Add
-              </Button>
+              {isAdmin && (
+                <Button
+                  startIcon={
+                    <SvgIcon fontSize="small">
+                      <PlusIcon />
+                    </SvgIcon>
+                  }
+                  variant="contained"
+                  onClick={() => {
+                    router.push("/news/add");
+                  }}
+                >
+                  Add
+                </Button>
+              )}
             </Stack>
             <Grid container spacing={2}>
               {news.currentData().map((newsItem) => (
