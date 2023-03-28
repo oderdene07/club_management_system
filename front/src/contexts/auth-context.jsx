@@ -79,11 +79,16 @@ export const AuthProvider = (props) => {
 
     if (isAuthenticated) {
       const user = {
-        id: "5e86809283e28b96d2d38537",
+        id: "1",
         avatar: "/assets/avatars/avatar-anika-visser.png",
-        name: "Anika Visser",
-        email: "anika.visser@devias.io",
+        first_name: "Od-Erdene",
+        last_name: "Natsagdorj",
+        email: "oderdene07@gmail.com",
         role: "admin",
+        phone_number: "99887766",
+        occupation: "Software Engineer",
+        profile_description: "I am a software engineer",
+        profile_picture: "/assets/avatars/avatar-marcus-finn.png",
       };
 
       dispatch({
@@ -106,7 +111,7 @@ export const AuthProvider = (props) => {
   );
 
   const signIn = async (email, password) => {
-    if (email !== "demo@devias.io" || password !== "Password123!") {
+    if (email !== "oderdene07@gmail.com" || password !== "password") {
       throw new Error("Please check your email and password");
     }
 
@@ -117,10 +122,16 @@ export const AuthProvider = (props) => {
     }
 
     const user = {
-      id: "5e86809283e28b96d2d38537",
+      id: "1",
       avatar: "/assets/avatars/avatar-anika-visser.png",
-      name: "Anika Visser",
-      email: "anika.visser@devias.io",
+      first_name: "Od-Erdene",
+      last_name: "Natsagdorj",
+      email: "oderdene07@gmail.com",
+      role: "admin",
+      phone_number: "99887766",
+      occupation: "Software Engineer",
+      profile_description: "I am a software engineer",
+      profile_picture: "/assets/avatars/avatar-marcus-finn.png",
     };
 
     dispatch({

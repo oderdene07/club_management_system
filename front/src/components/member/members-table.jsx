@@ -149,29 +149,47 @@ export const MembersTable = ({ members }) => {
 
   return (
     <Card>
-      <Box mx={3}>
-        <DataGrid
-          autoHeight
-          disableRowSelectionOnClick
-          rows={rows}
-          columns={isAdmin ? columns : columns.filter((col) => col.field !== "actions")}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: rowsPerPage,
-              },
+      <DataGrid
+        autoHeight
+        disableRowSelectionOnClick
+        rows={rows}
+        columns={isAdmin ? columns : columns.filter((col) => col.field !== "actions")}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: rowsPerPage,
             },
-          }}
-          pageSizeOptions={[rowsPerPage]}
-          loading={rows.length === 0}
-          onRowClick={(event) => handleMemberClick(event.row)}
-          sx={{
-            "& .MuiDataGrid-row:hover": {
-              cursor: "pointer",
-            },
-          }}
-        />
-      </Box>
+          },
+        }}
+        pageSizeOptions={[rowsPerPage]}
+        loading={rows.length === 0}
+        onRowClick={(event) => handleMemberClick(event.row)}
+        sx={{
+          border: "none",
+          marginX: 2,
+          "& .MuiDataGrid-iconSeparator": {
+            display: "none",
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            borderColor: "primary.light",
+            borderRadius: "0",
+          },
+          "& .MuiDataGrid-footerContainer": {
+            borderColor: "primary.light",
+          },
+          "& .MuiDataGrid-cell": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell:focus": {
+            outline: "none",
+          },
+          "& .MuiDataGrid-row:hover": {
+            cursor: "pointer",
+            color: "primary.main",
+            bgcolor: "primary.light",
+          },
+        }}
+      />
       <MemberModal
         selectedMember={selectedMember}
         isModalVisible={isModalVisible}

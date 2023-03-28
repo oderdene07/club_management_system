@@ -12,8 +12,8 @@ const Page = () => {
   const auth = useAuth();
   const formik = useFormik({
     initialValues: {
-      email: "demo@devias.io",
-      password: "Password123!",
+      email: "",
+      password: "",
       submit: null,
     },
     validationSchema: Yup.object({
@@ -70,7 +70,7 @@ const Page = () => {
               </Typography>
             </Stack>
 
-            <form autoComplete="off" noValidate onSubmit={formik.handleSubmit}>
+            <form noValidate onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <TextField
                   error={!!(formik.touched.email && formik.errors.email)}
@@ -81,10 +81,9 @@ const Page = () => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="email"
-                  value={formik.values.email}
+                  autoComplete="email"
                 />
                 <TextField
-                  autoComplete="off"
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
@@ -93,7 +92,7 @@ const Page = () => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="password"
-                  value={formik.values.password}
+                  autoComplete="current-password"
                 />
               </Stack>
               {formik.errors.submit && (

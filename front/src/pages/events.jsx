@@ -245,7 +245,7 @@ const Page = () => {
                   <EventModal
                     isModalVisible={isModalVisible}
                     handleCloseModal={() => setIsModalVisible(false)}
-                  />{" "}
+                  />
                 </>
               )}
               <EventsSearch />

@@ -45,6 +45,7 @@ export const EventCard = (props) => {
           height: "100%",
           color: "neutral.400",
           minWidth: 270,
+          cursor: "pointer",
         }}
         onClick={() => handleEventClick(event)}
       >

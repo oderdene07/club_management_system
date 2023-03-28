@@ -14,9 +14,12 @@ import {
 } from "@mui/material";
 import { useCallback, useState } from "react";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
+import { useAuth } from "@/contexts/auth-context";
 
 export const EventModal = (props) => {
   const { selectedEvent, isModalVisible, handleCloseModal } = props;
+
+  const isAdmin = useAuth().user?.role === "admin";
 
   const [values, setValues] = useState(
     selectedEvent
@@ -147,6 +150,10 @@ export const EventModal = (props) => {
               name="title"
               onChange={handleChange}
               value={values.title}
+              {...(isAdmin ? {} : { focused: false })}
+              InputProps={{
+                readOnly: !isAdmin,
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -158,6 +165,10 @@ export const EventModal = (props) => {
               name="description"
               onChange={handleChange}
               value={values.description}
+              {...(isAdmin ? {} : { focused: false })}
+              InputProps={{
+                readOnly: !isAdmin,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={8}>
@@ -188,6 +199,10 @@ export const EventModal = (props) => {
                 name="location"
                 onChange={handleChange}
                 value={values.location}
+                {...(isAdmin ? {} : { focused: false })}
+                InputProps={{
+                  readOnly: !isAdmin,
+                }}
               />
             </Stack>
           </Grid>
@@ -219,6 +234,7 @@ export const EventModal = (props) => {
                     label: position === "start" ? "Check-in" : "Check-out",
                   }),
                 }}
+                readOnly={!isAdmin}
                 value={[values.startDate, values.endDate]}
                 onChange={(newValue) => {
                   setValues((prevState) => ({
@@ -233,29 +249,31 @@ export const EventModal = (props) => {
         </Grid>
         <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
 
-        <CardActions sx={{ pt: 2, justifyContent: "flex-end" }}>
-          <Stack direction="row" spacing={2}>
-            <Button
-              onClick={() => {
-                handleCloseModal();
-                setValues({
-                  title: "",
-                  description: "",
-                  location: "",
-                  startDate: new Date(),
-                  endDate: new Date(),
-                  image: "",
-                });
-              }}
-              variant="outlined"
-            >
-              Close
-            </Button>
-            <Button onClick={handleSubmit} variant="contained">
-              Save details
-            </Button>
-          </Stack>
-        </CardActions>
+        {isAdmin && (
+          <CardActions sx={{ pt: 2, justifyContent: "flex-end" }}>
+            <Stack direction="row" spacing={2}>
+              <Button
+                onClick={() => {
+                  handleCloseModal();
+                  setValues({
+                    title: "",
+                    description: "",
+                    location: "",
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    image: "",
+                  });
+                }}
+                variant="outlined"
+              >
+                Close
+              </Button>
+              <Button onClick={handleSubmit} variant="contained">
+                Save details
+              </Button>
+            </Stack>
+          </CardActions>
+        )}
       </Card>
     </Modal>
   );

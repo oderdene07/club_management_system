@@ -10,19 +10,10 @@ import {
   TextField,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-
-const user = {
-  first_name: "John",
-  last_name: "Doe",
-  email: "johndoe@gmail.com",
-  phone_number: "99887744",
-  occupation: "Software Engineer",
-  date_joined: "2023-03-20T00:00:00Z",
-  profile_picture: "/assets/avatars/avatar-anika-visser.png",
-  profile_description: "I am a software engineer",
-};
+import { useAuth } from "@/contexts/auth-context";
 
 export const AccountProfileDetails = () => {
+  const { user } = useAuth();
   const [values, setValues] = useState({
     firstName: user.first_name,
     lastName: user.last_name,

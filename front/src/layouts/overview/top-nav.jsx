@@ -70,7 +70,11 @@ export const TopNav = (props) => {
                   fontSize: "1.25rem",
                 }}
               >
-                Hello, <strong>{user?.name}</strong>!
+                Hello,{" "}
+                <strong>
+                  {user?.first_name} {user?.last_name}
+                </strong>
+                !
               </Typography>
             </Stack>
             <Stack alignItems="center" direction="row" spacing={2}>
@@ -82,7 +86,7 @@ export const TopNav = (props) => {
                   height: 50,
                   width: 50,
                 }}
-                src="/assets/avatars/avatar-anika-visser.png"
+                src={user?.profile_picture}
               />
             </Stack>
           </Stack>
