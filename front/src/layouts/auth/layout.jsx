@@ -1,9 +1,5 @@
 import PropTypes from "prop-types";
-import NextLink from "next/link";
-import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
-import { Logo } from "src/components/logo";
-
-// TODO: Change subtitle text
+import { Box, CardMedia, Unstable_Grid2 as Grid } from "@mui/material";
 
 export const Layout = (props) => {
   const { children } = props;
@@ -23,8 +19,6 @@ export const Layout = (props) => {
           sx={{
             backgroundColor: "background.paper",
             display: "flex",
-            flexDirection: "column",
-            position: "relative",
           }}
         >
           <Box
@@ -34,20 +28,10 @@ export const Layout = (props) => {
               p: 3,
               position: "fixed",
               top: 0,
-              width: "100%",
+              width: 150,
             }}
           >
-            <Box
-              component={NextLink}
-              href="/"
-              sx={{
-                display: "inline-flex",
-                height: 32,
-                width: 32,
-              }}
-            >
-              <Logo />
-            </Box>
+            <CardMedia component="img" image="/assets/hackum-logo-dark.png" />
           </Box>
           {children}
         </Grid>
@@ -55,37 +39,16 @@ export const Layout = (props) => {
           xs={12}
           lg={6}
           sx={{
-            alignItems: "center",
-            background: "radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)",
-            color: "white",
+            background: "radial-gradient(50% 50% at 50% 50%, #605BFF 0%, #4338CA 100%)",
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
             "& img": {
-              maxWidth: "100%",
+              maxWidth: "90%",
             },
           }}
         >
-          <Box sx={{ p: 3 }}>
-            <Typography
-              align="center"
-              color="inherit"
-              sx={{
-                fontSize: "24px",
-                lineHeight: "32px",
-                mb: 1,
-              }}
-              variant="h1"
-            >
-              Welcome to{" "}
-              <Box component="a" sx={{ color: "#15B79E" }} target="_blank">
-                Devias Kit
-              </Box>
-            </Typography>
-            <Typography align="center" sx={{ mb: 3 }} variant="subtitle1">
-              A professional kit that comes with ready-to-use MUI components.
-            </Typography>
-            <img alt="" src="/assets/auth-illustration.svg" />
-          </Box>
+          <img alt="" src="/assets/auth-illustration.svg" />
         </Grid>
       </Grid>
     </Box>

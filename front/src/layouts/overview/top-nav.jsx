@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import Bars3Icon from "@heroicons/react/24/solid/Bars3Icon";
 import {
   Avatar,
-  Badge,
   Box,
   Container,
   IconButton,
@@ -14,6 +13,7 @@ import {
 import { alpha } from "@mui/material/styles";
 import { usePopover } from "src/hooks/use-popover";
 import { AccountPopover } from "./account-popover";
+import { useAuth } from "@/hooks/use-auth";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -22,6 +22,7 @@ export const TopNav = (props) => {
   const { onNavOpen } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const accountPopover = usePopover();
+  const { user } = useAuth();
 
   return (
     <>
@@ -69,7 +70,7 @@ export const TopNav = (props) => {
                   fontSize: "1.25rem",
                 }}
               >
-                Hello, <strong>Anika Visser</strong>!
+                Hello, <strong>{user.name}</strong>!
               </Typography>
             </Stack>
             <Stack alignItems="center" direction="row" spacing={2}>

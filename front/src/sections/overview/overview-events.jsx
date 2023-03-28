@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { StarIcon } from "@heroicons/react/24/solid";
 
-export const OverviewTotalMembers = (props) => {
+export const OverviewEvents = (props) => {
   const { value } = props;
 
   return (
@@ -11,19 +11,19 @@ export const OverviewTotalMembers = (props) => {
         <Stack alignItems="flex-start" direction="row" justifyContent="space-between" spacing={3}>
           <Stack spacing={1}>
             <Typography color="text.secondary" variant="overline">
-              Total Members
+              Upcoming Events
             </Typography>
             <Typography variant="h4">{value}</Typography>
           </Stack>
           <Avatar
             sx={{
-              backgroundColor: "success.main",
+              backgroundColor: "primary.main",
               height: 56,
               width: 56,
             }}
           >
             <SvgIcon>
-              <UserGroupIcon />
+              <StarIcon />
             </SvgIcon>
           </Avatar>
         </Stack>
@@ -32,7 +32,7 @@ export const OverviewTotalMembers = (props) => {
   );
 };
 
-OverviewTotalMembers.propTypes = {
-  value: PropTypes.string.isRequired,
+OverviewEvents.prototypes = {
   sx: PropTypes.object,
+  value: PropTypes.string.isRequired,
 };

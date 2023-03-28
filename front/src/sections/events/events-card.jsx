@@ -22,8 +22,6 @@ const dateFormatted = (startDate, endDate) => {
     hour: "numeric",
     minute: "numeric",
   })} - ${end.toLocaleString("en-GB", {
-    month: "short",
-  })} ${end.getDate()} ${end.toLocaleString("en-GB", {
     hour: "numeric",
     minute: "numeric",
   })}`;
@@ -46,6 +44,7 @@ export const EventCard = (props) => {
         sx={{
           height: "100%",
           color: "neutral.400",
+          minWidth: 270,
         }}
         onClick={() => handleEventClick(event)}
       >

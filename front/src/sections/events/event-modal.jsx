@@ -1,4 +1,4 @@
-import { ClockIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { CameraIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import {
   Button,
   Card,
@@ -10,8 +10,8 @@ import {
   Modal,
   Stack,
   TextField,
+  Tooltip,
 } from "@mui/material";
-import { DateTimePicker } from "@mui/x-date-pickers";
 import { useCallback, useState } from "react";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
 
@@ -31,13 +31,24 @@ export const EventModal = (props) => {
       : {
           title: "",
           description: "",
-
           location: "",
           startDate: new Date(),
           endDate: new Date(),
           image: "",
         }
   );
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setValues((prevState) => ({
+        ...prevState,
+        image: reader.result,
+      }));
+    };
+    if (file) reader.readAsDataURL(file);
+  };
 
   const handleChange = useCallback(
     (event) => {
@@ -52,9 +63,12 @@ export const EventModal = (props) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
+      // add event to events list
+
       console.log("submit", values);
+      handleCloseModal();
     },
-    [values]
+    [values, handleCloseModal]
   );
 
   return (
@@ -84,16 +98,45 @@ export const EventModal = (props) => {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             {values.image ? (
-              <CardMedia component="img" height={250} image={values.image} alt="Event Image" />
+              <Stack alignItems="center">
+                <Tooltip title="Click to change image">
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    sx={{
+                      padding: 0,
+                      overflow: "hidden",
+                      "&:hover": {
+                        opacity: 0.8,
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height={250}
+                      image={values.image}
+                      alt="Event Image"
+                    />
+                    <input hidden accept="image/*" type="file" onChange={handleImageChange} />
+                  </Button>
+                </Tooltip>
+              </Stack>
             ) : (
-              // input image source
-
-              <CardMedia
-                component="img"
-                height={250}
-                image="https://source.unsplash.com/random"
-                alt="Event Image"
-              />
+              <Button
+                variant="outlined"
+                component="label"
+                startIcon={
+                  <CameraIcon
+                    style={{
+                      width: 28,
+                      height: 28,
+                    }}
+                  />
+                }
+              >
+                Upload Image ...
+                <input hidden accept="image/*" type="file" onChange={handleImageChange} />
+              </Button>
             )}
           </Grid>
 
@@ -192,7 +235,20 @@ export const EventModal = (props) => {
 
         <CardActions sx={{ pt: 2, justifyContent: "flex-end" }}>
           <Stack direction="row" spacing={2}>
-            <Button onClick={handleCloseModal} variant="outlined">
+            <Button
+              onClick={() => {
+                handleCloseModal();
+                setValues({
+                  title: "",
+                  description: "",
+                  location: "",
+                  startDate: new Date(),
+                  endDate: new Date(),
+                  image: "",
+                });
+              }}
+              variant="outlined"
+            >
               Close
             </Button>
             <Button onClick={handleSubmit} variant="contained">

@@ -38,7 +38,7 @@ export const AccountProfile = () => (
             width: 80,
           }}
         />
-        <Typography gutterBottom variant="h5">
+        <Typography gutterBottom variant="h6">
           {user.first_name} {user.last_name}
         </Typography>
         <Typography color="text.secondary" variant="body2">

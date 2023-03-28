@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { SettingsNotifications } from "src/sections/settings/settings-notifications";
-import { SettingsPassword } from "src/sections/settings/settings-password";
-import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
+import { SettingsForm } from "src/sections/settings/settings-form";
+
+import { Layout as DashboardLayout } from "src/layouts/overview/layout";
 
 const Page = () => (
   <>
@@ -17,10 +17,17 @@ const Page = () => (
       }}
     >
       <Container maxWidth="lg">
-        <Stack spacing={3}>
+        <Stack
+          spacing={3}
+          width={{
+            xs: "100%",
+            sm: "90%",
+            md: "80%",
+            xl: "70%",
+          }}
+        >
           <Typography variant="h4">Settings</Typography>
-          <SettingsNotifications />
-          <SettingsPassword />
+          <SettingsForm />
         </Stack>
       </Container>
     </Box>

@@ -37,6 +37,11 @@ export const createTypography = () => {
       lineHeight: 2.5,
       textTransform: "uppercase",
     },
+    text: {
+      fontSize: "1rem",
+      fontWeight: 400,
+      lineHeight: 1.65,
+    },
     h1: {
       fontFamily: "'Plus Jakarta Sans', sans-serif",
       fontWeight: 700,
@@ -64,7 +69,7 @@ export const createTypography = () => {
     h5: {
       fontFamily: "'Plus Jakarta Sans', sans-serif",
       fontWeight: 700,
-      fontSize: "1.25rem",
+      fontSize: "1.5rem",
       lineHeight: 1.2,
     },
     h6: {

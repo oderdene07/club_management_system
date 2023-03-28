@@ -3,7 +3,6 @@ import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import {
   Box,
   Button,
-  Card,
   Container,
   Pagination,
   Stack,
@@ -13,12 +12,13 @@ import {
   Typography,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
+import { Layout as DashboardLayout } from "src/layouts/overview/layout";
 import { EventCard } from "src/sections/events/events-card";
 import { EventsSearch } from "@/sections/events/events-search";
 import { TabContext } from "@mui/lab";
 import { useState } from "react";
 import usePagination from "@/components/pagination";
+import { EventModal } from "@/sections/events/event-modal";
 
 const data = [
   {
@@ -184,7 +184,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {tab === index && <Box p={3}>{children}</Box>}
+      {tab === index && <Box py={3}>{children}</Box>}
     </div>
   );
 }
@@ -192,6 +192,8 @@ function TabPanel(props) {
 const Page = () => {
   const [tab, setTab] = useState(0);
   const [page, setPage] = useState(1);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const currentTabEvents = tabEvents(data, tab);
   const count = Math.ceil(currentTabEvents.length / rowsPerPage);
@@ -231,9 +233,14 @@ const Page = () => {
                   </SvgIcon>
                 }
                 variant="contained"
+                onClick={() => setIsModalVisible(true)}
               >
                 Add
               </Button>
+              <EventModal
+                isModalVisible={isModalVisible}
+                handleCloseModal={() => setIsModalVisible(false)}
+              />
               <EventsSearch />
             </Stack>
           </Stack>
@@ -245,7 +252,7 @@ const Page = () => {
           </Stack>
           {[0, 1].map((t) => (
             <TabPanel key={t} tab={tab} index={t}>
-              <Grid container spacing={3}>
+              <Grid container spacing={3} paddingX={0}>
                 {events.currentData().map((event) => (
                   <Grid xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
                     <EventCard event={event} />

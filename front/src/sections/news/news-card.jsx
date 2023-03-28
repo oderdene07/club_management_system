@@ -9,15 +9,30 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 
 export const NewsCard = (props) => {
-  const { news } = props;
+  const { newsItem } = props;
+
+  const href = {
+    pathname: "/news/[id]",
+    query: { id: newsItem.id },
+  };
+
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    router.push(href);
+    console.log(href);
+  };
 
   return (
     <Button
       sx={{
         padding: 0,
         margin: 1,
+        minWidth: 270,
         transition: "transform .3s ease-in-out",
         ":hover": {
           backgroundColor: "transparent",
@@ -25,7 +40,7 @@ export const NewsCard = (props) => {
         },
       }}
     >
-      <Link href="/news" underline="none">
+      <Link href={href.pathname} onClick={handleClick} underline="none">
         <Box
           sx={{
             display: "flex",
@@ -37,7 +52,7 @@ export const NewsCard = (props) => {
               borderRadius: 1,
             }}
             component="img"
-            image={news.image}
+            image={newsItem.image}
           />
         </Box>
         <CardContent sx={{ p: "0.8rem 0.8rem 0.8rem 0" }}>
@@ -66,7 +81,7 @@ export const NewsCard = (props) => {
                 gutterBottom
                 variant="h6"
               >
-                {news.title}
+                {newsItem.title}
               </Typography>
               <Typography color="neutral.500" gutterBottom variant="body2">
                 Continue reading...
@@ -80,5 +95,5 @@ export const NewsCard = (props) => {
 };
 
 NewsCard.propTypes = {
-  news: PropTypes.object.isRequired,
+  newsItem: PropTypes.object.isRequired,
 };
