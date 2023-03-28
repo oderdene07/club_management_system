@@ -8,9 +8,8 @@ import (
 
 func main() {
 	app.InitDB()
-	app.InfoLogger.Println("connected to database")
-
 	app.InitLog()
+	app.InfoLogger.Println("connected to database")
 
 	routes()
 }

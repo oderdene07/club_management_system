@@ -1,0 +1,2 @@
+INFO: 2023/03/29 01:39:09 main.go:12: connected to database
+ERROR: 2023/03/29 01:39:34 middleware.go:16: token is empty
