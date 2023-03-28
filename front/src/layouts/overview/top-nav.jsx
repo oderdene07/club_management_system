@@ -13,7 +13,7 @@ import {
 import { alpha } from "@mui/material/styles";
 import { usePopover } from "@/hooks/use-popover";
 import { AccountPopover } from "./account-popover";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/contexts/auth-context";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -70,7 +70,7 @@ export const TopNav = (props) => {
                   fontSize: "1.25rem",
                 }}
               >
-                Hello, <strong>{user.name}</strong>!
+                Hello, <strong>{user?.name}</strong>!
               </Typography>
             </Stack>
             <Stack alignItems="center" direction="row" spacing={2}>

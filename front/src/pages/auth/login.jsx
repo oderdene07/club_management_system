@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Alert, Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/contexts/auth-context";
 import { Layout as AuthLayout } from "@/layouts/auth/layout";
 
 const Page = () => {
@@ -84,6 +84,7 @@ const Page = () => {
                   value={formik.values.email}
                 />
                 <TextField
+                  autoComplete="off"
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
