@@ -1,6 +1,8 @@
 package event
 
-import "cms/app"
+import (
+	"cms/app"
+)
 
 func getEvents() ([]*Event, error) {
 	events := []*Event{}
@@ -12,7 +14,7 @@ func getEvents() ([]*Event, error) {
 
 	for rows.Next() {
 		event := &Event{}
-		err := rows.Scan(&event.ID, &event.Title, &event.Description, &event.Location, &event.StartDate, &event.EndDate, &event.Image)
+		err := rows.Scan(&event.ID, &event.Title, &event.StartDate, &event.EndDate, &event.Location, &event.Description, &event.Image)
 		if err != nil {
 			return nil, err
 		}
@@ -23,7 +25,7 @@ func getEvents() ([]*Event, error) {
 
 func getEventByID(id int64) (*Event, error) {
 	event := &Event{}
-	err := app.DB.QueryRow("SELECT * FROM events WHERE id = $1", id).Scan(&event.ID, &event.Title, &event.Description, &event.Location, &event.StartDate, &event.EndDate, &event.Image)
+	err := app.DB.QueryRow("SELECT * FROM events WHERE id = $1", id).Scan(&event.ID, &event.Title, &event.StartDate, &event.EndDate, &event.Location, &event.Description, &event.Image)
 	if err != nil {
 		return nil, err
 	}

@@ -9,10 +9,8 @@ import { useAuth } from "@/contexts/auth-context";
 
 const rowsPerPage = 12;
 
-export const MembersTable = ({ members }) => {
+export const MembersTable = ({ members, loading }) => {
   const isAdmin = useAuth().user?.role === "admin";
-
-  const [rows, setRows] = useState(members);
 
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,31 +22,16 @@ export const MembersTable = ({ members }) => {
 
   const deleteUser = useCallback(
     (id) => () => {
-      setTimeout(() => {
-        setRows(
-          rows.filter((row) => {
-            return row.id !== id;
-          })
-        );
-      });
+      setTimeout(() => {});
     },
-    [rows, setRows]
+    []
   );
 
   const toggleAdmin = useCallback(
     (id) => () => {
-      setTimeout(() => {
-        setRows((prevRows) =>
-          prevRows.map((row) => {
-            if (row.id === id) {
-              row.role === "admin" ? (row.role = "member") : (row.role = "admin");
-            }
-            return row;
-          })
-        );
-      });
+      setTimeout(() => {});
     },
-    [setRows]
+    []
   );
 
   const columns = useMemo(
@@ -152,7 +135,7 @@ export const MembersTable = ({ members }) => {
       <DataGrid
         autoHeight
         disableRowSelectionOnClick
-        rows={rows}
+        rows={members}
         columns={isAdmin ? columns : columns.filter((col) => col.field !== "actions")}
         initialState={{
           pagination: {
@@ -162,7 +145,7 @@ export const MembersTable = ({ members }) => {
           },
         }}
         pageSizeOptions={[rowsPerPage]}
-        loading={rows.length === 0}
+        loading={loading}
         onRowClick={(event) => handleMemberClick(event.row)}
         sx={{
           border: "none",

@@ -16,98 +16,13 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import usePagination from "@/components/pagination";
 import { useAuth } from "@/contexts/auth-context";
-
-const data = [
-  {
-    id: "1",
-    title: "It Does Not Matter Hows Slowly go as Long",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-1.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "2",
-    title: "Netbook Network Added New Photo Filter",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-2.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "3",
-    title: "We Optimised Netbooks Better Navigation",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-6.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "4",
-    title: "Netbook Network Added New Photo Filter",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-4.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "5",
-    title: "We Optimised Netbooks Better Navigation",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-5.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "6",
-    title: "It Does Not Matter Hows Slowly go as Long",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-6.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "7",
-    title: "It Does Not Matter Hows Slowly go as Long",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-1.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "8",
-    title: "Netbook Network Added New Photo Filter",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-2.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "9",
-    title: "We Optimised Netbooks Better Navigation",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-6.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "10",
-    title: "Netbook Network Added New Photo Filter",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-4.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "11",
-    title: "We Optimised Netbooks Better Navigation",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-5.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-  {
-    id: "12",
-    title: "It Does Not Matter Hows Slowly go as Long",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/assets/products/product-6.png",
-    createdAt: "2021-09-24 10:00:00",
-  },
-];
+import { useApi } from "@/hooks/use-api";
 
 const rowsPerPage = 8;
 
 const Page = () => {
   const router = useRouter();
+  const { data, error, loading } = useApi("/news");
 
   const [page, setPage] = useState(1);
   const isAdmin = useAuth().user?.role === "admin";

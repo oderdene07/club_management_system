@@ -31,17 +31,18 @@ export const NewsCard = (props) => {
   return (
     <Button
       sx={{
-        padding: 0,
+        paddingX: 1,
         margin: 1,
         minWidth: 270,
+        width: "100%",
         transition: "transform .3s ease-in-out",
         ":hover": {
           backgroundColor: "transparent",
-          transform: "scale(1.05)",
+          transform: "scale(1.04)",
         },
       }}
     >
-      <Link onClick={handleClick} underline="none">
+      <Link width="100%" onClick={handleClick} underline="none">
         <Box
           sx={{
             display: "flex",

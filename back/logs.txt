@@ -1,3 +1,7 @@
 INFO: 2023/03/29 01:39:09 main.go:12: connected to database
 ERROR: 2023/03/29 01:39:34 middleware.go:16: token is empty
 INFO: 2023/03/29 12:56:28 main.go:12: connected to database
+INFO: 2023/03/29 13:44:59 main.go:12: connected to database
+INFO: 2023/03/29 14:57:12 main.go:12: connected to database
+INFO: 2023/03/29 15:06:30 main.go:12: connected to database
+INFO: 2023/03/29 15:07:44 main.go:12: connected to database

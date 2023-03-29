@@ -1,15 +1,6 @@
 import PropTypes from "prop-types";
 import { MapPinIcon, CalendarIcon } from "@heroicons/react/24/solid";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Modal,
-  Stack,
-  SvgIcon,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Stack, SvgIcon, Typography } from "@mui/material";
 import { EventModal } from "./event-modal";
 import { useState } from "react";
 
@@ -27,9 +18,7 @@ const dateFormatted = (startDate, endDate) => {
   })}`;
 };
 
-export const EventCard = (props) => {
-  const { event } = props;
-
+export const EventCard = ({ event }) => {
   const [selectedEvent, setSelectedEvent] = useState(event);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -58,13 +47,24 @@ export const EventCard = (props) => {
             height: 200,
           }}
         >
-          <CardMedia
-            sx={{
-              borderRadius: 1,
-            }}
-            component="img"
-            image={event.image}
-          />
+          {event.image ? (
+            <CardMedia
+              sx={{
+                borderRadius: 1,
+              }}
+              component="img"
+              image={event.image}
+            />
+          ) : (
+            <CardMedia
+              sx={{
+                borderRadius: 1,
+                backgroundColor: "neutral.400",
+              }}
+              component="img"
+              image="https://picsum.photos/300/200"
+            />
+          )}
         </Box>
         <CardContent>
           <Typography mb="1rem" mt="0.5rem" color="neutral.500" gutterBottom variant="h6">
@@ -84,7 +84,7 @@ export const EventCard = (props) => {
                 <CalendarIcon />
               </SvgIcon>
               <Typography display="inline" variant="body2">
-                {dateFormatted(event.startDate, event.endDate)}
+                {dateFormatted(event.start_date, event.end_date)}
               </Typography>
             </Stack>
           </Stack>
