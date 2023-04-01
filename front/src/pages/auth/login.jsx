@@ -105,7 +105,7 @@ const Page = () => {
               </Button>
               <Alert color="primary" severity="info" sx={{ mt: 3 }}>
                 <div>
-                  You can use <b>demo@devias.io</b> and password <b>Password123!</b>
+                  Email: <b>oderdene07@gmail.com</b> password <b>password</b>
                 </div>
               </Alert>
             </form>

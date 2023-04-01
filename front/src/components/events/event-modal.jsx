@@ -27,8 +27,8 @@ export const EventModal = (props) => {
           title: selectedEvent.title,
           description: selectedEvent.description,
           location: selectedEvent.location,
-          startDate: new Date(selectedEvent.startDate),
-          endDate: new Date(selectedEvent.endDate),
+          startDate: new Date(selectedEvent.start_date),
+          endDate: new Date(selectedEvent.end_date),
           image: selectedEvent.image,
         }
       : {
