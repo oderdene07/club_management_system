@@ -2,6 +2,7 @@ package news
 
 import (
 	"cms/app"
+	"cms/member"
 	"net/http"
 	"strconv"
 
@@ -32,6 +33,13 @@ func GetNewsByID(c *gin.Context) {
 		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
 		return
 	}
+	creator, err := member.ServiceGetMemberByID(news.MemberID)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	news.Creator = creator.FirstName + " " + creator.LastName
 	app.Responce(c, http.StatusOK, "Success", news)
 }
 

@@ -19,8 +19,7 @@ const handlers = {
 
     return {
       ...state,
-      ...// if payload (user) is provided, then is authenticated
-      (user
+      ...(user
         ? {
             isAuthenticated: true,
             isLoading: false,
@@ -52,17 +51,13 @@ const handlers = {
 const reducer = (state, action) =>
   handlers[action.type] ? handlers[action.type](state, action) : state;
 
-// The role of this context is to propagate authentication state through the App tree.
-
 export const AuthContext = createContext({ undefined });
 
-export const AuthProvider = (props) => {
-  const { children } = props;
+export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
 
   const initialize = async () => {
-    // Prevent from calling twice in development mode with React.StrictMode enabled
     if (initialized.current) {
       return;
     }
@@ -90,7 +85,6 @@ export const AuthProvider = (props) => {
         profile_description: "I am a software engineer",
         profile_picture: "/assets/avatars/avatar-marcus-finn.png",
       };
-
       dispatch({
         type: HANDLERS.INITIALIZE,
         payload: user,
@@ -145,6 +139,11 @@ export const AuthProvider = (props) => {
   };
 
   const signOut = () => {
+    try {
+      window.sessionStorage.removeItem("authenticated");
+    } catch (err) {
+      console.error(err);
+    }
     dispatch({
       type: HANDLERS.SIGN_OUT,
     });

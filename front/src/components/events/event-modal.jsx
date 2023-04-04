@@ -88,14 +88,13 @@ export const EventModal = (props) => {
             xs: 2,
             sm: 3,
             md: 4,
-            lg: 5,
           },
           position: "absolute",
-          top: "40%",
+          top: "45%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          minWidth: 400,
-          maxWidth: 600,
+          minWidth: 350,
+          maxWidth: 500,
         }}
       >
         <Grid container spacing={3}>
@@ -250,7 +249,7 @@ export const EventModal = (props) => {
         <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
 
         {isAdmin && (
-          <CardActions sx={{ pt: 2, justifyContent: "flex-end" }}>
+          <CardActions sx={{ p: 0, pt: 2, justifyContent: "flex-end" }}>
             <Stack direction="row" spacing={2}>
               <Button
                 onClick={() => {

@@ -4,17 +4,7 @@ import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useAuth } from "@/contexts/auth-context";
-
-const news = {
-  id: "1",
-  title:
-    "Өндөр барилга дээр гэмтсэн хүнд нисдэг тэргээр эмнэлгийн тусламж үзүүлэх сургуулилалт боллоо",
-  content:
-    "Тэрбээр 'Өндөр барилга дээр ажиллаж буй краннистын биеийн байдал муудсан үед хэрхэн тусламж үзүүлэх талаар сургуулилалт хийж байна. Энэ тохиолдолд иргэнийг өндрөөс буулгах боломжгүй учир аврах ангийнхан эмнэлгийн тусламжийг нисдэг тэргээр ирж үзүүлэх юм. Энэ бол бодит биш. Дадлага сургуулилалт' хэмээн ярилаа. ",
-  image: "/assets/products/product-1.png",
-  createdAt: "2021-09-24 10:00:00",
-  creator: "H.ЭРХБАЯР",
-};
+import { useApi } from "@/hooks/use-api";
 
 const dateFormat = (date) => {
   const d = new Date(date);
@@ -25,6 +15,8 @@ const Page = () => {
   const router = useRouter();
   const { id } = router.query;
   const isAdmin = useAuth().user?.role === "admin";
+
+  const { data: news, error, loading } = useApi(`/news/${id}`);
 
   return (
     <>
@@ -80,7 +72,7 @@ const Page = () => {
           <Stack mt={2} spacing={2}>
             <Typography variant="h5">{news.title}</Typography>
             <Typography variant="subtitle2">
-              {dateFormat(news.createdAt)} | {news.creator}
+              {dateFormat(news.created_at)} | {news.creator}
             </Typography>
             <CardMedia
               component="img"

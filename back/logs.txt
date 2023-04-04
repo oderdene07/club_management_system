@@ -5,3 +5,6 @@ INFO: 2023/03/29 13:44:59 main.go:12: connected to database
 INFO: 2023/03/29 14:57:12 main.go:12: connected to database
 INFO: 2023/03/29 15:06:30 main.go:12: connected to database
 INFO: 2023/03/29 15:07:44 main.go:12: connected to database
+INFO: 2023/04/04 13:42:28 main.go:12: connected to database
+ERROR: 2023/04/04 13:43:26 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 13:43:26 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
