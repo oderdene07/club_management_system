@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardActions,
+  CardHeader,
   CardMedia,
   Divider,
   Grid,
@@ -11,14 +12,14 @@ import {
   Stack,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { useCallback, useState } from "react";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
 import { useAuth } from "@/contexts/auth-context";
+import { useApiDelete, useApiPost } from "@/hooks/use-api";
 
-export const EventModal = (props) => {
-  const { selectedEvent, isModalVisible, handleCloseModal } = props;
-
+export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal }) => {
   const isAdmin = useAuth().user?.role === "admin";
 
   const [values, setValues] = useState(
@@ -27,19 +28,21 @@ export const EventModal = (props) => {
           title: selectedEvent.title,
           description: selectedEvent.description,
           location: selectedEvent.location,
-          startDate: new Date(selectedEvent.start_date),
-          endDate: new Date(selectedEvent.end_date),
+          start_date: new Date(selectedEvent.start_date),
+          end_date: new Date(selectedEvent.end_date),
           image: selectedEvent.image,
         }
       : {
           title: "",
           description: "",
           location: "",
-          startDate: new Date(),
-          endDate: new Date(),
+          start_date: new Date(),
+          end_date: new Date(),
           image: "",
         }
   );
+
+  const [error, setError] = useState("");
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -63,16 +66,32 @@ export const EventModal = (props) => {
     [setValues]
   );
 
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-      // add event to events list
+  const { requestPost } = useApiPost();
+  const { requestDelete } = useApiDelete();
 
-      console.log("submit", values);
-      handleCloseModal();
-    },
-    [values, handleCloseModal]
-  );
+  const handleSubmit = async () => {
+    if (values.title === "") {
+      setError("Title is required");
+      return;
+    }
+    try {
+      await requestPost("/event", values);
+      console.log("Form submitted successfully!");
+    } catch (err) {
+      console.error("Error submitting form: ", err);
+    }
+    handleCloseModal();
+  };
+
+  const handleDelete = async () => {
+    try {
+      await requestDelete("/event/" + selectedEvent.id);
+      console.log("Event deleted successfully!");
+    } catch (err) {
+      console.error("Error deleting event: ", err);
+    }
+    handleCloseModal();
+  };
 
   return (
     <Modal
@@ -97,6 +116,22 @@ export const EventModal = (props) => {
           maxWidth: 500,
         }}
       >
+        {isAdmin && (
+          <CardHeader
+            title={selectedEvent ? "Edit Event" : "Create Event"}
+            action={
+              selectedEvent && (
+                <Button onClick={handleDelete} color="error">
+                  Delete
+                </Button>
+              )
+            }
+            sx={{
+              padding: 0,
+              paddingBottom: 2,
+            }}
+          />
+        )}
         <Grid container spacing={3}>
           <Grid item xs={12}>
             {values.image ? (
@@ -144,6 +179,8 @@ export const EventModal = (props) => {
 
           <Grid item xs={12}>
             <TextField
+              error={error === "Title is required"}
+              required
               fullWidth
               label="Title"
               name="title"
@@ -154,6 +191,7 @@ export const EventModal = (props) => {
                 readOnly: !isAdmin,
               }}
             />
+            {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -234,12 +272,12 @@ export const EventModal = (props) => {
                   }),
                 }}
                 readOnly={!isAdmin}
-                value={[values.startDate, values.endDate]}
+                value={[values.start_date, values.end_date]}
                 onChange={(newValue) => {
                   setValues((prevState) => ({
                     ...prevState,
-                    startDate: newValue[0],
-                    endDate: newValue[1],
+                    start_date: newValue[0],
+                    end_date: newValue[1],
                   }));
                 }}
               />
@@ -258,8 +296,8 @@ export const EventModal = (props) => {
                     title: "",
                     description: "",
                     location: "",
-                    startDate: new Date(),
-                    endDate: new Date(),
+                    start_date: new Date(),
+                    end_date: new Date(),
                     image: "",
                   });
                 }}

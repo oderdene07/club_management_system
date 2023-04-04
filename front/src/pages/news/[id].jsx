@@ -44,7 +44,6 @@ const Page = () => {
                   />
                 }
                 onClick={() => {
-                  console.log("Edit");
                   router.push(`/news/edit/${id}`);
                 }}
               >

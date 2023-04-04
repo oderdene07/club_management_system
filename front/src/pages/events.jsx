@@ -16,7 +16,7 @@ import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { EventCard } from "@/components/events/events-card";
 import { EventsSearch } from "@/components/events/events-search";
 import { TabContext } from "@mui/lab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usePagination from "@/components/pagination";
 import { EventModal } from "@/components/events/event-modal";
 import { useAuth } from "@/contexts/auth-context";
@@ -57,7 +57,7 @@ function TabPanel(props) {
 }
 
 const Page = () => {
-  const { data, error, loading } = useApi("/events");
+  const { data, error, loading, refresh } = useApi("/events");
   const isAdmin = useAuth().user?.role === "admin";
 
   const [tab, setTab] = useState(0);
@@ -80,6 +80,11 @@ const Page = () => {
 
   const handleSearch = (value) => {
     console.log(value);
+  };
+
+  const handleCloseModal = () => {
+    refresh();
+    setIsModalVisible(false);
   };
 
   return (
@@ -113,10 +118,7 @@ const Page = () => {
                   >
                     Add
                   </Button>
-                  <EventModal
-                    isModalVisible={isModalVisible}
-                    handleCloseModal={() => setIsModalVisible(false)}
-                  />
+                  <EventModal isModalVisible={isModalVisible} handleCloseModal={handleCloseModal} />
                 </>
               )}
               <EventsSearch

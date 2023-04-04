@@ -1,8 +1,10 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
 import { Box, Button, CardMedia, Stack, TextField, Tooltip } from "@mui/material";
+import { useEffect } from "react";
 
 export const NewsForm = (props) => {
   const { values, handleChange, handleImageChange } = props;
+
   return (
     <Stack spacing={2}>
       <TextField
@@ -10,7 +12,7 @@ export const NewsForm = (props) => {
         label="Title"
         name="title"
         fullWidth
-        value={values.title}
+        value={values.title || ""}
         onChange={handleChange}
       />
       <Box>
@@ -57,7 +59,7 @@ export const NewsForm = (props) => {
         fullWidth
         multiline
         rows={10}
-        value={values.content}
+        value={values.content || ""}
         onChange={handleChange}
       />
     </Stack>

@@ -12,29 +12,27 @@ import {
 } from "@mui/material";
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NewsForm } from "@/components/news/news-form";
-
-const news = {
-  id: "1",
-  title:
-    "Өндөр барилга дээр гэмтсэн хүнд нисдэг тэргээр эмнэлгийн тусламж үзүүлэх сургуулилалт боллоо",
-  content:
-    "Тэрбээр 'Өндөр барилга дээр ажиллаж буй краннистын биеийн байдал муудсан үед хэрхэн тусламж үзүүлэх талаар сургуулилалт хийж байна. Энэ тохиолдолд иргэнийг өндрөөс буулгах боломжгүй учир аврах ангийнхан эмнэлгийн тусламжийг нисдэг тэргээр ирж үзүүлэх юм. Энэ бол бодит биш. Дадлага сургуулилалт' хэмээн ярилаа. ",
-  image: "/assets/products/product-1.png",
-  createdAt: "2021-09-24 10:00:00",
-  creator: "H.ЭРХБАЯР",
-};
+import { useApi } from "@/hooks/use-api";
 
 const Page = () => {
   const router = useRouter();
+  const { id } = router.query;
+  const [values, setValues] = useState();
 
-  const [values, setValues] = useState({
-    title: news.title,
-    content: news.content,
-    image: news.image,
-    creator: news.creator,
-  });
+  const { data: news, error, loading } = useApi(`/news/${id}`);
+
+  useEffect(() => {
+    if (news) {
+      setValues({
+        title: news.title,
+        content: news.content,
+        image: news.image,
+        creator: news.creator,
+      });
+    }
+  }, [news]);
 
   const handleSubmit = useCallback(
     (event) => {
@@ -89,7 +87,7 @@ const Page = () => {
               <CardHeader title="Edit News" />
               <CardContent>
                 <NewsForm
-                  values={values}
+                  values={news}
                   handleChange={handleChange}
                   handleImageChange={handleImageChange}
                 />
