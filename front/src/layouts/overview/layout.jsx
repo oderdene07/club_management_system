@@ -3,6 +3,8 @@ import { usePathname } from "next/navigation";
 import { styled } from "@mui/material/styles";
 import { SideNav } from "./side-nav";
 import { TopNav } from "./top-nav";
+import { useAuth } from "@/contexts/auth-context";
+import { useRouter } from "next/router";
 
 const SIDE_NAV_WIDTH = 280;
 
@@ -27,6 +29,9 @@ export const Layout = (props) => {
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
 
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
+
   const handlePathnameChange = useCallback(() => {
     if (openNav) {
       setOpenNav(false);
@@ -35,6 +40,9 @@ export const Layout = (props) => {
 
   useEffect(
     () => {
+      if (!isAuthenticated) {
+        router.replace("/auth/login");
+      }
       handlePathnameChange();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,12 +50,14 @@ export const Layout = (props) => {
   );
 
   return (
-    <>
-      <TopNav onNavOpen={() => setOpenNav(true)} />
-      <SideNav onClose={() => setOpenNav(false)} open={openNav} />
-      <LayoutRoot>
-        <LayoutContainer>{children}</LayoutContainer>
-      </LayoutRoot>
-    </>
+    isAuthenticated && (
+      <>
+        <TopNav onNavOpen={() => setOpenNav(true)} />
+        <SideNav onClose={() => setOpenNav(false)} open={openNav} />
+        <LayoutRoot>
+          <LayoutContainer>{children}</LayoutContainer>
+        </LayoutRoot>
+      </>
+    )
   );
 };
