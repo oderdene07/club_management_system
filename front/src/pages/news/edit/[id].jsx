@@ -14,25 +14,22 @@ import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { NewsForm } from "@/components/news/news-form";
-import { useApi } from "@/hooks/use-api";
+import { apiClient } from "@/api/apiClient";
 
 const Page = () => {
   const router = useRouter();
-  const { id } = router.query;
   const [values, setValues] = useState();
+  const newsID = router.query.id;
 
-  const { data: news, error, loading } = useApi(`/news/${id}`);
+  const getNews = async (id) => {
+    await apiClient.get(`/news/${id}`).then((res) => {
+      setValues(res.data);
+    });
+  };
 
   useEffect(() => {
-    if (news) {
-      setValues({
-        title: news.title,
-        content: news.content,
-        image: news.image,
-        creator: news.creator,
-      });
-    }
-  }, [news]);
+    if (newsID) getNews(newsID);
+  }, [newsID]);
 
   const handleSubmit = useCallback(
     (event) => {
@@ -87,7 +84,7 @@ const Page = () => {
               <CardHeader title="Edit News" />
               <CardContent>
                 <NewsForm
-                  values={news}
+                  values={values}
                   handleChange={handleChange}
                   handleImageChange={handleImageChange}
                 />

@@ -13,19 +13,29 @@ import {
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { NewsCard } from "@/components/news/news-card";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usePagination from "@/components/pagination";
 import { useAuth } from "@/contexts/auth-context";
-import { useApi } from "@/hooks/use-api";
+import { apiClient } from "@/api/apiClient";
 
 const rowsPerPage = 8;
 
 const Page = () => {
   const router = useRouter();
-  const { data, error, loading } = useApi("/news");
-
-  const [page, setPage] = useState(1);
   const isAdmin = useAuth().user?.role === "admin";
+
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const getNews = async () => {
+    await apiClient.get("/news").then((res) => {
+      setData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getNews();
+  }, []);
 
   const count = Math.ceil(data.length / rowsPerPage);
   const news = usePagination(data, rowsPerPage);

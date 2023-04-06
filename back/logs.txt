@@ -23,3 +23,78 @@ ERROR: 2023/04/04 15:40:18 handler.go:26: strconv.ParseInt: parsing "undefined":
 ERROR: 2023/04/04 15:40:18 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
 ERROR: 2023/04/04 15:42:17 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
 ERROR: 2023/04/04 15:42:17 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+INFO: 2023/04/04 22:01:20 main.go:12: connected to database
+ERROR: 2023/04/04 22:13:34 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:13:34 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:13:38 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:13:38 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:14:10 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:14:10 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:14:26 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:14:36 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 22:14:36 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 22:14:40 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:14:41 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:16:00 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:16:15 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:16:16 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:16:21 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:16:46 middleware.go:16: token is empty
+ERROR: 2023/04/04 22:47:26 handler.go:48: pq: value too long for type character varying(200)
+ERROR: 2023/04/04 23:03:47 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:03:47 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:04:51 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:04:51 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:16 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:16 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:31 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:31 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:35 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:35 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:54 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:06:54 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:08:50 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:08:50 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:09:00 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+ERROR: 2023/04/04 23:09:00 handler.go:26: strconv.ParseInt: parsing "undefined": invalid syntax
+INFO: 2023/04/04 23:24:51 main.go:12: connected to database
+INFO: 2023/04/04 23:27:16 main.go:12: connected to database
+INFO: 2023/04/04 23:28:05 main.go:12: connected to database
+INFO: 2023/04/06 12:56:43 main.go:12: connected to database
+INFO: 2023/04/06 12:56:50 main.go:12: connected to database
+INFO: 2023/04/06 13:03:24 main.go:12: connected to database
+ERROR: 2023/04/06 13:25:31 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:31 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:42 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:42 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:42 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:42 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:42 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:25:42 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:26:50 handler.go:136: Duplicate email address
+ERROR: 2023/04/06 13:27:15 handler.go:203: Wait for admin approval
+ERROR: 2023/04/06 13:27:37 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:27:55 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:28:40 middleware.go:51: no such member found
+INFO: 2023/04/06 13:28:45 main.go:12: connected to database
+ERROR: 2023/04/06 13:28:47 middleware.go:51: no such member found
+ERROR: 2023/04/06 13:29:06 handler.go:204: Wait for admin approval
+ERROR: 2023/04/06 13:30:26 middleware.go:51: no such member found
+INFO: 2023/04/06 14:41:12 main.go:12: connected to database
+INFO: 2023/04/06 14:54:09 main.go:12: connected to database
+INFO: 2023/04/06 14:54:15 handler.go:275: member
+INFO: 2023/04/06 15:03:43 handler.go:275: request
+ERROR: 2023/04/06 15:03:43 handler.go:278: Invalid role
+INFO: 2023/04/06 15:13:42 handler.go:275: admin
+INFO: 2023/04/06 15:16:00 handler.go:275: member
+ERROR: 2023/04/06 15:16:05 middleware.go:67: not admin
+ERROR: 2023/04/06 15:16:13 middleware.go:67: not admin
+ERROR: 2023/04/06 15:16:18 middleware.go:67: not admin
+ERROR: 2023/04/06 15:16:25 middleware.go:67: not admin
+ERROR: 2023/04/06 15:16:29 middleware.go:67: not admin
+ERROR: 2023/04/06 15:17:20 middleware.go:67: not admin
+ERROR: 2023/04/06 15:17:46 middleware.go:67: not admin
+ERROR: 2023/04/06 15:17:58 middleware.go:67: not admin
+INFO: 2023/04/06 15:18:25 handler.go:275: member
+INFO: 2023/04/06 15:18:42 handler.go:275: admin
+INFO: 2023/04/06 15:18:44 handler.go:275: member

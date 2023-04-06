@@ -1,9 +1,10 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
 import { Box, Button, CardMedia, Stack, TextField, Tooltip } from "@mui/material";
-import { useEffect } from "react";
 
 export const NewsForm = (props) => {
   const { values, handleChange, handleImageChange } = props;
+
+  console.log("values", values);
 
   return (
     <Stack spacing={2}>
@@ -12,11 +13,11 @@ export const NewsForm = (props) => {
         label="Title"
         name="title"
         fullWidth
-        value={values.title || ""}
+        value={values ? values.title : ""}
         onChange={handleChange}
       />
       <Box>
-        {values.image ? (
+        {values && values.image ? (
           <Stack alignItems="flex-start">
             <Tooltip title="Click to change image">
               <Button
@@ -59,7 +60,7 @@ export const NewsForm = (props) => {
         fullWidth
         multiline
         rows={10}
-        value={values.content || ""}
+        value={values ? values.content : ""}
         onChange={handleChange}
       />
     </Stack>

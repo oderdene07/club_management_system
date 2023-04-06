@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
 
-export const OverviewTotalMembers = (props) => {
-  const { value } = props;
-
+export const OverviewTotalMembers = ({ value }) => {
   return (
     <Card>
       <CardContent>

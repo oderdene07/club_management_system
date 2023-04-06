@@ -3,10 +3,24 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { MembersTable } from "@/components/member/members-table";
 import { MembersSearch } from "@/components/member/members-search";
-import { useApi } from "@/hooks/use-api";
+import { useEffect, useState } from "react";
+import { apiClient } from "@/api/apiClient";
 
 const Page = () => {
-  const { data, error, loading } = useApi("/members");
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getMembers = async () => {
+    setLoading(true);
+    await apiClient.get("/members").then((res) => {
+      setData(res.data);
+    });
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getMembers();
+  }, []);
 
   const handleSearch = (value) => {
     console.log(value);
@@ -34,7 +48,7 @@ const Page = () => {
                 <MembersSearch onChange={(value) => handleSearch(value)} />
               </Stack>
             </Stack>
-            <MembersTable members={data} loading={loading} />
+            <MembersTable members={data} loading={loading} refresh={getMembers} />
           </Stack>
         </Container>
       </Box>

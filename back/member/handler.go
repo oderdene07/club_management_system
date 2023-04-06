@@ -19,6 +19,16 @@ func GetMembers(c *gin.Context) {
 	app.Responce(c, http.StatusOK, "Success", members)
 }
 
+func GetMembersCount(c *gin.Context) {
+	count, err := getMembersCount()
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	app.Responce(c, http.StatusOK, "Success", count)
+}
+
 func GetMemberByID(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.ParseInt(id, 10, 64)
@@ -250,16 +260,25 @@ func ResendVerificationCode(c *gin.Context) {
 	app.Responce(c, http.StatusOK, "Success", nil)
 }
 
-func ApproveMember(c *gin.Context) {
+func UpdateMemberRole(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.ParseInt(id, 10, 64)
+
 	if err != nil {
 		app.ErrorLogger.Println(err)
 		app.Responce(c, http.StatusBadRequest, err.Error(), nil)
 		return
 	}
 
-	err = updateMemberRole(idInt, "member")
+	role := c.Param("role")
+
+	if role != "admin" && role != "member" {
+		app.ErrorLogger.Println("Invalid role")
+		app.Responce(c, http.StatusBadRequest, "Invalid role", nil)
+		return
+	}
+
+	err = updateMemberRole(idInt, role)
 	if err != nil {
 		app.ErrorLogger.Println(err)
 		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)

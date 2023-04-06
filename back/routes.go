@@ -35,15 +35,17 @@ func routes() {
 	// r.POST("/reset", member.ResetPassword)
 	r.GET("/verify/:code", member.VerifyEmail)
 	r.POST("/resend", member.ResendVerificationCode)
-	r.POST("/approve/:id", member.ValidateToken(), member.ValidateAdmin(), member.ApproveMember)
 
 	// member
 	r.GET("/members", member.ValidateToken(), member.GetMembers)
+	r.GET("/members/count", member.ValidateToken(), member.GetMembersCount)
 	r.GET("/member/:id", member.ValidateToken(), member.GetMemberByID)
 	r.PUT("/member/:id", member.ValidateToken(), member.UpdateMember)
+	r.PUT("/member/:id/:role", member.ValidateToken(), member.ValidateAdmin(), member.UpdateMemberRole)
 	r.DELETE("/member/:id", member.ValidateToken(), member.ValidateAdmin(), member.DeleteMember)
 	// event
 	r.GET("/events", member.ValidateToken(), event.GetEvents)
+	r.GET("/events/count", member.ValidateToken(), event.GetUpcomingEventsCount)
 	r.GET("/event/:id", member.ValidateToken(), event.GetEventByID)
 	r.POST("/event", member.ValidateToken(), member.ValidateAdmin(), event.CreateEvent)
 	r.PUT("/event/:id", member.ValidateToken(), member.ValidateAdmin(), event.UpdateEvent)

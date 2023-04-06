@@ -18,6 +18,16 @@ func GetEvents(c *gin.Context) {
 	app.Responce(c, http.StatusOK, "Success", events)
 }
 
+func GetUpcomingEventsCount(c *gin.Context) {
+	count, err := getUpcomingEventsCount()
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+	app.Responce(c, http.StatusOK, "Success", count)
+}
+
 func GetEventByID(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.ParseInt(id, 10, 64)

@@ -17,9 +17,9 @@ import {
 import { useCallback, useState } from "react";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
 import { useAuth } from "@/contexts/auth-context";
-import { useApiDelete, useApiPost } from "@/hooks/use-api";
+import { apiClient } from "@/api/apiClient";
 
-export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal }) => {
+export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, refresh }) => {
   const isAdmin = useAuth().user?.role === "admin";
 
   const [values, setValues] = useState(
@@ -41,7 +41,6 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal }) 
           image: "",
         }
   );
-
   const [error, setError] = useState("");
 
   const handleImageChange = (event) => {
@@ -66,30 +65,40 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal }) 
     [setValues]
   );
 
-  const { requestPost } = useApiPost();
-  const { requestDelete } = useApiDelete();
+  const addEvent = async (event) => {
+    try {
+      await apiClient.post("/event", event).then((res) => {
+        console.log(res);
+        refresh();
+      });
+    } catch (err) {
+      console.error("Error submitting form: ", err);
+    }
+  };
+
+  const removeEvent = async (id) => {
+    try {
+      await apiClient.delete("/event/" + id).then((res) => {
+        console.log(res);
+        refresh();
+      });
+    } catch (err) {
+      console.error("Error deleting event: ", err);
+    }
+  };
 
   const handleSubmit = async () => {
     if (values.title === "") {
       setError("Title is required");
       return;
     }
-    try {
-      await requestPost("/event", values);
-      console.log("Form submitted successfully!");
-    } catch (err) {
-      console.error("Error submitting form: ", err);
-    }
+    addEvent(values);
     handleCloseModal();
   };
 
   const handleDelete = async () => {
-    try {
-      await requestDelete("/event/" + selectedEvent.id);
-      console.log("Event deleted successfully!");
-    } catch (err) {
-      console.error("Error deleting event: ", err);
-    }
+    if (selectedEvent === null) return;
+    removeEvent(selectedEvent.id);
     handleCloseModal();
   };
 

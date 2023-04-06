@@ -18,7 +18,7 @@ const dateFormatted = (startDate, endDate) => {
   })}`;
 };
 
-export const EventCard = ({ event }) => {
+export const EventCard = ({ event, refresh }) => {
   const [selectedEvent, setSelectedEvent] = useState(event);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -94,6 +94,7 @@ export const EventCard = ({ event }) => {
         selectedEvent={selectedEvent}
         isModalVisible={isModalVisible}
         handleCloseModal={() => setIsModalVisible(false)}
+        refresh={refresh}
       />
     </>
   );

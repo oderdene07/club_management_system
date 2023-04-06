@@ -7,7 +7,7 @@ const apiClient = axios.create({
     Accept: "application/json",
     "Content-Type": "application/json",
     Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJfaWQiOjEwfQ.deajtyjpaYKHASi4UFS-NtDy7kHVUdrNnAuQmZgoRb4",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJfaWQiOjI0fQ.ItOvQE96AIL5VQkwmB1DgX6GM2W0L_WiW9fFAOj5aqk",
   },
   timeout: 10000,
 });

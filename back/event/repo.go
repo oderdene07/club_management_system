@@ -23,6 +23,15 @@ func getEvents() ([]*Event, error) {
 	return events, nil
 }
 
+func getUpcomingEventsCount() (int, error) {
+	var count int
+	err := app.DB.QueryRow("SELECT COUNT(*) FROM events WHERE start_date > NOW()").Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
 func getEventByID(id int64) (*Event, error) {
 	event := &Event{}
 	err := app.DB.QueryRow("SELECT * FROM events WHERE id = $1", id).Scan(&event.ID, &event.Title, &event.StartDate, &event.EndDate, &event.Location, &event.Description, &event.Image)

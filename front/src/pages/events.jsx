@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import usePagination from "@/components/pagination";
 import { EventModal } from "@/components/events/event-modal";
 import { useAuth } from "@/contexts/auth-context";
-import { useApi } from "@/hooks/use-api";
+import { apiClient } from "@/api/apiClient";
 
 const rowsPerPage = 8;
 
@@ -57,13 +57,22 @@ function TabPanel(props) {
 }
 
 const Page = () => {
-  const { data, error, loading, refresh } = useApi("/events");
   const isAdmin = useAuth().user?.role === "admin";
 
+  const [data, setData] = useState([]);
   const [tab, setTab] = useState(0);
   const [page, setPage] = useState(1);
-
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const getEvents = async () => {
+    await apiClient.get("/events").then((res) => {
+      setData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   const currentTabEvents = tabEvents(data, tab);
   const count = Math.ceil(currentTabEvents.length / rowsPerPage);
@@ -80,11 +89,6 @@ const Page = () => {
 
   const handleSearch = (value) => {
     console.log(value);
-  };
-
-  const handleCloseModal = () => {
-    refresh();
-    setIsModalVisible(false);
   };
 
   return (
@@ -118,7 +122,11 @@ const Page = () => {
                   >
                     Add
                   </Button>
-                  <EventModal isModalVisible={isModalVisible} handleCloseModal={handleCloseModal} />
+                  <EventModal
+                    isModalVisible={isModalVisible}
+                    handleCloseModal={() => setIsModalVisible(false)}
+                    refresh={getEvents}
+                  />
                 </>
               )}
               <EventsSearch
@@ -155,7 +163,7 @@ const Page = () => {
                 ) : (
                   events.currentData().map((event) => (
                     <Grid xs={12} sm={6} md={6} lg={4} xl={3} key={event.id}>
-                      <EventCard event={event} />
+                      <EventCard event={event} refresh={getEvents} />
                     </Grid>
                   ))
                 )}

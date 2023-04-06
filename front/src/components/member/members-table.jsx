@@ -1,15 +1,33 @@
 import PropTypes from "prop-types";
-import { Avatar, Card, Box } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  NativeSelect,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { getInitials } from "@/utils/get-initials";
 import { ShieldCheckIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useCallback, useMemo, useState } from "react";
 import { MemberModal } from "./members-modal";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { useAuth } from "@/contexts/auth-context";
+import { apiClient } from "@/api/apiClient";
 
 const rowsPerPage = 12;
 
-export const MembersTable = ({ members, loading }) => {
+const formatDate = (date) => {
+  const d = new Date(date);
+  return `${d.toLocaleString("en-US", { month: "short" })} ${d.toLocaleString("en-US", {
+    day: "2-digit",
+  })}, ${d.getFullYear()}`;
+};
+
+export const MembersTable = ({ members, loading, refresh }) => {
   const isAdmin = useAuth().user?.role === "admin";
 
   const [selectedMember, setSelectedMember] = useState(null);
@@ -20,44 +38,45 @@ export const MembersTable = ({ members, loading }) => {
     setIsModalVisible(true);
   };
 
-  const deleteUser = useCallback(
-    (id) => () => {
-      setTimeout(() => {});
-    },
-    []
-  );
-
-  const toggleAdmin = useCallback(
-    (id) => () => {
-      setTimeout(() => {});
-    },
-    []
-  );
-
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    const handleDelete = (id) => () => {
+      apiClient.delete(`/member/${id}`).then((res) => {
+        refresh();
+      });
+    };
+    const handleChangeRole = (event, memberID) => {
+      const role = event.target.value;
+      apiClient.put(`/member/${memberID}/${role}`).then((res) => {
+        refresh();
+      });
+    };
+    return [
+      {
+        field: "Avatar",
+        headerName: "Avatar",
+        flex: 1,
+        minWidth: 60,
+        renderCell: (params) => (
+          <Avatar
+            src={params.row.profile_picture}
+            sx={{ width: 36, height: 36, fontSize: 16, mr: 2 }}
+          >
+            {getInitials(`${params.row.first_name} ${params.row.last_name}`)}
+          </Avatar>
+        ),
+      },
       {
         field: "full_name",
         headerName: "Full name",
         flex: 1,
-        minWidth: 270,
-        renderCell: (params) => (
-          <>
-            <Avatar
-              src={params.row.profile_picture}
-              sx={{ width: 36, height: 36, fontSize: 16, mr: 2 }}
-            >
-              {getInitials(`${params.row.first_name} ${params.row.last_name}`)}
-            </Avatar>
-            {params.row.first_name} {params.row.last_name}
-          </>
-        ),
+        minWidth: 150,
+        valueGetter: (params) => `${params.row.first_name} ${params.row.last_name}`,
       },
       {
         field: "email",
         headerName: "Email",
         flex: 1,
-        minWidth: 270,
+        minWidth: 220,
       },
       {
         field: "phone_number",
@@ -69,66 +88,70 @@ export const MembersTable = ({ members, loading }) => {
         field: "occupation",
         headerName: "Occupation",
         flex: 1,
-        minWidth: 200,
+        minWidth: 150,
       },
       {
         field: "date_joined",
         headerName: "Date Joined",
         flex: 1,
         minWidth: 150,
-        valueGetter: (params) => new Date(params.row.date_joined).toDateString(),
+        valueGetter: (params) => formatDate(params.row.date_joined),
       },
       {
         field: "role",
         headerName: "Role",
+        cellClassName: "actions",
         flex: 1,
-        minWidth: 150,
+        minWidth: 120,
+        renderCell: ({ row }) => {
+          return isAdmin ? (
+            <FormControl fullWidth variant="standard" onClick={(e) => e.stopPropagation()}>
+              <InputLabel>Role</InputLabel>
+              <Select
+                label="Role"
+                value={row.role}
+                onChange={(e) => {
+                  e.preventDefault();
+                  handleChangeRole(e, row.id);
+                }}
+              >
+                <MenuItem value="admin">Admin</MenuItem>
+                <MenuItem value="member">Member</MenuItem>
+                <MenuItem value="request">Request</MenuItem>
+                <MenuItem value="unverified">Unverified</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            row.role
+          );
+        },
       },
       {
         field: "actions",
-        type: "actions",
-        width: 50,
-        getActions: (params) => [
-          <GridActionsCellItem
-            key={params.id}
-            icon={
-              <ShieldCheckIcon
-                style={{
-                  color: "#605BFF",
-                  width: "28px",
-                }}
-              />
-            }
-            label="Toggle Admin"
-            showInMenu
-            onClick={toggleAdmin(params.id)}
-            sx={{
-              color: "primary.main",
-            }}
-          />,
-          <GridActionsCellItem
-            key={params.id}
-            icon={
-              <TrashIcon
-                style={{
-                  color: "#F04438",
-                  width: "28px",
-                }}
-              />
-            }
-            label="Delete"
-            showInMenu
-            onClick={deleteUser(params.id)}
-            sx={{
-              mt: 1,
-              color: "error.main",
-            }}
-          />,
-        ],
+        // type: "actions",
+        cellClassName: "actions",
+        width: 60,
+        getActions: ({ id }) => {
+          return [
+            <GridActionsCellItem
+              key={id}
+              icon={
+                <TrashIcon
+                  style={{
+                    color: "#F04438",
+                    width: "24px",
+                  }}
+                />
+              }
+              label="Delete"
+              onClick={handleDelete(id)}
+              color="inherit"
+            />,
+          ];
+        },
       },
-    ],
-    [deleteUser, toggleAdmin]
-  );
+    ];
+  }, [isAdmin, refresh]);
 
   return (
     <Card>
