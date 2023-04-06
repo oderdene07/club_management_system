@@ -41,6 +41,7 @@ func routes() {
 	r.GET("/members/count", member.ValidateToken(), member.GetMembersCount)
 	r.GET("/member/:id", member.ValidateToken(), member.GetMemberByID)
 	r.PUT("/member/:id", member.ValidateToken(), member.UpdateMember)
+	r.POST("/member/:id/password", member.ValidateToken(), member.ChangeMemberPassword)
 	r.PUT("/member/:id/:role", member.ValidateToken(), member.ValidateAdmin(), member.UpdateMemberRole)
 	r.DELETE("/member/:id", member.ValidateToken(), member.ValidateAdmin(), member.DeleteMember)
 	// event

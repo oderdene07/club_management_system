@@ -64,8 +64,8 @@ func createMember(member *Member) (int64, error) {
 }
 
 func updateMember(id int64, member *Member) error {
-	query := "UPDATE members SET first_name = $1, last_name = $2, email = $3, phone_number = $4, occupation = $5, role = $6, date_joined = $7, profile_picture = $8, profile_description = $9 WHERE id = $10"
-	_, err := app.DB.Exec(query, member.FirstName, member.LastName, member.Email, member.PhoneNumber, member.Occupation, member.Role, member.DateJoined, member.ProfilePicture, member.ProfileDescription, id)
+	query := "UPDATE members SET first_name = $1, last_name = $2, email = $3, phone_number = $4, occupation = $5, profile_picture = $6, profile_description = $7 WHERE id = $8"
+	_, err := app.DB.Exec(query, member.FirstName, member.LastName, member.Email, member.PhoneNumber, member.Occupation, member.ProfilePicture, member.ProfileDescription, id)
 	if err != nil {
 		return err
 	}
@@ -98,6 +98,15 @@ func getMemberByEmail(email string) (*Member, error) {
 func updateMemberRole(id int64, memberRole string) error {
 	query := "UPDATE members SET role = $1 WHERE id = $2"
 	_, err := app.DB.Exec(query, memberRole, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func updateMemberPassword(id int64, password string) error {
+	query := "UPDATE members SET password = $1 WHERE id = $2"
+	_, err := app.DB.Exec(query, password, id)
 	if err != nil {
 		return err
 	}

@@ -31,14 +31,14 @@ const Page = () => {
     if (newsID) getNews(newsID);
   }, [newsID]);
 
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-      console.log("submit", values);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(values);
+    await apiClient.put(`/news/${newsID}`, values).then((res) => {
+      console.log(res);
       router.back();
-    },
-    [values, router]
-  );
+    });
+  };
 
   const handleChange = useCallback(
     (event) => {

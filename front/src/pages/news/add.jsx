@@ -14,25 +14,28 @@ import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { NewsForm } from "@/components/news/news-form";
+import { apiClient } from "@/api/apiClient";
+import { useAuth } from "@/contexts/auth-context";
 
 const Page = () => {
   const router = useRouter();
+  const { user } = useAuth();
 
   const [values, setValues] = useState({
     title: "",
     content: "",
     image: "",
-    creator: "",
+    member_id: user?.id,
   });
 
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-      console.log("submit", values);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(values);
+    await apiClient.post("/news", values).then((res) => {
+      console.log(res);
       router.push("/news");
-    },
-    [values, router]
-  );
+    });
+  };
 
   const handleChange = useCallback(
     (event) => {

@@ -9,26 +9,40 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { apiClient } from "@/api/apiClient";
 
-export const AccountPassword = () => {
+export const AccountPassword = ({ member }) => {
+  const [error, setError] = useState(false);
   const [values, setValues] = useState({
     password: "",
     confirm: "",
   });
 
+  const changePasswordData = {
+    email: member.email,
+    password: values.password,
+  };
+
   const handleChange = useCallback((event) => {
+    setError(false);
     setValues((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
   }, []);
 
-  const handleSubmit = useCallback((event) => {
-    event.preventDefault();
-  }, []);
+  const handleSubmit = async () => {
+    if (values.password !== values.confirm) {
+      setError(true);
+      return;
+    }
+    await apiClient.post(`/member/password`, changePasswordData).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
+    <form autoComplete="off">
       <Card>
         <CardHeader subheader="Update password" title="Password" />
         <Divider />
@@ -50,13 +64,16 @@ export const AccountPassword = () => {
               name="confirm"
               onChange={handleChange}
               type="password"
+              error={error}
               value={values.confirm}
             />
           </Stack>
         </CardContent>
         <Divider />
         <CardActions sx={{ padding: 3, paddingTop: 1, justifyContent: "flex-end" }}>
-          <Button variant="contained">Update</Button>
+          <Button onClick={handleSubmit} variant="contained">
+            Update
+          </Button>
         </CardActions>
       </Card>
     </form>

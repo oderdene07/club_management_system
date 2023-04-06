@@ -49,13 +49,15 @@ export const NewsCard = (props) => {
             height: 200,
           }}
         >
-          <CardMedia
-            sx={{
-              borderRadius: 1,
-            }}
-            component="img"
-            image={newsItem.image}
-          />
+          {newsItem.image && (
+            <CardMedia
+              sx={{
+                borderRadius: 1,
+              }}
+              component="img"
+              image={newsItem.image}
+            />
+          )}
         </Box>
         <CardContent sx={{ p: "0.8rem 0.8rem 0.8rem 0" }}>
           <Stack direction="row">

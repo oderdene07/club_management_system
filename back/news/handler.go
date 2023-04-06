@@ -45,6 +45,7 @@ func GetNewsByID(c *gin.Context) {
 
 func CreateNews(c *gin.Context) {
 	var news News
+
 	err := c.BindJSON(&news)
 	if err != nil {
 		app.ErrorLogger.Println(err)

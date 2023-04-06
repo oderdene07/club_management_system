@@ -287,3 +287,48 @@ func UpdateMemberRole(c *gin.Context) {
 
 	app.Responce(c, http.StatusOK, "Success", nil)
 }
+
+func ChangeMemberPassword(c *gin.Context) {
+	var signInData SignInData
+	err := c.BindJSON(&signInData)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusBadRequest, err.Error(), nil)
+		return
+	}
+
+	member, err := getMemberByEmail(signInData.Email)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
+	if member == nil {
+		app.ErrorLogger.Println("Invalid email address")
+		app.Responce(c, http.StatusBadRequest, "Invalid email address", nil)
+		return
+	}
+
+	if verifyPassword(signInData.Password, member.Password) {
+		app.ErrorLogger.Println("Cannot use same password")
+		app.Responce(c, http.StatusBadRequest, "Cannot use same password", nil)
+		return
+	}
+
+	hashedPassword, err := hashPassword(signInData.Password)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
+	err = updateMemberPassword(member.ID, hashedPassword)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
+	app.Responce(c, http.StatusOK, "Success", nil)
+}

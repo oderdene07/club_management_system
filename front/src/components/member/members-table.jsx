@@ -1,18 +1,8 @@
 import PropTypes from "prop-types";
-import {
-  Avatar,
-  Card,
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  NativeSelect,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Avatar, Card, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { getInitials } from "@/utils/get-initials";
-import { ShieldCheckIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useCallback, useMemo, useState } from "react";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import { useMemo, useState } from "react";
 import { MemberModal } from "./members-modal";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { useAuth } from "@/contexts/auth-context";

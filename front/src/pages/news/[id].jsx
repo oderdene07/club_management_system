@@ -33,6 +33,14 @@ const Page = () => {
     if (newsID) router.push(`/news/edit/${newsID}`);
   };
 
+  const handleDelete = async () => {
+    if (newsID) {
+      await apiClient.delete(`/news/${newsID}`).then((res) => {
+        if (res.status === 200) router.push("/news");
+      });
+    }
+  };
+
   return (
     <>
       <Head>
@@ -72,10 +80,7 @@ const Page = () => {
                     }}
                   />
                 }
-                onClick={() => {
-                  console.log("Delete");
-                  router.push("/news");
-                }}
+                onClick={handleDelete}
               >
                 Delete
               </Button>

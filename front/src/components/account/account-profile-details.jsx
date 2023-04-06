@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import {
   Box,
   Button,
@@ -10,32 +10,16 @@ import {
   TextField,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import { useAuth } from "@/contexts/auth-context";
 
-export const AccountProfileDetails = () => {
-  const { user } = useAuth();
-  const [values, setValues] = useState({
-    firstName: user.first_name,
-    lastName: user.last_name,
-    email: user.email,
-    phone_number: user.phone_number,
-    occupation: user.occupation,
-    profile_description: user.profile_description,
-  });
-
-  const handleChange = useCallback((event) => {
-    setValues((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  }, []);
-
-  const handleSubmit = useCallback(
+export const AccountProfileDetails = ({ member, setMember, handleSubmit }) => {
+  const handleChange = useCallback(
     (event) => {
-      event.preventDefault();
-      console.log("submit", values);
+      setMember((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value,
+      }));
     },
-    [values]
+    [setMember]
   );
 
   return (
@@ -52,7 +36,7 @@ export const AccountProfileDetails = () => {
                   name="firstName"
                   onChange={handleChange}
                   required
-                  value={values.firstName}
+                  value={member.first_name}
                 />
               </Grid>
               <Grid xs={12} md={6}>
@@ -62,7 +46,7 @@ export const AccountProfileDetails = () => {
                   name="lastName"
                   onChange={handleChange}
                   required
-                  value={values.lastName}
+                  value={member.last_name}
                 />
               </Grid>
               <Grid xs={12} md={8}>
@@ -72,7 +56,7 @@ export const AccountProfileDetails = () => {
                   name="email"
                   onChange={handleChange}
                   required
-                  value={values.email}
+                  value={member.email}
                 />
               </Grid>
               <Grid xs={12} md={6}>
@@ -82,7 +66,7 @@ export const AccountProfileDetails = () => {
                   name="phone_number"
                   onChange={handleChange}
                   type="number"
-                  value={values.phone_number}
+                  value={member.phone_number}
                 />
               </Grid>
               <Grid xs={12} md={6}>
@@ -91,7 +75,7 @@ export const AccountProfileDetails = () => {
                   label="Occupation"
                   name="occupation"
                   onChange={handleChange}
-                  value={values.occupation}
+                  value={member.occupation}
                 />
               </Grid>
               <Grid xs={12} md={8}>
@@ -102,7 +86,7 @@ export const AccountProfileDetails = () => {
                   label="Description"
                   name="profile_description"
                   onChange={handleChange}
-                  value={values.profile_description}
+                  value={member.profile_description}
                 />
               </Grid>
             </Grid>

@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 
     if (isAuthenticated) {
       const user = {
-        id: "1",
+        id: 24,
         avatar: "/assets/avatars/avatar-anika-visser.png",
         first_name: "Od-Erdene",
         last_name: "Natsagdorj",
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const user = {
-      id: "1",
+      id: 24,
       avatar: "/assets/avatars/avatar-anika-visser.png",
       first_name: "Od-Erdene",
       last_name: "Natsagdorj",
