@@ -115,3 +115,10 @@ INFO: 2023/04/06 16:47:51 main.go:12: connected to database
 INFO: 2023/04/06 16:49:17 main.go:12: connected to database
 ERROR: 2023/04/06 16:49:20 handler.go:314: Cannot use same password
 ERROR: 2023/04/06 16:57:49 handler.go:314: Cannot use same password
+ERROR: 2023/04/06 17:04:13 handler.go:276: Invalid role
+INFO: 2023/04/06 17:04:43 main.go:12: connected to database
+ERROR: 2023/04/06 18:02:02 upload.go:15: request Content-Type isn't multipart/form-data
+ERROR: 2023/04/06 18:02:52 upload.go:15: request Content-Type isn't multipart/form-data
+ERROR: 2023/04/06 18:03:13 upload.go:15: request Content-Type isn't multipart/form-data
+ERROR: 2023/04/06 18:03:54 upload.go:15: request Content-Type isn't multipart/form-data
+ERROR: 2023/04/06 18:06:19 upload.go:15: request Content-Type isn't multipart/form-data

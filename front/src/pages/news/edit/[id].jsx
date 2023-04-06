@@ -50,6 +50,16 @@ const Page = () => {
     [setValues]
   );
 
+  const handleChangeEditor = useCallback(
+    (event) => {
+      setValues((prevState) => ({
+        ...prevState,
+        content: event,
+      }));
+    },
+    [setValues]
+  );
+
   const handleImageChange = useCallback(
     (event) => {
       const file = event.target.files[0];
@@ -87,6 +97,7 @@ const Page = () => {
                   values={values}
                   handleChange={handleChange}
                   handleImageChange={handleImageChange}
+                  handleChangeEditor={handleChangeEditor}
                 />
               </CardContent>
               <Divider sx={{ borderColor: "primary.light" }} />

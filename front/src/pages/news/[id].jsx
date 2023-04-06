@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/contexts/auth-context";
 import { useEffect, useState } from "react";
 import { apiClient } from "@/api/apiClient";
+import Script from "next/script";
 
 const dateFormat = (date) => {
   const d = new Date(date);
@@ -91,17 +92,22 @@ const Page = () => {
             <Typography variant="subtitle2">
               {dateFormat(data.created_at)} | {data.creator}
             </Typography>
-            <CardMedia
-              component="img"
-              image={data.image}
-              alt="Event Image"
-              sx={{
-                borderRadius: 2,
+            {data.image && (
+              <CardMedia
+                component="img"
+                image={data.image}
+                alt="Event Image"
+                sx={{
+                  borderRadius: 2,
+                }}
+              />
+            )}
+            <div
+              className="ck-content"
+              dangerouslySetInnerHTML={{
+                __html: data.content,
               }}
-            />
-            <Typography textAlign="justify" variant="text">
-              {data.content}
-            </Typography>
+            ></div>
           </Stack>
         </Container>
       </Box>

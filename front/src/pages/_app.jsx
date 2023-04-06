@@ -9,6 +9,8 @@ import { useNProgress } from "@/hooks/use-nprogress";
 import { createTheme } from "@/theme";
 import { createEmotionCache } from "@/utils/create-emotion-cache";
 
+import "@/styles/editor-content-styles.css";
+
 const clientSideEmotionCache = createEmotionCache();
 
 const SplashScreen = () => {

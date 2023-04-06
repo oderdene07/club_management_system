@@ -272,7 +272,7 @@ func UpdateMemberRole(c *gin.Context) {
 
 	role := c.Param("role")
 
-	if role != "admin" && role != "member" {
+	if role != "admin" && role != "member" && role != "request" && role != "unverified" {
 		app.ErrorLogger.Println("Invalid role")
 		app.Responce(c, http.StatusBadRequest, "Invalid role", nil)
 		return

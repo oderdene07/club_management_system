@@ -1,10 +1,14 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
 import { Box, Button, CardMedia, Stack, TextField, Tooltip } from "@mui/material";
+import Editor from "./news-editor";
+import { useEffect, useState } from "react";
 
-export const NewsForm = (props) => {
-  const { values, handleChange, handleImageChange } = props;
+export const NewsForm = ({ values, handleChange, handleImageChange, handleChangeEditor }) => {
+  const [editorLoaded, setEditorLoaded] = useState(false);
 
-  console.log("values", values);
+  useEffect(() => {
+    setEditorLoaded(true);
+  }, []);
 
   return (
     <Stack spacing={2}>
@@ -54,14 +58,11 @@ export const NewsForm = (props) => {
           </Button>
         )}
       </Box>
-      <TextField
-        label="Content"
-        name="content"
-        fullWidth
-        multiline
-        rows={10}
+      <Editor
+        name={"content"}
         value={values ? values.content : ""}
-        onChange={handleChange}
+        onChange={handleChangeEditor}
+        editorLoaded={editorLoaded}
       />
     </Stack>
   );
