@@ -1,3 +1,5 @@
+import { apiClient } from "@/api/apiClient";
+import { getInitials } from "@/utils/get-initials";
 import {
   Avatar,
   Box,
@@ -12,14 +14,20 @@ import {
 export const AccountProfile = ({ member, setMember }) => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setMember((prevState) => ({
-        ...prevState,
-        profile_picture: reader.result,
-      }));
-    };
-    if (file) reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("image", file);
+    apiClient
+      .post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setMember((prevState) => ({
+          ...prevState,
+          profile_picture: res.data,
+        }));
+      });
   };
 
   return (
@@ -33,13 +41,16 @@ export const AccountProfile = ({ member, setMember }) => {
           }}
         >
           <Avatar
-            src={member.profile_picture}
+            src={member.profile_picture && member.profile_picture}
             sx={{
               height: 80,
               mb: 2,
               width: 80,
+              fontSize: "1.5rem",
             }}
-          />
+          >
+            {getInitials(member.first_name + " " + member.last_name)}
+          </Avatar>
           <Typography gutterBottom variant="h6">
             {member.first_name} {member.last_name}
           </Typography>

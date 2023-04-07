@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
         phone_number: "99887766",
         occupation: "Software Engineer",
         profile_description: "I am a software engineer",
-        profile_picture: process.env.NEXT_PUBLIC_API_URL + "/images/odko.jpg",
+        profile_picture: "/images/odko.jpg",
       };
       dispatch({
         type: HANDLERS.INITIALIZE,
@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
       phone_number: "99887766",
       occupation: "Software Engineer",
       profile_description: "I am a software engineer",
-      profile_picture: process.env.NEXT_PUBLIC_API_URL + "/images/odko.jpg",
+      profile_picture: "/images/odko.jpg",
     };
 
     dispatch({

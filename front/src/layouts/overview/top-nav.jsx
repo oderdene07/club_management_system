@@ -86,7 +86,7 @@ export const TopNav = (props) => {
                   height: 50,
                   width: 50,
                 }}
-                src={user?.profile_picture}
+                src={process.env.NEXT_PUBLIC_API_URL + user?.profile_picture}
               />
             </Stack>
           </Stack>
