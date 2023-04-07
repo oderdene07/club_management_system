@@ -36,3 +36,8 @@ type Member struct {
 	ProfilePicture     string `json:"profile_picture"`
 	ProfileDescription string `json:"profile_description"`
 }
+
+type LoginResponse struct {
+	Token  string  `json:"token"`
+	Member *Member `json:"member"`
+}

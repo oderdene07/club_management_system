@@ -46,6 +46,11 @@ func GetMemberByID(c *gin.Context) {
 	app.Responce(c, http.StatusOK, "Success", member)
 }
 
+func GetMemberByToken(c *gin.Context) {
+	member := c.MustGet("member").(Member)
+	app.Responce(c, http.StatusOK, "Success", member)
+}
+
 func UpdateMember(c *gin.Context) {
 	var member Member
 	id := c.Param("id")
@@ -212,7 +217,12 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
-	app.Responce(c, http.StatusOK, "Success", token)
+	loginResponse := LoginResponse{
+		Token:  token,
+		Member: member,
+	}
+
+	app.Responce(c, http.StatusOK, "Success", loginResponse)
 }
 
 func VerifyEmail(c *gin.Context) {

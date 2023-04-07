@@ -30,9 +30,7 @@ const Page = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(values);
     await apiClient.post("/news", values).then((res) => {
-      console.log(res);
       router.push("/news");
     });
   };

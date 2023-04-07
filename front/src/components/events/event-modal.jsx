@@ -73,10 +73,8 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
 
   const addEvent = async (event) => {
     try {
-      await apiClient.post("/event", event).then((res) => {
-        console.log(res);
-        refresh();
-      });
+      await apiClient.post("/event", event);
+      await refresh();
     } catch (err) {
       console.error("Error submitting form: ", err);
     }
@@ -84,10 +82,8 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
 
   const removeEvent = async (id) => {
     try {
-      await apiClient.delete("/event/" + id).then((res) => {
-        console.log(res);
-        refresh();
-      });
+      await apiClient.delete("/event/" + id);
+      await refresh();
     } catch (err) {
       console.error("Error deleting event: ", err);
     }
@@ -95,10 +91,8 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
 
   const updateEvent = async (event) => {
     try {
-      await apiClient.put("/event/" + event.id, event).then((res) => {
-        console.log(res);
-        refresh();
-      });
+      await apiClient.put("/event/" + event.id, event);
+      await refresh();
     } catch (err) {
       console.error("Error updating event: ", err);
     }

@@ -21,7 +21,6 @@ const Page = () => {
   });
 
   useEffect(() => {
-    console.log(user);
     setMember({
       first_name: user?.first_name,
       last_name: user?.last_name,
@@ -35,10 +34,7 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await apiClient.put("/member/" + user?.id, member).then((res) => {
-      console.log(res);
-    });
-    console.log(member);
+    await apiClient.put("/member/" + user?.id, member);
   };
 
   return (

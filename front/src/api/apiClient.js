@@ -1,13 +1,11 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: false,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJfaWQiOjI0fQ.ItOvQE96AIL5VQkwmB1DgX6GM2W0L_WiW9fFAOj5aqk",
   },
   timeout: 10000,
 });
@@ -29,6 +27,10 @@ apiClient.interceptors.response.use(
     return response?.data;
   },
   function (error) {
+    if (error?.response?.status === 401) {
+      window.localStorage.removeItem("token");
+      window.location.reload();
+    }
     return Promise.reject(error);
   }
 );

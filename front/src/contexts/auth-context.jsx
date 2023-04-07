@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useReducer, useRef } from "react";
+import { apiClient } from "@/api/apiClient";
 import PropTypes from "prop-types";
+import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -61,32 +62,17 @@ export const AuthProvider = ({ children }) => {
     if (initialized.current) {
       return;
     }
-
     initialized.current = true;
 
-    let isAuthenticated = false;
+    const token = localStorage.getItem("token");
 
-    try {
-      isAuthenticated = window.sessionStorage.getItem("authenticated") === "true";
-    } catch (err) {
-      console.error(err);
-    }
+    if (token) {
+      apiClient.defaults.headers.common["Authorization"] = token;
+      const response = await apiClient.get("/member");
 
-    if (isAuthenticated) {
-      const user = {
-        id: 24,
-        first_name: "Od-Erdene",
-        last_name: "Natsagdorj",
-        email: "oderdene07@gmail.com",
-        role: "admin",
-        phone_number: "99887766",
-        occupation: "Software Engineer",
-        profile_description: "I am a software engineer",
-        profile_picture: "/images/odko.jpg",
-      };
       dispatch({
         type: HANDLERS.INITIALIZE,
-        payload: user,
+        payload: response?.data,
       });
     } else {
       dispatch({
@@ -104,7 +90,12 @@ export const AuthProvider = ({ children }) => {
   );
 
   const signIn = async (email, password) => {
-    if (email !== "oderdene07@gmail.com" || password !== "password") {
+    const response = await apiClient.post("/login", {
+      email,
+      password,
+    });
+
+    if (response.status !== 200) {
       throw new Error("Please check your email and password");
     }
 
@@ -114,23 +105,19 @@ export const AuthProvider = ({ children }) => {
       console.error(err);
     }
 
-    const user = {
-      id: 24,
-      first_name: "Od-Erdene",
-      last_name: "Natsagdorj",
-      email: "oderdene07@gmail.com",
-      role: "admin",
-      phone_number: "99887766",
-      occupation: "Software Engineer",
-      profile_description: "I am a software engineer",
-      profile_picture: "/images/odko.jpg",
-    };
+    const user = response.data.member;
+
+    apiClient.defaults.headers.common["Authorization"] = response.data.token;
+
+    localStorage.setItem("token", response.data.token);
 
     dispatch({
       type: HANDLERS.SIGN_IN,
       payload: user,
     });
   };
+
+  // 401 -> send to login page
 
   const signUp = async (email, name, password) => {
     throw new Error("Sign up is not implemented");
@@ -139,9 +126,13 @@ export const AuthProvider = ({ children }) => {
   const signOut = () => {
     try {
       window.sessionStorage.removeItem("authenticated");
+      window.localStorage.removeItem("token");
     } catch (err) {
       console.error(err);
     }
+
+    apiClient.defaults.headers.common["Authorization"] = null;
+
     dispatch({
       type: HANDLERS.SIGN_OUT,
     });

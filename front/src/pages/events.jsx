@@ -65,9 +65,8 @@ const Page = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const getEvents = async () => {
-    await apiClient.get("/events").then((res) => {
-      setData(res.data);
-    });
+    const response = await apiClient.get("/events");
+    setData(response.data);
   };
 
   useEffect(() => {
