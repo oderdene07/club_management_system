@@ -78,6 +78,8 @@ const Page = () => {
   const count = Math.ceil(currentTabEvents.length / rowsPerPage);
   const events = usePagination(currentTabEvents, rowsPerPage);
 
+  console.log(events.currentData());
+
   const handleChangeTab = (event, newValue) => {
     setTab(newValue);
   };

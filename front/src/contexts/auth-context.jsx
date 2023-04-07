@@ -75,7 +75,6 @@ export const AuthProvider = ({ children }) => {
     if (isAuthenticated) {
       const user = {
         id: 24,
-        avatar: "/assets/avatars/avatar-anika-visser.png",
         first_name: "Od-Erdene",
         last_name: "Natsagdorj",
         email: "oderdene07@gmail.com",
@@ -83,7 +82,7 @@ export const AuthProvider = ({ children }) => {
         phone_number: "99887766",
         occupation: "Software Engineer",
         profile_description: "I am a software engineer",
-        profile_picture: "/assets/avatars/avatar-marcus-finn.png",
+        profile_picture: process.env.NEXT_PUBLIC_API_URL + "/images/odko.jpg",
       };
       dispatch({
         type: HANDLERS.INITIALIZE,
@@ -117,7 +116,6 @@ export const AuthProvider = ({ children }) => {
 
     const user = {
       id: 24,
-      avatar: "/assets/avatars/avatar-anika-visser.png",
       first_name: "Od-Erdene",
       last_name: "Natsagdorj",
       email: "oderdene07@gmail.com",
@@ -125,7 +123,7 @@ export const AuthProvider = ({ children }) => {
       phone_number: "99887766",
       occupation: "Software Engineer",
       profile_description: "I am a software engineer",
-      profile_picture: "/assets/avatars/avatar-marcus-finn.png",
+      profile_picture: process.env.NEXT_PUBLIC_API_URL + "/images/odko.jpg",
     };
 
     dispatch({

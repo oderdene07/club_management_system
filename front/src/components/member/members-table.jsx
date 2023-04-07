@@ -48,7 +48,10 @@ export const MembersTable = ({ members, loading, refresh }) => {
         minWidth: 60,
         renderCell: (params) => (
           <Avatar
-            src={params.row.profile_picture}
+            src={
+              params.row.profile_picture &&
+              process.env.NEXT_PUBLIC_API_URL + params.row.profile_picture
+            }
             sx={{ width: 36, height: 36, fontSize: 16, mr: 2 }}
           >
             {getInitials(`${params.row.first_name} ${params.row.last_name}`)}
@@ -59,7 +62,7 @@ export const MembersTable = ({ members, loading, refresh }) => {
         field: "full_name",
         headerName: "Full name",
         flex: 1,
-        minWidth: 150,
+        minWidth: 180,
         valueGetter: (params) => `${params.row.first_name} ${params.row.last_name}`,
       },
       {
@@ -72,7 +75,7 @@ export const MembersTable = ({ members, loading, refresh }) => {
         field: "phone_number",
         headerName: "Phone Number",
         flex: 1,
-        minWidth: 150,
+        minWidth: 130,
       },
       {
         field: "occupation",
@@ -84,7 +87,7 @@ export const MembersTable = ({ members, loading, refresh }) => {
         field: "date_joined",
         headerName: "Date Joined",
         flex: 1,
-        minWidth: 150,
+        minWidth: 130,
         valueGetter: (params) => formatDate(params.row.date_joined),
       },
       {
@@ -118,7 +121,7 @@ export const MembersTable = ({ members, loading, refresh }) => {
       },
       {
         field: "actions",
-        // type: "actions",
+        type: "actions",
         cellClassName: "actions",
         width: 60,
         getActions: ({ id }) => {

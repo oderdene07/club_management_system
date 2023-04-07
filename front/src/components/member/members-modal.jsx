@@ -57,16 +57,19 @@ export const MemberModal = (props) => {
           <Stack spacing={4}>
             <Stack display="flex" alignItems="center">
               <Avatar
-                src={selectedMember.profile_picture}
+                src={
+                  selectedMember.profile_picture &&
+                  process.env.NEXT_PUBLIC_API_URL + selectedMember.profile_picture
+                }
                 sx={{ width: 96, height: 96, fontSize: 36 }}
               >
                 {getInitials(fullName)}
               </Avatar>
-              <Typography color={neutral[700]} mt={3} variant="h4">
+              <Typography align="center" color={neutral[700]} mt={3} variant="h4">
                 {fullName}
               </Typography>
               <Typography mt={1} mb={1.5} variant="body2">
-                Software engineer
+                {selectedMember.occupation}
               </Typography>
             </Stack>
             <Divider sx={{ borderColor: "neutral.200" }} />
@@ -88,13 +91,13 @@ export const MemberModal = (props) => {
               </Stack>
             </Stack>
             <Divider sx={{ borderColor: "neutral.200" }} />
-            <Stack spacing={3}>
+            <Stack spacing={2}>
               <Typography color={neutral[700]} variant="h6">
                 Bio
               </Typography>
               <Card sx={{ padding: "1.5rem", bgcolor: "neutral.200" }}>
-                <Typography color={neutral[600]} variant="body2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod
+                <Typography overflow="auto" maxHeight={70} color={neutral[600]} variant="body2">
+                  {selectedMember.profile_description}
                 </Typography>
               </Card>
             </Stack>

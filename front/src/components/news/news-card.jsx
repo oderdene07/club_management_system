@@ -55,7 +55,7 @@ export const NewsCard = (props) => {
                 borderRadius: 1,
               }}
               component="img"
-              image={newsItem.image}
+              image={process.env.NEXT_PUBLIC_API_URL + newsItem.image}
             />
           )}
         </Box>

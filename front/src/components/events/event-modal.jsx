@@ -45,14 +45,20 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setValues((prevState) => ({
-        ...prevState,
-        image: reader.result,
-      }));
-    };
-    if (file) reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("image", file);
+    apiClient
+      .post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setValues((prevState) => ({
+          ...prevState,
+          image: res.data,
+        }));
+      });
   };
 
   const handleChange = useCallback(
@@ -87,12 +93,33 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
     }
   };
 
+  const updateEvent = async (event) => {
+    try {
+      await apiClient.put("/event/" + event.id, event).then((res) => {
+        console.log(res);
+        refresh();
+      });
+    } catch (err) {
+      console.error("Error updating event: ", err);
+    }
+  };
+
   const handleSubmit = async () => {
     if (values.title === "") {
       setError("Title is required");
       return;
     }
-    addEvent(values);
+    if (selectedEvent)
+      updateEvent({
+        id: selectedEvent.id,
+        title: values.title,
+        description: values.description,
+        location: values.location,
+        start_date: values.start_date,
+        end_date: values.end_date,
+        image: values.image,
+      });
+    else addEvent(values);
     handleCloseModal();
   };
 
@@ -160,7 +187,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                     <CardMedia
                       component="img"
                       height={250}
-                      image={values.image}
+                      image={process.env.NEXT_PUBLIC_API_URL + values.image}
                       alt="Event Image"
                     />
                     <input hidden accept="image/*" type="file" onChange={handleImageChange} />
@@ -298,20 +325,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
         {isAdmin && (
           <CardActions sx={{ p: 0, pt: 2, justifyContent: "flex-end" }}>
             <Stack direction="row" spacing={2}>
-              <Button
-                onClick={() => {
-                  handleCloseModal();
-                  setValues({
-                    title: "",
-                    description: "",
-                    location: "",
-                    start_date: new Date(),
-                    end_date: new Date(),
-                    image: "",
-                  });
-                }}
-                variant="outlined"
-              >
+              <Button onClick={handleCloseModal} variant="outlined">
                 Close
               </Button>
               <Button onClick={handleSubmit} variant="contained">

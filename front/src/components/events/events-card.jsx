@@ -53,7 +53,7 @@ export const EventCard = ({ event, refresh }) => {
                 borderRadius: 1,
               }}
               component="img"
-              image={event.image}
+              image={process.env.NEXT_PUBLIC_API_URL + event.image}
             />
           ) : (
             <CardMedia

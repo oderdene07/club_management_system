@@ -122,3 +122,5 @@ ERROR: 2023/04/06 18:02:52 upload.go:15: request Content-Type isn't multipart/fo
 ERROR: 2023/04/06 18:03:13 upload.go:15: request Content-Type isn't multipart/form-data
 ERROR: 2023/04/06 18:03:54 upload.go:15: request Content-Type isn't multipart/form-data
 ERROR: 2023/04/06 18:06:19 upload.go:15: request Content-Type isn't multipart/form-data
+INFO: 2023/04/07 13:42:35 main.go:12: connected to database
+ERROR: 2023/04/07 14:06:29 upload.go:15: http: no such file
