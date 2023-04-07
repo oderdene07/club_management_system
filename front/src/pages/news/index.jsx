@@ -28,9 +28,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
 
   const getNews = async () => {
-    await apiClient.get("/news").then((res) => {
-      setData(res.data);
-    });
+    const res = await apiClient.get("/news");
+    setData(res.data);
   };
 
   useEffect(() => {

@@ -21,15 +21,7 @@ const Page = () => {
   });
 
   useEffect(() => {
-    setMember({
-      first_name: user?.first_name,
-      last_name: user?.last_name,
-      email: user?.email,
-      phone_number: user?.phone_number,
-      occupation: user?.occupation,
-      profile_picture: process.env.NEXT_PUBLIC_API_URL + user?.profile_picture,
-      profile_description: user?.profile_description,
-    });
+    setMember(user);
   }, [user]);
 
   const handleSubmit = async (e) => {

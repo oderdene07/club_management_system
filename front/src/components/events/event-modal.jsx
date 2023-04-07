@@ -1,3 +1,5 @@
+import { apiClient } from "@/api/apiClient";
+import { useAuth } from "@/contexts/auth-context";
 import { CameraIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import {
   Button,
@@ -14,51 +16,49 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
-import { useAuth } from "@/contexts/auth-context";
-import { apiClient } from "@/api/apiClient";
+import { useCallback, useEffect, useState } from "react";
 
 export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, refresh }) => {
   const isAdmin = useAuth().user?.role === "admin";
 
-  const [values, setValues] = useState(
-    selectedEvent
-      ? {
-          title: selectedEvent.title,
-          description: selectedEvent.description,
-          location: selectedEvent.location,
-          start_date: new Date(selectedEvent.start_date),
-          end_date: new Date(selectedEvent.end_date),
-          image: selectedEvent.image,
-        }
-      : {
-          title: "",
-          description: "",
-          location: "",
-          start_date: new Date(),
-          end_date: new Date(),
-          image: "",
-        }
-  );
+  const [values, setValues] = useState({});
   const [error, setError] = useState("");
 
-  const handleImageChange = (event) => {
+  useEffect(() => {
+    if (selectedEvent)
+      setValues({
+        title: selectedEvent.title,
+        description: selectedEvent.description,
+        location: selectedEvent.location,
+        start_date: new Date(selectedEvent.start_date),
+        end_date: new Date(selectedEvent.end_date),
+        image: selectedEvent.image,
+      });
+    else
+      setValues({
+        title: "",
+        description: "",
+        location: "",
+        start_date: null,
+        end_date: null,
+        image: "",
+      });
+  }, [selectedEvent]);
+
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
-    apiClient
-      .post("/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setValues((prevState) => ({
-          ...prevState,
-          image: res.data,
-        }));
-      });
+    const res = await apiClient.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    setValues((prevState) => ({
+      ...prevState,
+      image: res.data,
+    }));
   };
 
   const handleChange = useCallback(
@@ -115,6 +115,14 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
       });
     else addEvent(values);
     handleCloseModal();
+    setValues({
+      title: "",
+      description: "",
+      location: "",
+      start_date: new Date(),
+      end_date: new Date(),
+      image: "",
+    });
   };
 
   const handleDelete = async () => {
@@ -143,7 +151,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
           left: "50%",
           transform: "translate(-50%, -50%)",
           minWidth: 350,
-          maxWidth: 500,
+          maxWidth: 550,
         }}
       >
         {isAdmin && (
@@ -303,6 +311,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                 }}
                 readOnly={!isAdmin}
                 value={[values.start_date, values.end_date]}
+                format="dd/MM/yyyy HH:mm"
                 onChange={(newValue) => {
                   setValues((prevState) => ({
                     ...prevState,

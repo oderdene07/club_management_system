@@ -14,6 +14,7 @@ import { alpha } from "@mui/material/styles";
 import { usePopover } from "@/hooks/use-popover";
 import { AccountPopover } from "./account-popover";
 import { useAuth } from "@/contexts/auth-context";
+import { useEffect } from "react";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;

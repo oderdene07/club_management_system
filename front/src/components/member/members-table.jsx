@@ -29,16 +29,14 @@ export const MembersTable = ({ members, loading, refresh }) => {
   };
 
   const columns = useMemo(() => {
-    const handleDelete = (id) => () => {
-      apiClient.delete(`/member/${id}`).then((res) => {
-        refresh();
-      });
+    const handleDelete = (id) => async () => {
+      await apiClient.delete(`/member/${id}`);
+      refresh();
     };
-    const handleChangeRole = (event, memberID) => {
+    const handleChangeRole = async (event, memberID) => {
       const role = event.target.value;
-      apiClient.put(`/member/${memberID}/${role}`).then((res) => {
-        refresh();
-      });
+      await apiClient.put(`/member/${memberID}/${role}`);
+      refresh();
     };
     return [
       {

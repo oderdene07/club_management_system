@@ -12,22 +12,19 @@ import {
 } from "@mui/material";
 
 export const AccountProfile = ({ member, setMember }) => {
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
-    apiClient
-      .post("/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setMember((prevState) => ({
-          ...prevState,
-          profile_picture: res.data,
-        }));
-      });
+    const res = await apiClient.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    setMember((prevState) => ({
+      ...prevState,
+      profile_picture: res.data,
+    }));
   };
 
   return (
@@ -41,7 +38,7 @@ export const AccountProfile = ({ member, setMember }) => {
           }}
         >
           <Avatar
-            src={member.profile_picture && member.profile_picture}
+            src={member.profile_picture && process.env.NEXT_PUBLIC_API_URL + member.profile_picture}
             sx={{
               height: 80,
               mb: 2,

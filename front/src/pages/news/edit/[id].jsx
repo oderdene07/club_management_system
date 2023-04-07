@@ -22,9 +22,8 @@ const Page = () => {
   const newsID = router.query.id;
 
   const getNews = async (id) => {
-    await apiClient.get(`/news/${id}`).then((res) => {
-      setValues(res.data);
-    });
+    const res = await apiClient.get(`/news/${id}`);
+    setValues(res.data);
   };
 
   useEffect(() => {
@@ -33,9 +32,8 @@ const Page = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await apiClient.put(`/news/${newsID}`, values).then((res) => {
-      router.back();
-    });
+    await apiClient.put(`/news/${newsID}`, values);
+    router.back();
   };
 
   const handleChange = useCallback(
@@ -58,20 +56,20 @@ const Page = () => {
     [setValues]
   );
 
-  const handleImageChange = useCallback(
-    (event) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValues((prevState) => ({
-          ...prevState,
-          image: reader.result,
-        }));
-      };
-      if (file) reader.readAsDataURL(file);
-    },
-    [setValues]
-  );
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    const res = await apiClient.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    setValues((prevState) => ({
+      ...prevState,
+      image: res.data,
+    }));
+  };
 
   return (
     <>

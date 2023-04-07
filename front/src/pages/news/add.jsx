@@ -30,9 +30,8 @@ const Page = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await apiClient.post("/news", values).then((res) => {
-      router.push("/news");
-    });
+    await apiClient.post("/news", values);
+    router.push("/news");
   };
 
   const handleChange = useCallback(
@@ -45,20 +44,21 @@ const Page = () => {
     [setValues]
   );
 
-  const handleImageChange = useCallback(
-    (event) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValues((prevState) => ({
-          ...prevState,
-          image: reader.result,
-        }));
-      };
-      if (file) reader.readAsDataURL(file);
-    },
-    [setValues]
-  );
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    const res = await apiClient.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    setValues((prevState) => ({
+      ...prevState,
+      image: res.data,
+    }));
+  };
 
   const handleChangeEditor = useCallback(
     (event) => {

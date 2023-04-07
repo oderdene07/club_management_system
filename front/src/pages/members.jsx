@@ -12,9 +12,8 @@ const Page = () => {
 
   const getMembers = async () => {
     setLoading(true);
-    await apiClient.get("/members").then((res) => {
-      setData(res.data);
-    });
+    const res = await apiClient.get("/members");
+    setData(res.data);
     setLoading(false);
   };
 

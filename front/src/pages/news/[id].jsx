@@ -21,9 +21,8 @@ const Page = () => {
   const newsID = router.query.id;
 
   const getNews = async (id) => {
-    await apiClient.get(`/news/${id}`).then((res) => {
-      setData(res.data);
-    });
+    const res = await apiClient.get(`/news/${id}`);
+    setData(res.data);
   };
 
   useEffect(() => {
@@ -36,9 +35,8 @@ const Page = () => {
 
   const handleDelete = async () => {
     if (newsID) {
-      await apiClient.delete(`/news/${newsID}`).then((res) => {
-        if (res.status === 200) router.push("/news");
-      });
+      const res = await apiClient.delete(`/news/${newsID}`);
+      if (res.status === 200) router.push("/news");
     }
   };
 
@@ -93,14 +91,17 @@ const Page = () => {
               {dateFormat(data.created_at)} | {data.creator}
             </Typography>
             {data.image && (
-              <CardMedia
-                component="img"
-                image={data.image}
-                alt="Event Image"
-                sx={{
-                  borderRadius: 2,
-                }}
-              />
+              <Stack alignItems={"center"} justifyContent={"center"} sx={{ mt: 2 }}>
+                <CardMedia
+                  component="img"
+                  image={process.env.NEXT_PUBLIC_API_URL + data.image}
+                  alt="Event Image"
+                  sx={{
+                    borderRadius: 2,
+                    maxWidth: "max-content",
+                  }}
+                />
+              </Stack>
             )}
             <div
               className="ck-content"

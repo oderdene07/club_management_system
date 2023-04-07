@@ -1,26 +1,26 @@
-import Head from "next/head";
+import { apiClient } from "@/api/apiClient";
+import { EventModal } from "@/components/events/event-modal";
+import { EventCard } from "@/components/events/events-card";
+import { EventsSearch } from "@/components/events/events-search";
+import usePagination from "@/components/pagination";
+import { useAuth } from "@/contexts/auth-context";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
+import { TabContext } from "@mui/lab";
 import {
   Box,
   Button,
   Container,
+  Unstable_Grid2 as Grid,
   Pagination,
   Stack,
   SvgIcon,
   Tab,
   Tabs,
   Typography,
-  Unstable_Grid2 as Grid,
 } from "@mui/material";
-import { Layout as DashboardLayout } from "@/layouts/overview/layout";
-import { EventCard } from "@/components/events/events-card";
-import { EventsSearch } from "@/components/events/events-search";
-import { TabContext } from "@mui/lab";
+import Head from "next/head";
 import { useEffect, useState } from "react";
-import usePagination from "@/components/pagination";
-import { EventModal } from "@/components/events/event-modal";
-import { useAuth } from "@/contexts/auth-context";
-import { apiClient } from "@/api/apiClient";
 
 const rowsPerPage = 8;
 

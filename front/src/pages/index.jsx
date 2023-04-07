@@ -15,27 +15,23 @@ const Page = () => {
   const [membersCount, setMembersCount] = useState(0);
 
   const getEvents = async () => {
-    await apiClient.get("/events").then((res) => {
-      setEvents(res.data);
-    });
+    const res = await apiClient.get("/events");
+    setEvents(res.data);
   };
 
   const getNews = async () => {
-    await apiClient.get("/news").then((res) => {
-      setNews(res.data);
-    });
+    const res = await apiClient.get("/news");
+    setNews(res.data);
   };
 
   const getUpcomingEventsCount = async () => {
-    await apiClient.get("/events/count").then((res) => {
-      setEventsCount(res.data);
-    });
+    const res = await apiClient.get("/events/count");
+    setEventsCount(res.data);
   };
 
   const getMembersCount = async () => {
-    await apiClient.get("/members/count").then((res) => {
-      setMembersCount(res.data);
-    });
+    const res = await apiClient.get("/members/count");
+    setMembersCount(res.data);
   };
 
   useEffect(() => {

@@ -36,9 +36,7 @@ export const AccountPassword = ({ member }) => {
       setError(true);
       return;
     }
-    await apiClient.post(`/member/password`, changePasswordData).then((res) => {
-      console.log(res);
-    });
+    await apiClient.post(`/member/password`, changePasswordData);
   };
 
   return (
