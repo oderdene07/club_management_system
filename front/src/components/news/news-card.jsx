@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 
 export const NewsCard = (props) => {
   const { newsItem } = props;

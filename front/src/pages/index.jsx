@@ -1,12 +1,12 @@
-import Head from "next/head";
-import { Box, Container, Unstable_Grid2 as Grid } from "@mui/material";
-import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { apiClient } from "@/api/apiClient";
 import { OverviewEvents } from "@/components/overview/overview-events";
-import { OverviewTotalMembers } from "@/components/overview/overview-total-members";
 import { OverviewEventsList } from "@/components/overview/overview-events-list";
 import { OverviewNewsList } from "@/components/overview/overview-news-list";
+import { OverviewTotalMembers } from "@/components/overview/overview-total-members";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { Box, Container, Unstable_Grid2 as Grid } from "@mui/material";
+import Head from "next/head";
 import { useEffect, useState } from "react";
-import { apiClient } from "@/api/apiClient";
 
 const Page = () => {
   const [events, setEvents] = useState([]);

@@ -1,18 +1,15 @@
-import { useCallback } from "react";
 import {
   Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  Checkbox,
   Divider,
-  FormControlLabel,
   Stack,
   TextField,
   Typography,
-  Unstable_Grid2 as Grid,
 } from "@mui/material";
+import { useCallback } from "react";
 
 export const SettingsForm = () => {
   const handleSubmit = useCallback((event) => {

@@ -1,10 +1,10 @@
 import {
+  CalendarDaysIcon,
   ChartBarIcon,
   CogIcon,
-  CalendarDaysIcon,
-  UserIcon,
   NewspaperIcon,
   UserGroupIcon,
+  UserIcon,
 } from "@heroicons/react/24/solid";
 import { SvgIcon } from "@mui/material";
 

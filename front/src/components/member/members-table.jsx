@@ -1,12 +1,12 @@
-import PropTypes from "prop-types";
-import { Avatar, Card, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { apiClient } from "@/api/apiClient";
+import { useAuth } from "@/contexts/auth-context";
 import { getInitials } from "@/utils/get-initials";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { Avatar, Card, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
 import { MemberModal } from "./members-modal";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import { useAuth } from "@/contexts/auth-context";
-import { apiClient } from "@/api/apiClient";
 
 const rowsPerPage = 12;
 

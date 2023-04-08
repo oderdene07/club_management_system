@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
 export const OverviewTotalMembers = ({ value }) => {
   return (

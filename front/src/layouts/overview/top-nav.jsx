@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+import { useAuth } from "@/contexts/auth-context";
+import { usePopover } from "@/hooks/use-popover";
 import Bars3Icon from "@heroicons/react/24/solid/Bars3Icon";
 import {
   Avatar,
@@ -11,10 +12,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { usePopover } from "@/hooks/use-popover";
+import PropTypes from "prop-types";
 import { AccountPopover } from "./account-popover";
-import { useAuth } from "@/contexts/auth-context";
-import { useEffect } from "react";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;

@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
-import ArrowPathIcon from "@heroicons/react/24/solid/ArrowPathIcon";
 import ArrowRightIcon from "@heroicons/react/24/solid/ArrowRightIcon";
 import {
-  Button,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -11,9 +9,9 @@ import {
   Divider,
   Stack,
   SvgIcon,
-  Grid,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 import { EventCard } from "../events/events-card";
 
 export const OverviewEventsList = (props) => {

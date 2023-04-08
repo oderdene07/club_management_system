@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import {
   Box,
   Button,
@@ -7,10 +7,10 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  TextField,
   Unstable_Grid2 as Grid,
+  TextField,
 } from "@mui/material";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { useCallback } from "react";
 
 export const AccountProfileDetails = ({ isLoading, member, setMember, handleSubmit }) => {
   const handleChange = useCallback(

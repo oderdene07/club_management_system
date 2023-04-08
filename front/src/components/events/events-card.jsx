@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { MapPinIcon, CalendarIcon } from "@heroicons/react/24/solid";
+import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import { Box, Card, CardContent, CardMedia, Stack, SvgIcon, Typography } from "@mui/material";
-import { EventModal } from "./event-modal";
+import PropTypes from "prop-types";
 import { useState } from "react";
+import { EventModal } from "./event-modal";
 
 const dateFormatted = (startDate, endDate) => {
   const start = new Date(startDate);

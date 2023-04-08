@@ -1,13 +1,13 @@
-import Head from "next/head";
-import { CacheProvider } from "@emotion/react";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { Box, CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
 import { AuthConsumer, AuthProvider } from "@/contexts/auth-context";
 import { useNProgress } from "@/hooks/use-nprogress";
 import { createTheme } from "@/theme";
 import { createEmotionCache } from "@/utils/create-emotion-cache";
+import { CacheProvider } from "@emotion/react";
+import { Box, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import Head from "next/head";
 
 import "@/styles/editor-content-styles.css";
 

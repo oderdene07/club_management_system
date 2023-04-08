@@ -1,5 +1,5 @@
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
-import { Card, InputAdornment, OutlinedInput, SvgIcon } from "@mui/material";
+import { InputAdornment, OutlinedInput, SvgIcon } from "@mui/material";
 
 export const MembersSearch = (props) => {
   const { onChange } = props;

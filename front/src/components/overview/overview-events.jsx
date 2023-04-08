@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
 export const OverviewEvents = (props) => {
   const { value } = props;

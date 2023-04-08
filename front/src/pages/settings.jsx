@@ -1,6 +1,6 @@
-import Head from "next/head";
-import { Box, Container, Stack, Typography } from "@mui/material";
 import { SettingsForm } from "@/components/settings/settings-form";
+import { Box, Container, Stack, Typography } from "@mui/material";
+import Head from "next/head";
 
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 

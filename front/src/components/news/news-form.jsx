@@ -1,7 +1,7 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
 import { Box, Button, CardMedia, Stack, TextField, Tooltip } from "@mui/material";
-import Editor from "./news-editor";
 import { useEffect, useState } from "react";
+import Editor from "./news-editor";
 
 export const NewsForm = ({ values, handleChange, handleImageChange, handleChangeEditor }) => {
   const [editorLoaded, setEditorLoaded] = useState(false);

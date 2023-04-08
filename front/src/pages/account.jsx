@@ -1,12 +1,12 @@
-import Head from "next/head";
-import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid } from "@mui/material";
-import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { apiClient } from "@/api/apiClient";
+import { AccountPassword } from "@/components/account/account-password";
 import { AccountProfile } from "@/components/account/account-profile";
 import { AccountProfileDetails } from "@/components/account/account-profile-details";
-import { AccountPassword } from "@/components/account/account-password";
 import { useAuth } from "@/contexts/auth-context";
+import { Layout as DashboardLayout } from "@/layouts/overview/layout";
+import { Box, Container, Unstable_Grid2 as Grid, Stack, Typography } from "@mui/material";
+import Head from "next/head";
 import { useEffect, useState } from "react";
-import { apiClient } from "@/api/apiClient";
 
 const Page = () => {
   const { user, refresh } = useAuth();

@@ -12,7 +12,7 @@ func SendVerificationEmail(id int64, email string) error {
 		return err
 	}
 
-	url := "http://localhost:8080/verify/" + code
+	url := "http://localhost:3000/verify/" + code
 	subject := "Verify your email address"
 	body := "Please use link below to verify your email address. :)\n" + url
 	err = SendEmail(subject, body, []string{email})

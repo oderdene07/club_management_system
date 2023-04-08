@@ -1,7 +1,7 @@
-import { Children } from "react";
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import createEmotionServer from "@emotion/server/create-instance";
 import { createEmotionCache } from "@/utils/create-emotion-cache";
+import createEmotionServer from "@emotion/server/create-instance";
+import Document, { Head, Html, Main, NextScript } from "next/document";
+import { Children } from "react";
 
 const Favicon = () => <link rel="icon" href="/favicon.ico" />;
 

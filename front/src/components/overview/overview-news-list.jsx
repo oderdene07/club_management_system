@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import ArrowRightIcon from "@heroicons/react/24/solid/ArrowRightIcon";
 import {
   Button,
@@ -11,6 +10,7 @@ import {
   SvgIcon,
 } from "@mui/material";
 import { useRouter } from "next/router";
+import PropTypes from "prop-types";
 import { NewsCard } from "../news/news-card";
 
 export const OverviewNewsList = (props) => {

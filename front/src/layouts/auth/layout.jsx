@@ -1,17 +1,9 @@
-import PropTypes from "prop-types";
 import { Box, CardMedia, Unstable_Grid2 as Grid } from "@mui/material";
+import PropTypes from "prop-types";
 
-export const Layout = (props) => {
-  const { children } = props;
-
+export const Layout = ({ children }) => {
   return (
-    <Box
-      component="main"
-      sx={{
-        display: "flex",
-        flex: "1 1 auto",
-      }}
-    >
+    <Box component="main" display="flex" flex="1 1 auto">
       <Grid container sx={{ flex: "1 1 auto" }}>
         <Grid
           xs={12}
