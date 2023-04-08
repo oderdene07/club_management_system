@@ -90,13 +90,14 @@ export const AuthProvider = ({ children }) => {
   );
 
   const signIn = async (email, password) => {
-    const response = await apiClient.post("/login", {
-      email,
-      password,
-    });
-
-    if (response.status !== 200) {
-      throw new Error("Please check your email and password");
+    let response = {};
+    try {
+      response = await apiClient.post("/login", {
+        email,
+        password,
+      });
+    } catch (err) {
+      throw new Error(err?.response?.data?.message);
     }
 
     try {
@@ -117,10 +118,19 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  // 401 -> send to login page
-
-  const signUp = async (email, name, password) => {
-    throw new Error("Sign up is not implemented");
+  const signUp = async (email, first_name, last_name, password) => {
+    let response = {};
+    try {
+      response = await apiClient.post("/register", {
+        email,
+        first_name,
+        last_name,
+        password,
+      });
+    } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+    console.log(response);
   };
 
   const signOut = () => {

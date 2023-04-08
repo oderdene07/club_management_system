@@ -850,3 +850,50 @@ ERROR: 2023/04/07 23:31:54 handler.go:118: pq: update or delete on table "member
 ERROR: 2023/04/07 23:31:54 handler.go:118: pq: update or delete on table "members" violates foreign key constraint "fk_member_id" on table "event_attendance"
 ERROR: 2023/04/07 23:31:54 handler.go:118: pq: update or delete on table "members" violates foreign key constraint "fk_member_id" on table "event_attendance"
 ERROR: 2023/04/07 23:31:54 handler.go:118: pq: update or delete on table "members" violates foreign key constraint "fk_member_id" on table "event_attendance"
+ERROR: 2023/04/08 00:00:28 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:01:14 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:01:57 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:02:33 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:04:24 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:04:54 handler.go:135: Invalid email address
+ERROR: 2023/04/08 00:09:49 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:11:08 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:11:32 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:28:49 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:29:25 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:34:03 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:34:39 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 00:35:12 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 00:37:49 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 00:38:42 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 00:38:48 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 00:39:22 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 00:41:30 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 00:43:03 handler.go:190: Invalid email address or password
+INFO: 2023/04/08 12:16:49 main.go:12: connected to database
+ERROR: 2023/04/08 12:19:05 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:22:22 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:23:57 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 12:24:23 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:24:52 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 12:26:01 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:27:23 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:27:24 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:28:27 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:29:12 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:29:55 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:30:00 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:30:35 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:33:22 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:35:19 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:36:22 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:36:58 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:39:00 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:39:15 handler.go:196: Invalid email address or password
+ERROR: 2023/04/08 12:40:21 handler.go:141: Duplicate email address
+ERROR: 2023/04/08 12:41:19 handler.go:202: Verify your email
+ERROR: 2023/04/08 12:44:47 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 12:44:51 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 12:44:55 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 12:44:58 handler.go:190: Invalid email address or password
+ERROR: 2023/04/08 12:45:18 handler.go:135: Invalid email address

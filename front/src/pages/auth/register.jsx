@@ -1,32 +1,41 @@
-import Head from "next/head";
-import NextLink from "next/link";
-import { useRouter } from "next/navigation";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
 import { useAuth } from "@/contexts/auth-context";
 import { Layout as AuthLayout } from "@/layouts/auth/layout";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import { LoadingButton } from "@mui/lab";
+import { Box, Link, Stack, TextField, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import Head from "next/head";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import * as Yup from "yup";
 
 const Page = () => {
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const auth = useAuth();
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: "",
-      name: "",
+      first_name: "",
+      last_name: "",
       password: "",
       submit: null,
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      name: Yup.string().max(255).required("Name is required"),
+      first_name: Yup.string().max(255).required("First name is required"),
+      last_name: Yup.string().max(255).required("Last name is required"),
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (values, helpers) => {
+      setIsLoading(true);
       try {
-        await auth.signUp(values.email, values.name, values.password);
-        router.push("/");
+        await auth.signUp(values.email, values.first_name, values.last_name, values.password);
+        setIsLoading(false);
+        router.push("/verify");
       } catch (err) {
+        setIsLoading(false);
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
@@ -68,14 +77,24 @@ const Page = () => {
             <form noValidate onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <TextField
-                  error={!!(formik.touched.name && formik.errors.name)}
+                  error={!!(formik.touched.first_name && formik.errors.first_name)}
                   fullWidth
-                  helperText={formik.touched.name && formik.errors.name}
-                  label="Name"
-                  name="name"
+                  helperText={formik.touched.first_name && formik.errors.first_name}
+                  label="First Name"
+                  name="first_name"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.name}
+                  value={formik.values.first_name}
+                />
+                <TextField
+                  error={!!(formik.touched.last_name && formik.errors.last_name)}
+                  fullWidth
+                  helperText={formik.touched.last_name && formik.errors.last_name}
+                  label="Last Name"
+                  name="last_name"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  value={formik.values.last_name}
                 />
                 <TextField
                   error={!!(formik.touched.email && formik.errors.email)}
@@ -106,9 +125,18 @@ const Page = () => {
                   {formik.errors.submit}
                 </Typography>
               )}
-              <Button fullWidth size="large" sx={{ mt: 3 }} type="submit" variant="contained">
+              <LoadingButton
+                loading={isLoading}
+                loadingPosition="start"
+                startIcon={<ArrowLeftOnRectangleIcon width={24} />}
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+              >
                 Continue
-              </Button>
+              </LoadingButton>
             </form>
           </div>
         </Box>

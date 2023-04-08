@@ -1,15 +1,19 @@
+import { useAuth } from "@/contexts/auth-context";
+import { Layout as AuthLayout } from "@/layouts/auth/layout";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import { LoadingButton } from "@mui/lab";
+import { Alert, Box, Link, Stack, TextField, Typography } from "@mui/material";
+import { useFormik } from "formik";
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
-import { useFormik } from "formik";
+import { useState } from "react";
 import * as Yup from "yup";
-import { Alert, Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
-import { useAuth } from "@/contexts/auth-context";
-import { Layout as AuthLayout } from "@/layouts/auth/layout";
 
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -21,13 +25,16 @@ const Page = () => {
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (values, helpers) => {
+      setIsLoading(true);
       try {
-        await auth.signIn(values.email, values.password);
+        await auth.signIn(formik.values.email, formik.values.password);
+        setIsLoading(false);
         router.push("/");
       } catch (err) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
+        setIsLoading(false);
+        formik.setStatus({ success: false });
+        formik.setErrors({ submit: err.message });
+        formik.setSubmitting(false);
       }
     },
   });
@@ -100,9 +107,18 @@ const Page = () => {
                   {formik.errors.submit}
                 </Typography>
               )}
-              <Button fullWidth size="large" sx={{ mt: 3 }} type="submit" variant="contained">
+              <LoadingButton
+                loading={isLoading}
+                loadingPosition="start"
+                startIcon={<ArrowLeftOnRectangleIcon width={24} />}
+                fullWidth
+                size="large"
+                sx={{ mt: 3 }}
+                type="submit"
+                variant="contained"
+              >
                 Continue
-              </Button>
+              </LoadingButton>
               <Alert color="primary" severity="info" sx={{ mt: 3 }}>
                 <div>
                   Email: <b>oderdene07@gmail.com</b> password <b>password</b>
