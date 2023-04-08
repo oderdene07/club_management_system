@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-export const AccountProfile = ({ member, setMember }) => {
+export const AccountProfile = ({ member, setMember, setIsChanged }) => {
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
@@ -25,6 +25,7 @@ export const AccountProfile = ({ member, setMember }) => {
       ...prevState,
       profile_picture: res.data,
     }));
+    setIsChanged(true);
   };
 
   return (
@@ -61,7 +62,7 @@ export const AccountProfile = ({ member, setMember }) => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button fullWidth variant="contained" component="label">
+        <Button fullWidth variant="outlined" component="label">
           Change profile picture
           <input hidden accept="image/*" type="file" onChange={handleImageChange} />
         </Button>

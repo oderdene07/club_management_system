@@ -97,7 +97,9 @@ const Page = () => {
                   alt="Event Image"
                   sx={{
                     borderRadius: 2,
-                    maxWidth: "max-content",
+                    // maxWidth: "max-content",
+                    width: "100%",
+                    height: "40vh",
                   }}
                 />
               </Stack>

@@ -180,19 +180,20 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                     component="label"
                     sx={{
                       padding: 0,
+                      width: "100%",
                       overflow: "hidden",
                       "&:hover": {
                         opacity: 0.8,
                       },
                     }}
                   >
+                    <input hidden accept="image/*" type="file" onChange={handleImageChange} />
                     <CardMedia
                       component="img"
                       height={250}
                       image={process.env.NEXT_PUBLIC_API_URL + values.image}
                       alt="Event Image"
                     />
-                    <input hidden accept="image/*" type="file" onChange={handleImageChange} />
                   </Button>
                 </Tooltip>
               </Stack>

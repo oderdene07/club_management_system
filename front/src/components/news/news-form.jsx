@@ -35,13 +35,13 @@ export const NewsForm = ({ values, handleChange, handleImageChange, handleChange
                   },
                 }}
               >
+                <input hidden accept="image/*" type="file" onChange={handleImageChange} />
                 <CardMedia
                   component="img"
                   height={250}
                   image={process.env.NEXT_PUBLIC_API_URL + values.image}
                   alt="Event Image"
                 />
-                <input hidden accept="image/*" type="file" onChange={handleImageChange} />
               </Button>
             </Tooltip>
           </Stack>

@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 const Page = () => {
   const { user, refresh } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
   const [member, setMember] = useState({
     first_name: "",
     last_name: "",
@@ -52,7 +53,11 @@ const Page = () => {
               <Grid container spacing={3}>
                 <Grid xs={12} md={6} lg={5}>
                   <Grid xs={12}>
-                    <AccountProfile member={member} setMember={setMember} />
+                    <AccountProfile
+                      setIsChanged={setIsChanged}
+                      member={member}
+                      setMember={setMember}
+                    />
                   </Grid>
                   <Grid xs={12}>
                     <AccountPassword member={member} />
@@ -60,6 +65,8 @@ const Page = () => {
                 </Grid>
                 <Grid xs={12} md={6} lg={7}>
                   <AccountProfileDetails
+                    isChanged={isChanged}
+                    setIsChanged={setIsChanged}
                     isLoading={isLoading}
                     member={member}
                     setMember={setMember}

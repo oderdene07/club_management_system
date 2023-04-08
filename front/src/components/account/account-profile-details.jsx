@@ -12,16 +12,21 @@ import {
 } from "@mui/material";
 import { useCallback } from "react";
 
-export const AccountProfileDetails = ({ isLoading, member, setMember, handleSubmit }) => {
-  const handleChange = useCallback(
-    (event) => {
-      setMember((prevState) => ({
-        ...prevState,
-        [event.target.name]: event.target.value,
-      }));
-    },
-    [setMember]
-  );
+export const AccountProfileDetails = ({
+  isLoading,
+  isChanged,
+  setIsChanged,
+  member,
+  setMember,
+  handleSubmit,
+}) => {
+  const handleChange = (event) => {
+    setMember((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+    setIsChanged(true);
+  };
 
   return (
     <form autoComplete="off">
@@ -96,6 +101,7 @@ export const AccountProfileDetails = ({ isLoading, member, setMember, handleSubm
         <Divider sx={{ borderColor: "primary.light" }} />
         <CardActions sx={{ py: 2, px: 3, justifyContent: "flex-end" }}>
           <Button
+            disabled={!isChanged}
             startIcon={<CheckBadgeIcon width={24} />}
             onClick={handleSubmit}
             variant="contained"
