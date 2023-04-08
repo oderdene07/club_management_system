@@ -10,8 +10,9 @@ import {
   TextField,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
-export const AccountProfileDetails = ({ member, setMember, handleSubmit }) => {
+export const AccountProfileDetails = ({ isLoading, member, setMember, handleSubmit }) => {
   const handleChange = useCallback(
     (event) => {
       setMember((prevState) => ({
@@ -33,7 +34,7 @@ export const AccountProfileDetails = ({ member, setMember, handleSubmit }) => {
                 <TextField
                   fullWidth
                   label="First name"
-                  name="firstName"
+                  name="first_name"
                   onChange={handleChange}
                   required
                   value={member.first_name}
@@ -43,7 +44,7 @@ export const AccountProfileDetails = ({ member, setMember, handleSubmit }) => {
                 <TextField
                   fullWidth
                   label="Last name"
-                  name="lastName"
+                  name="last_name"
                   onChange={handleChange}
                   required
                   value={member.last_name}
@@ -94,8 +95,12 @@ export const AccountProfileDetails = ({ member, setMember, handleSubmit }) => {
         </CardContent>
         <Divider sx={{ borderColor: "primary.light" }} />
         <CardActions sx={{ py: 2, px: 3, justifyContent: "flex-end" }}>
-          <Button onClick={handleSubmit} variant="contained">
-            Save details
+          <Button
+            startIcon={<CheckBadgeIcon width={24} />}
+            onClick={handleSubmit}
+            variant="contained"
+          >
+            {isLoading ? "Saving ..." : "Save details"}
           </Button>
         </CardActions>
       </Card>

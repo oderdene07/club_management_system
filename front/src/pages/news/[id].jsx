@@ -1,12 +1,11 @@
-import Head from "next/head";
-import { Box, Container, Stack, Typography, CardMedia, Button } from "@mui/material";
+import { apiClient } from "@/api/apiClient";
+import { useAuth } from "@/contexts/auth-context";
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Box, Button, CardMedia, Container, Stack, Typography } from "@mui/material";
+import Head from "next/head";
 import { useRouter } from "next/router";
-import { useAuth } from "@/contexts/auth-context";
 import { useEffect, useState } from "react";
-import { apiClient } from "@/api/apiClient";
-import Script from "next/script";
 
 const dateFormat = (date) => {
   const d = new Date(date);

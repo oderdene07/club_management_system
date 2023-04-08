@@ -148,6 +148,24 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  const refresh = async () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      apiClient.defaults.headers.common["Authorization"] = token;
+      const response = await apiClient.get("/member");
+
+      dispatch({
+        type: HANDLERS.INITIALIZE,
+        payload: response?.data,
+      });
+    } else {
+      dispatch({
+        type: HANDLERS.INITIALIZE,
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -155,6 +173,7 @@ export const AuthProvider = ({ children }) => {
         signIn,
         signUp,
         signOut,
+        refresh,
       }}
     >
       {children}

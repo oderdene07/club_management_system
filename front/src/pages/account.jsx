@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import { apiClient } from "@/api/apiClient";
 
 const Page = () => {
-  const { user } = useAuth();
+  const { user, refresh } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [member, setMember] = useState({
     first_name: "",
     last_name: "",
@@ -25,8 +26,11 @@ const Page = () => {
   }, [user]);
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     await apiClient.put("/member/" + user?.id, member);
+    refresh();
+    setIsLoading(false);
   };
 
   return (
@@ -56,6 +60,7 @@ const Page = () => {
                 </Grid>
                 <Grid xs={12} md={6} lg={7}>
                   <AccountProfileDetails
+                    isLoading={isLoading}
                     member={member}
                     setMember={setMember}
                     handleSubmit={handleSubmit}

@@ -1,8 +1,6 @@
 package email
 
-import (
-	"cms/app"
-)
+import "cms/app"
 
 func saveEmailVerificationCode(id int64, code string) error {
 	query := "INSERT INTO emails (type, code, member_id) VALUES ('verification', $1, $2)"

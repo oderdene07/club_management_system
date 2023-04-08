@@ -15,7 +15,11 @@ func SendVerificationEmail(id int64, email string) error {
 	url := "http://localhost:8080/verify/" + code
 	subject := "Verify your email address"
 	body := "Please use link below to verify your email address. :)\n" + url
-	SendEmail(subject, body, []string{email})
+	err = SendEmail(subject, body, []string{email})
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
 	return nil
 }
 

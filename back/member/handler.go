@@ -295,6 +295,23 @@ func UpdateMemberRole(c *gin.Context) {
 		return
 	}
 
+	member, err := getMemberByID(idInt)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
+	subject := "Role Changed"
+	body := "Your role has been changed to " + role
+
+	err = email.SendEmail(subject, body, []string{member.Email})
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
 	app.Responce(c, http.StatusOK, "Success", nil)
 }
 
