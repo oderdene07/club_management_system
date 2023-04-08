@@ -19,6 +19,7 @@ const formatDate = (date) => {
 
 export const MembersTable = ({ members, loading, refresh }) => {
   const isAdmin = useAuth().user?.role === "admin";
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -30,20 +31,23 @@ export const MembersTable = ({ members, loading, refresh }) => {
 
   const columns = useMemo(() => {
     const handleDelete = (id) => async () => {
+      setIsLoading(true);
       await apiClient.delete(`/member/${id}`);
       refresh();
+      setIsLoading(false);
     };
     const handleChangeRole = async (event, memberID) => {
+      setIsLoading(true);
       const role = event.target.value;
       await apiClient.put(`/member/${memberID}/${role}`);
       refresh();
+      setIsLoading(false);
     };
     return [
       {
         field: "Avatar",
         headerName: "Avatar",
-        flex: 1,
-        minWidth: 60,
+        width: 60,
         renderCell: (params) => (
           <Avatar
             src={
@@ -159,7 +163,7 @@ export const MembersTable = ({ members, loading, refresh }) => {
           },
         }}
         pageSizeOptions={[rowsPerPage]}
-        loading={loading}
+        loading={isLoading}
         onRowClick={(event) => handleMemberClick(event.row)}
         sx={{
           border: "none",

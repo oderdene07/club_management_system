@@ -95,6 +95,15 @@ func getMemberByEmail(email string) (*Member, error) {
 	return member, nil
 }
 
+func getMemberEmailByID(id int64) (string, error) {
+	var email string
+	err := app.DB.QueryRow("SELECT email FROM members WHERE id = $1", id).Scan(&email)
+	if err != nil {
+		return "", err
+	}
+	return email, nil
+}
+
 func updateMemberRole(id int64, memberRole string) error {
 	query := "UPDATE members SET role = $1 WHERE id = $2"
 	_, err := app.DB.Exec(query, memberRole, id)

@@ -295,22 +295,22 @@ func UpdateMemberRole(c *gin.Context) {
 		return
 	}
 
-	member, err := getMemberByID(idInt)
-	if err != nil {
-		app.ErrorLogger.Println(err)
-		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
-		return
-	}
+	// emailStr, err := getMemberEmailByID(idInt)
+	// if err != nil {
+	// 	app.ErrorLogger.Println(err)
+	// 	app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+	// 	return
+	// }
 
-	subject := "Role Changed"
-	body := "Your role has been changed to " + role
+	// subject := "Role Changed"
+	// body := "Your role has been changed to " + role + " on Club Management System."
 
-	err = email.SendEmail(subject, body, []string{member.Email})
-	if err != nil {
-		app.ErrorLogger.Println(err)
-		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
-		return
-	}
+	// err = email.SendEmail(subject, body, []string{emailStr})
+	// if err != nil {
+	// 	app.ErrorLogger.Println(err)
+	// 	app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+	// 	return
+	// }
 
 	app.Responce(c, http.StatusOK, "Success", nil)
 }
