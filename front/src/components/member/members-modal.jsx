@@ -5,7 +5,7 @@ import {
   DevicePhoneMobileIcon,
   EnvelopeIcon,
   XMarkIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 import { Avatar, Button, Card, Divider, Modal, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 

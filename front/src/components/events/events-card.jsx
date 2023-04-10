@@ -1,4 +1,4 @@
-import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { Box, Card, CardContent, CardMedia, Stack, SvgIcon, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { useState } from "react";

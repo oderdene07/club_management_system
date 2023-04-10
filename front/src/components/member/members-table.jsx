@@ -1,7 +1,7 @@
 import { apiClient } from "@/api/apiClient";
 import { useAuth } from "@/contexts/auth-context";
 import { getInitials } from "@/utils/get-initials";
-import { TrashIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { Avatar, Card, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import PropTypes from "prop-types";

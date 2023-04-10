@@ -1,6 +1,6 @@
 import { apiClient } from "@/api/apiClient";
 import { useAuth } from "@/contexts/auth-context";
-import { CameraIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { CameraIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   Card,

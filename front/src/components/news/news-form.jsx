@@ -1,4 +1,4 @@
-import { CameraIcon } from "@heroicons/react/24/solid";
+import { CameraIcon } from "@heroicons/react/24/outline";
 import { Box, Button, CardMedia, Stack, TextField, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import Editor from "./news-editor";

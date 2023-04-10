@@ -1,4 +1,4 @@
-import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 

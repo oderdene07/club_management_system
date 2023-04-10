@@ -1,7 +1,7 @@
 import { apiClient } from "@/api/apiClient";
 import { useAuth } from "@/contexts/auth-context";
 import { Layout as DashboardLayout } from "@/layouts/overview/layout";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Box, Button, CardMedia, Container, Stack, Typography } from "@mui/material";
 import Head from "next/head";
 import { useRouter } from "next/router";

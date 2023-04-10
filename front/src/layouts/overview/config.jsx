@@ -1,11 +1,11 @@
 import {
   CalendarDaysIcon,
   ChartBarIcon,
-  CogIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
   NewspaperIcon,
   UserGroupIcon,
   UserIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 import { SvgIcon } from "@mui/material";
 
 export const items = [
@@ -37,6 +37,15 @@ export const items = [
     ),
   },
   {
+    title: "Chat",
+    path: "/chat",
+    icon: (
+      <SvgIcon fontSize="small">
+        <ChatBubbleOvalLeftEllipsisIcon />
+      </SvgIcon>
+    ),
+  },
+  {
     title: "News",
     path: "/news",
     icon: (
@@ -51,15 +60,6 @@ export const items = [
     icon: (
       <SvgIcon fontSize="small">
         <UserIcon />
-      </SvgIcon>
-    ),
-  },
-  {
-    title: "Settings",
-    path: "/settings",
-    icon: (
-      <SvgIcon fontSize="small">
-        <CogIcon />
       </SvgIcon>
     ),
   },

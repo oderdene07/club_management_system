@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/auth-context";
 import { Layout as AuthLayout } from "@/layouts/auth/layout";
-import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/outline";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, Link, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
