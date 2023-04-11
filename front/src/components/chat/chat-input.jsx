@@ -20,9 +20,7 @@ const addMessage = async (user, message) => {
       avatar: process.env.NEXT_PUBLIC_API_URL + user.profile_picture,
     },
   };
-  console.log(newMessage);
-  const docRef = await addDoc(collection(db, "chat"), newMessage);
-  console.log("Document written with ID: ", docRef.id);
+  await addDoc(collection(db, "chat"), newMessage);
 };
 
 export const ChatInput = () => {
@@ -74,7 +72,12 @@ export const ChatInput = () => {
             onChange={handleChange}
           />
         </Stack>
-        <Button onClick={handleSend} variant="contained" endIcon={<PaperAirplaneIcon width={24} />}>
+        <Button
+          disabled={message.length === 0}
+          onClick={handleSend}
+          variant="contained"
+          endIcon={<PaperAirplaneIcon width={24} />}
+        >
           Send
         </Button>
       </Stack>

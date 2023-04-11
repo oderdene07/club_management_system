@@ -4,8 +4,15 @@ import { Avatar, Card, Stack, Typography } from "@mui/material";
 
 const dateFormat = (seconds) => {
   const date = new Date(seconds * 1000);
-
-  return date.toLocaleTimeString("en-US", {
+  if (date.toLocaleDateString() === new Date().toLocaleDateString()) {
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+    });
+  }
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
     hour: "numeric",
     minute: "numeric",
   });
