@@ -1,6 +1,6 @@
 import { apiClient } from "@/api/apiClient";
 import { useAuth } from "@/contexts/auth-context";
-import { CameraIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import { CameraIcon, ClockIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   Card,
@@ -20,13 +20,20 @@ import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInput
 import { useCallback, useEffect, useState } from "react";
 
 export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, refresh }) => {
-  const isAdmin = useAuth().user?.role === "admin";
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
   const [values, setValues] = useState({});
+  const [votes, setVotes] = useState({});
+  const [membersCount, setMembersCount] = useState(0);
+  const [memberVoteStatus, setMemberVoteStatus] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (selectedEvent)
+    if (selectedEvent && isModalVisible) {
+      getVoteStatus(selectedEvent?.id);
+      getMemberVoteStatus(selectedEvent?.id, user?.id);
+      getMembersCount();
       setValues({
         title: selectedEvent.title,
         description: selectedEvent.description,
@@ -35,7 +42,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
         end_date: new Date(selectedEvent.end_date),
         image: selectedEvent.image,
       });
-    else
+    } else {
       setValues({
         title: "",
         description: "",
@@ -44,7 +51,8 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
         end_date: null,
         image: "",
       });
-  }, [selectedEvent]);
+    }
+  }, [selectedEvent, isModalVisible, user]);
 
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
@@ -131,214 +139,315 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
     handleCloseModal();
   };
 
-  return (
-    <Modal
-      disableEnforceFocus
-      disableAutoFocus
-      disableRestoreFocus
-      open={isModalVisible}
-      onClose={handleCloseModal}
-    >
-      <Card
-        sx={{
-          p: {
-            xs: 2,
-            sm: 3,
-            md: 4,
-          },
-          position: "absolute",
-          top: "45%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          minWidth: 350,
-          maxWidth: 550,
-        }}
-      >
-        {isAdmin && (
-          <CardHeader
-            title={selectedEvent ? "Edit Event" : "Create Event"}
-            action={
-              selectedEvent && (
-                <Button onClick={handleDelete} color="error">
-                  Delete
-                </Button>
-              )
-            }
-            sx={{
-              padding: 0,
-              paddingBottom: 2,
-            }}
-          />
-        )}
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            {values.image ? (
-              <Stack alignItems="center">
-                <Tooltip title="Click to change image">
-                  <Button
-                    variant="outlined"
-                    component="label"
-                    sx={{
-                      padding: 0,
-                      width: "100%",
-                      overflow: "hidden",
-                      "&:hover": {
-                        opacity: 0.8,
-                      },
-                    }}
-                  >
-                    <input hidden accept="image/*" type="file" onChange={handleImageChange} />
-                    <CardMedia
-                      component="img"
-                      height={250}
-                      image={process.env.NEXT_PUBLIC_API_URL + values.image}
-                      alt="Event Image"
-                    />
-                  </Button>
-                </Tooltip>
-              </Stack>
-            ) : (
-              <Button
-                variant="outlined"
-                component="label"
-                startIcon={
-                  <CameraIcon
-                    style={{
-                      width: 28,
-                      height: 28,
-                    }}
-                  />
-                }
-              >
-                Upload Image ...
-                <input hidden accept="image/*" type="file" onChange={handleImageChange} />
-              </Button>
-            )}
-          </Grid>
+  const handleVote = async (vote) => {
+    if (selectedEvent === null) return;
+    try {
+      await apiClient.post("/event/vote", {
+        member_id: user.id,
+        event_id: selectedEvent.id,
+        status: vote,
+      });
+      await refresh();
+    } catch (err) {
+      console.error("Error voting for event: ", err);
+    }
+    handleCloseModal();
+  };
 
-          <Grid item xs={12}>
-            <TextField
-              error={error === "Title is required"}
-              required
-              fullWidth
-              label="Title"
-              name="title"
-              onChange={handleChange}
-              value={values.title}
-              {...(isAdmin ? {} : { focused: false })}
-              InputProps={{
-                readOnly: !isAdmin,
+  const getVoteStatus = async (id) => {
+    try {
+      const response = await apiClient.get("/event/" + id + "/vote");
+      setVotes(response.data);
+    } catch (err) {
+      console.error("Error getting vote for event: ", err);
+    }
+  };
+
+  const getMemberVoteStatus = async (eventID, userID) => {
+    try {
+      const response = await apiClient.get("/event/" + eventID + "/vote/" + userID);
+      setMemberVoteStatus(response.data);
+    } catch (err) {
+      console.error("Error getting vote for event: ", err);
+    }
+  };
+
+  const getMembersCount = async () => {
+    const res = await apiClient.get("/members/count");
+    setMembersCount(res.data);
+  };
+
+  return (
+    <>
+      <Modal
+        disableEnforceFocus
+        disableAutoFocus
+        disableRestoreFocus
+        open={isModalVisible}
+        onClose={handleCloseModal}
+      >
+        <Card
+          sx={{
+            p: {
+              xs: 2,
+              sm: 3,
+              md: 4,
+            },
+            position: "absolute",
+            top: "45%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            minWidth: 350,
+            maxWidth: 550,
+          }}
+        >
+          {isAdmin && (
+            <CardHeader
+              title={selectedEvent ? "Edit Event" : "Create Event"}
+              action={
+                selectedEvent && (
+                  <Button onClick={handleDelete} color="error">
+                    Delete
+                  </Button>
+                )
+              }
+              sx={{
+                padding: 0,
+                paddingBottom: 2,
               }}
             />
-            {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              multiline
-              maxRows={4}
-              fullWidth
-              label="Description"
-              name="description"
-              onChange={handleChange}
-              value={values.description}
-              {...(isAdmin ? {} : { focused: false })}
-              InputProps={{
-                readOnly: !isAdmin,
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Stack direction="row" alignItems="center">
-              <IconButton
-                color="warning"
-                disableRipple
-                sx={{
-                  bgcolor: "warning.light",
-                  marginRight: 2,
-                  cursor: "default",
-                  "&:hover": {
-                    bgcolor: "warning.light",
-                  },
-                }}
-              >
-                <MapPinIcon
-                  style={{
-                    width: 28,
-                    height: 28,
-                    color: "warning.main",
-                  }}
-                />
-              </IconButton>
+          )}
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              {values.image ? (
+                <Stack alignItems="center">
+                  <Tooltip title="Click to change image">
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      sx={{
+                        padding: 0,
+                        width: "100%",
+                        overflow: "hidden",
+                        "&:hover": {
+                          opacity: 0.8,
+                        },
+                      }}
+                    >
+                      <input hidden accept="image/*" type="file" onChange={handleImageChange} />
+                      <CardMedia
+                        component="img"
+                        height={250}
+                        image={process.env.NEXT_PUBLIC_API_URL + values.image}
+                        alt="Event Image"
+                      />
+                    </Button>
+                  </Tooltip>
+                </Stack>
+              ) : (
+                <Button
+                  variant="outlined"
+                  component="label"
+                  startIcon={
+                    <CameraIcon
+                      style={{
+                        width: 28,
+                        height: 28,
+                      }}
+                    />
+                  }
+                >
+                  Upload Image ...
+                  <input hidden accept="image/*" type="file" onChange={handleImageChange} />
+                </Button>
+              )}
+            </Grid>
+
+            <Grid item xs={12}>
               <TextField
+                error={error === "Title is required"}
+                required
                 fullWidth
-                label="Location"
-                name="location"
+                label="Title"
+                name="title"
                 onChange={handleChange}
-                value={values.location}
+                value={values.title}
                 {...(isAdmin ? {} : { focused: false })}
                 InputProps={{
                   readOnly: !isAdmin,
                 }}
               />
-            </Stack>
-          </Grid>
-          <Grid item xs={12}>
-            <Stack direction="row" alignItems="center">
-              <IconButton
-                color="warning"
-                disableRipple
-                sx={{
-                  bgcolor: "warning.light",
-                  marginRight: 2,
-                  cursor: "default",
-                  "&:hover": {
-                    bgcolor: "warning.light",
-                  },
-                }}
-              >
-                <ClockIcon
-                  style={{
-                    width: 28,
-                    height: 28,
-                    color: "warning.main",
-                  }}
-                />
-              </IconButton>
-              <MultiInputDateTimeRangeField
-                slotProps={{
-                  textField: ({ position }) => ({
-                    label: position === "start" ? "Check-in" : "Check-out",
-                  }),
-                }}
-                readOnly={!isAdmin}
-                value={[values.start_date, values.end_date]}
-                format="dd/MM/yyyy HH:mm"
-                onChange={(newValue) => {
-                  setValues((prevState) => ({
-                    ...prevState,
-                    start_date: newValue[0],
-                    end_date: newValue[1],
-                  }));
+              {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                multiline
+                maxRows={4}
+                fullWidth
+                label="Description"
+                name="description"
+                onChange={handleChange}
+                value={values.description}
+                {...(isAdmin ? {} : { focused: false })}
+                InputProps={{
+                  readOnly: !isAdmin,
                 }}
               />
-            </Stack>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Stack direction="row" alignItems="center">
+                <IconButton
+                  color="warning"
+                  disableRipple
+                  sx={{
+                    bgcolor: "warning.light",
+                    marginRight: 2,
+                    cursor: "default",
+                    "&:hover": {
+                      bgcolor: "warning.light",
+                    },
+                  }}
+                >
+                  <MapPinIcon
+                    style={{
+                      width: 28,
+                      height: 28,
+                      color: "warning.main",
+                    }}
+                  />
+                </IconButton>
+                <TextField
+                  fullWidth
+                  label="Location"
+                  name="location"
+                  onChange={handleChange}
+                  value={values.location}
+                  {...(isAdmin ? {} : { focused: false })}
+                  InputProps={{
+                    readOnly: !isAdmin,
+                  }}
+                />
+              </Stack>
+            </Grid>
+            {selectedEvent && (
+              <Grid item xs={12} md={8}>
+                <Stack direction="row" alignItems="center">
+                  <IconButton
+                    color="warning"
+                    disableRipple
+                    sx={{
+                      bgcolor: "warning.light",
+                      marginRight: 3,
+                      cursor: "default",
+                      "&:hover": {
+                        bgcolor: "warning.light",
+                      },
+                    }}
+                  >
+                    <UsersIcon
+                      style={{
+                        width: 28,
+                        height: 28,
+                        color: "warning.main",
+                      }}
+                    />
+                  </IconButton>
+                  <Stack>
+                    <Typography variant="body1">{membersCount} members</Typography>
+                    <Typography variant="caption">
+                      {votes.going} yes, {votes.not_going} no, {votes.maybe} maybe,{" "}
+                      {membersCount - votes.going - votes.not_going - votes.maybe} awaiting
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <Stack direction="row" alignItems="center">
+                <IconButton
+                  color="warning"
+                  disableRipple
+                  sx={{
+                    bgcolor: "warning.light",
+                    marginRight: 2,
+                    cursor: "default",
+                    "&:hover": {
+                      bgcolor: "warning.light",
+                    },
+                  }}
+                >
+                  <ClockIcon
+                    style={{
+                      width: 28,
+                      height: 28,
+                      color: "warning.main",
+                    }}
+                  />
+                </IconButton>
+                <MultiInputDateTimeRangeField
+                  slotProps={{
+                    textField: ({ position }) => ({
+                      label: position === "start" ? "Check-in" : "Check-out",
+                    }),
+                  }}
+                  readOnly={!isAdmin}
+                  value={[values.start_date, values.end_date]}
+                  format="dd/MM/yyyy HH:mm"
+                  onChange={(newValue) => {
+                    setValues((prevState) => ({
+                      ...prevState,
+                      start_date: newValue[0],
+                      end_date: newValue[1],
+                    }));
+                  }}
+                />
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
-        <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
+          <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
 
-        {isAdmin && (
-          <CardActions sx={{ p: 0, pt: 2, justifyContent: "flex-end" }}>
-            <Stack direction="row" spacing={2}>
-              <Button onClick={handleCloseModal} variant="outlined">
-                Close
-              </Button>
-              <Button onClick={handleSubmit} variant="contained">
-                Save details
-              </Button>
-            </Stack>
-          </CardActions>
-        )}
-      </Card>
-    </Modal>
+          {isAdmin ? (
+            <CardActions sx={{ p: 0, pt: 2, justifyContent: "flex-end" }}>
+              <Stack direction="row" spacing={2}>
+                <Button onClick={handleCloseModal} variant="outlined">
+                  Close
+                </Button>
+                <Button onClick={handleSubmit} variant="contained">
+                  Save details
+                </Button>
+              </Stack>
+            </CardActions>
+          ) : (
+            <CardActions sx={{ p: 0, pt: 2, justifyContent: "space-between" }}>
+              <Stack spacing={2}>
+                <Typography variant="body1" color="neutral.600">
+                  Going?
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  onClick={() => handleVote("going")}
+                  variant={memberVoteStatus === "going" ? "contained" : "outlined"}
+                >
+                  Yes
+                </Button>
+                <Button
+                  onClick={() => handleVote("not going")}
+                  variant={memberVoteStatus === "not going" ? "contained" : "outlined"}
+                >
+                  No
+                </Button>
+                <Button
+                  onClick={() => handleVote("maybe")}
+                  variant={memberVoteStatus === "maybe" ? "contained" : "outlined"}
+                >
+                  Maybe
+                </Button>
+              </Stack>
+            </CardActions>
+          )}
+        </Card>
+      </Modal>
+    </>
   );
 };

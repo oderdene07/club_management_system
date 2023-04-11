@@ -2,6 +2,7 @@ package main
 
 import (
 	"cms/app"
+	"cms/attendance"
 	"cms/event"
 	"cms/member"
 	"cms/news"
@@ -35,7 +36,6 @@ func routes() {
 	// r.POST("/reset", member.ResetPassword)
 	r.GET("/verify/:code", member.VerifyEmail)
 	r.POST("/resend", member.ResendVerificationCode)
-
 	// member
 	r.GET("/members", member.ValidateToken(), member.GetMembers)
 	r.GET("/members/count", member.ValidateToken(), member.GetMembersCount)
@@ -52,6 +52,10 @@ func routes() {
 	r.POST("/event", member.ValidateToken(), member.ValidateAdmin(), event.CreateEvent)
 	r.PUT("/event/:id", member.ValidateToken(), member.ValidateAdmin(), event.UpdateEvent)
 	r.DELETE("/event/:id", member.ValidateToken(), member.ValidateAdmin(), event.DeleteEvent)
+	// attendance
+	r.GET("/event/:id/vote", member.ValidateToken(), attendance.GetVoteEvent)
+	r.GET("/event/:id/vote/:memberID", member.ValidateToken(), attendance.GetMemberVoteStatus)
+	r.POST("/event/vote", member.ValidateToken(), attendance.VoteEvent)
 	// news
 	r.GET("/news", news.GetNews)
 	r.GET("/news/:id", news.GetNewsByID)
