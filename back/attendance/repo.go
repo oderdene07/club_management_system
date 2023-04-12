@@ -2,7 +2,28 @@ package attendance
 
 import "cms/app"
 
-func getEventAttendance(eventID, memberID int64) (string, error) {
+func getEventAttendance(eventID int64) ([]*EventAttendance, error) {
+	rows, err := app.DB.Query("SELECT * FROM event_attendance WHERE event_id = $1", eventID)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	eventAttendance := []*EventAttendance{}
+	for rows.Next() {
+		ea := &EventAttendance{}
+		err := rows.Scan(&ea.ID, &ea.MemberID, &ea.EventID, &ea.Status, &ea.Attended)
+		if err != nil {
+			return nil, err
+		}
+		eventAttendance = append(eventAttendance, ea)
+	}
+
+	return eventAttendance, nil
+}
+
+func getMemberEventAttendance(eventID, memberID int64) (string, error) {
 	var status string
 	err := app.DB.QueryRow("SELECT status FROM event_attendance WHERE event_id = $1 AND member_id = $2", eventID, memberID).Scan(&status)
 	if err != nil {

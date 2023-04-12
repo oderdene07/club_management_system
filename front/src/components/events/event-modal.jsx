@@ -17,11 +17,13 @@ import {
   Typography,
 } from "@mui/material";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
 export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, refresh }) => {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
+  const router = useRouter();
 
   const [values, setValues] = useState({});
   const [votes, setVotes] = useState({});
@@ -175,6 +177,10 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
   const getMembersCount = async () => {
     const res = await apiClient.get("/members/count");
     setMembersCount(res.data);
+  };
+
+  const handleAttendanceClick = () => {
+    router.push("/attendance/" + selectedEvent.id);
   };
 
   return (
@@ -331,7 +337,17 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
             </Grid>
             {selectedEvent && (
               <Grid item xs={12} md={8}>
-                <Stack direction="row" alignItems="center">
+                <Stack
+                  onClick={handleAttendanceClick}
+                  direction="row"
+                  alignItems="center"
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      opacity: 0.7,
+                    },
+                  }}
+                >
                   <IconButton
                     color="warning"
                     disableRipple

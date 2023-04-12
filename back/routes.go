@@ -53,6 +53,7 @@ func routes() {
 	r.PUT("/event/:id", member.ValidateToken(), member.ValidateAdmin(), event.UpdateEvent)
 	r.DELETE("/event/:id", member.ValidateToken(), member.ValidateAdmin(), event.DeleteEvent)
 	// attendance
+	r.GET("/event/:id/attendance", member.ValidateToken(), attendance.GetEventAttendance)
 	r.GET("/event/:id/vote", member.ValidateToken(), attendance.GetVoteEvent)
 	r.GET("/event/:id/vote/:memberID", member.ValidateToken(), attendance.GetMemberVoteStatus)
 	r.POST("/event/vote", member.ValidateToken(), attendance.VoteEvent)
