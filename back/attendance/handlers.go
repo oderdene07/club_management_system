@@ -44,6 +44,27 @@ func GetEventAttendance(c *gin.Context) {
 	app.Responce(c, http.StatusOK, "Success", eventAttendanceResponseList)
 }
 
+func UpdateEventAttendanceByEventID(c *gin.Context) {
+	var eventAttendances EventAttendances
+	err := c.BindJSON(&eventAttendances)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusBadRequest, err.Error(), nil)
+		return
+	}
+
+	for _, ea := range eventAttendances {
+		err = updateEventAttendanceByEventID(ea)
+		if err != nil {
+			app.ErrorLogger.Println(err)
+			app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+			return
+		}
+	}
+
+	app.Responce(c, http.StatusOK, "Success", nil)
+}
+
 func VoteEvent(c *gin.Context) {
 	var eventAttendance EventAttendance
 	err := c.BindJSON(&eventAttendance)

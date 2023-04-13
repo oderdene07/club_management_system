@@ -23,6 +23,15 @@ func getEventAttendance(eventID int64) ([]*EventAttendance, error) {
 	return eventAttendance, nil
 }
 
+func updateEventAttendanceByEventID(eventAttendance EventAttendance) error {
+	_, err := app.DB.Exec("UPDATE event_attendance SET attended = $1 WHERE id = $2", eventAttendance.Attended, eventAttendance.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func getMemberEventAttendance(eventID, memberID int64) (string, error) {
 	var status string
 	err := app.DB.QueryRow("SELECT status FROM event_attendance WHERE event_id = $1 AND member_id = $2", eventID, memberID).Scan(&status)

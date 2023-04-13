@@ -10,6 +10,8 @@ type EventAttendance struct {
 	Attended bool   `json:"attended"`
 }
 
+type EventAttendances []EventAttendance
+
 type EventAttendanceResponse struct {
 	ID       int64         `json:"id"`
 	Status   string        `json:"status"`

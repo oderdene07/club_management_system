@@ -57,6 +57,7 @@ func routes() {
 	r.GET("/event/:id/vote", member.ValidateToken(), attendance.GetVoteEvent)
 	r.GET("/event/:id/vote/:memberID", member.ValidateToken(), attendance.GetMemberVoteStatus)
 	r.POST("/event/vote", member.ValidateToken(), attendance.VoteEvent)
+	r.PUT("/event/:id/attendance", member.ValidateToken(), attendance.UpdateEventAttendanceByEventID)
 	// news
 	r.GET("/news", news.GetNews)
 	r.GET("/news/:id", news.GetNewsByID)
