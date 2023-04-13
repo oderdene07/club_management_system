@@ -2,6 +2,8 @@ package email
 
 import (
 	"cms/app"
+	"cms/event"
+	"time"
 )
 
 func SendVerificationEmail(id int64, email string) error {
@@ -44,4 +46,32 @@ func VerifyEmail(code string) (int64, error) {
 		return 0, err
 	}
 	return id, nil
+}
+
+func StringToTime(date string) time.Time {
+	t, err := time.Parse(time.RFC3339, date)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return time.Time{}
+	}
+	return t
+}
+
+func SendEmailForUpcomingEvents(email string, events []*event.Event) error {
+	subject := "Upcoming Events"
+	body := "Upcoming Events:\n"
+	for _, event := range events {
+		date := StringToTime(event.StartDate)
+		body += "Event: " + event.Title + "\n" + "When: " + date.Format(time.RFC1123) + "\n" + "Where: " + event.Location + "\n" + "Description: " + event.Description + "\n\n"
+	}
+	// log.Println("email", email)
+	// log.Println("subject", subject)
+	// log.Println("body", body)
+
+	err := SendEmail(subject, body, []string{email})
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+	return nil
 }

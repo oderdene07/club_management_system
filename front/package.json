@@ -1,6 +1,7 @@
 {
   "name": "club_management_system",
   "version": "3.0.0",
+  "license": "MIT",
   "private": false,
   "scripts": {
     "dev": "next",

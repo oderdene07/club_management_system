@@ -66,3 +66,22 @@ func deleteEvent(id int64) error {
 	}
 	return nil
 }
+
+func getUpcomingEvents() ([]*Event, error) {
+	events := []*Event{}
+	rows, err := app.DB.Query("SELECT * FROM events WHERE start_date > NOW()")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		event := &Event{}
+		err := rows.Scan(&event.ID, &event.Title, &event.StartDate, &event.EndDate, &event.Location, &event.Description, &event.Image)
+		if err != nil {
+			return nil, err
+		}
+		events = append(events, event)
+	}
+	return events, nil
+}
