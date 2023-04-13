@@ -1,6 +1,6 @@
 import db from "@/firebase/config";
 import { collection, limit, onSnapshot, orderBy, query } from "@firebase/firestore";
-import { Stack } from "@mui/material";
+import { CircularProgress, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ChatInput } from "./chat-input";
 import { ChatMessage } from "./chat-message";
@@ -27,9 +27,13 @@ export const ChatBox = () => {
   return (
     <Stack height="calc(100% - 72px)" mt={2}>
       <Stack flex={1}>
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message.data()} />
-        ))}
+        {messages.length !== 0 ? (
+          messages.map((message) => <ChatMessage key={message.id} message={message.data()} />)
+        ) : (
+          <Stack width="100%" height="100%" alignItems="center" justifyContent="center">
+            <CircularProgress />
+          </Stack>
+        )}
       </Stack>
       <Box
         ref={(el) => {
