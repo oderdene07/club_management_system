@@ -4,7 +4,6 @@ import (
 	"cms/app"
 	"cms/email"
 	"cms/event"
-	"log"
 )
 
 func ServiceGetMemberByID(id int64) (*Member, error) {
@@ -16,7 +15,7 @@ func ServiceGetMembers() ([]*Member, error) {
 }
 
 func SendEmailForUpcomingEvents() {
-	log.Println("Sending email for upcoming events...")
+	app.InfoLogger.Println("Sending email for upcoming events")
 	members, err := getMembers()
 	if err != nil {
 		app.ErrorLogger.Println(err)
