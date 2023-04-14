@@ -237,10 +237,27 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
           )}
           <Grid container spacing={3}>
             <Grid item xs={12}>
+              <TextField
+                error={error === "Title is required"}
+                required
+                fullWidth
+                label="Title"
+                name="title"
+                onChange={handleChange}
+                value={values.title}
+                {...(isAdmin ? {} : { focused: false })}
+                InputProps={{
+                  readOnly: !isAdmin,
+                }}
+              />
+              {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
+            </Grid>
+            <Grid item xs={12}>
               {values.image ? (
                 <Stack alignItems="center">
                   <Tooltip title="Click to change image">
                     <Button
+                      disabled={!isAdmin}
                       variant="outlined"
                       component="label"
                       sx={{
@@ -281,22 +298,6 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
               )}
             </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                error={error === "Title is required"}
-                required
-                fullWidth
-                label="Title"
-                name="title"
-                onChange={handleChange}
-                value={values.title}
-                {...(isAdmin ? {} : { focused: false })}
-                InputProps={{
-                  readOnly: !isAdmin,
-                }}
-              />
-              {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 multiline

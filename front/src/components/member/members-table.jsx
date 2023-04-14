@@ -2,7 +2,7 @@ import { apiClient } from "@/api/apiClient";
 import { useAuth } from "@/contexts/auth-context";
 import { getInitials } from "@/utils/get-initials";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { Avatar, Card, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Avatar, Card, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
@@ -117,7 +117,20 @@ export const MembersTable = ({ members, refresh }) => {
               </Select>
             </FormControl>
           ) : (
-            row.role
+            <Typography
+              color={
+                row.role === "admin"
+                  ? "primary.main"
+                  : row.role === "member"
+                  ? "info.main"
+                  : row.role === "request"
+                  ? "warning.main"
+                  : "error.main"
+              }
+              variant="overline"
+            >
+              {row.role}
+            </Typography>
           );
         },
       },
