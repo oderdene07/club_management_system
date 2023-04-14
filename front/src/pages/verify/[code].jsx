@@ -10,13 +10,20 @@ const Page = () => {
   const router = useRouter();
   const code = router.query.code;
 
-  const verify = async (code) => {
-    apiClient.get(`/verify/${code}`);
-  };
-
   useEffect(() => {
-    if (code) verify(code);
-  }, [code]);
+    async function verify(code) {
+      if (!code) return;
+      try {
+        await apiClient.get(`/verify/${code}`);
+      } catch (error) {
+        console.log(error);
+        if (error) {
+          router.push("/auth/login");
+        }
+      }
+    }
+    verify(code);
+  }, [code, router]);
 
   return (
     <>
