@@ -7,8 +7,8 @@ const firebaseConfig = {
   projectId: "club-management-system-d474b",
   storageBucket: "club-management-system-d474b.appspot.com",
   messagingSenderId: "336669191655",
-  appId: "1:336669191655:web:bba1a88e727314e5e1e142",
-  measurementId: "G-35KFRTWWFP",
+  appId: "1:336669191655:web:fb3d0e1497704736e1e142",
+  measurementId: "G-GBE33NWRJD",
 };
 
 const app = initializeApp(firebaseConfig);
