@@ -2,6 +2,7 @@ package member
 
 import (
 	"cms/app"
+	"cms/email"
 	"regexp"
 
 	"github.com/golang-jwt/jwt"
@@ -47,4 +48,42 @@ func (m *Member) CopyFromSignUp(s *SignUpData) {
 	m.LastName = s.LastName
 	m.Email = s.Email
 	m.Password = s.Password
+}
+
+func getMemberFullNameByID(id int64) (string, error) {
+	member, err := getMemberByID(id)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return "", err
+	}
+	return member.FirstName + " " + member.LastName, nil
+}
+
+func sendEmailToAdmin(id int64) {
+	adminEmails, err := getAdminEmails()
+	if err != nil {
+		app.ErrorLogger.Println(err)
+	}
+
+	name, err := getMemberFullNameByID(id)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+	}
+
+	err = email.SendEmailToAdmin(adminEmails, name)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+	}
+}
+
+func sendEmailForRoleUpdate(id int64, role string) {
+	member, err := getMemberByID(id)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+	}
+
+	err = email.SendEmailForRoleUpdate(member.Email, role)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+	}
 }

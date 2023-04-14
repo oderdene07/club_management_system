@@ -241,6 +241,8 @@ func VerifyEmail(c *gin.Context) {
 		return
 	}
 
+	go sendEmailToAdmin(id)
+
 	app.Responce(c, http.StatusOK, "Success", nil)
 }
 
@@ -295,22 +297,7 @@ func UpdateMemberRole(c *gin.Context) {
 		return
 	}
 
-	// emailStr, err := getMemberEmailByID(idInt)
-	// if err != nil {
-	// 	app.ErrorLogger.Println(err)
-	// 	app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
-	// 	return
-	// }
-
-	// subject := "Role Changed"
-	// body := "Your role has been changed to " + role + " on Club Management System."
-
-	// err = email.SendEmail(subject, body, []string{emailStr})
-	// if err != nil {
-	// 	app.ErrorLogger.Println(err)
-	// 	app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
-	// 	return
-	// }
+	go sendEmailForRoleUpdate(idInt, role)
 
 	app.Responce(c, http.StatusOK, "Success", nil)
 }

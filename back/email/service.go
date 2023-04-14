@@ -47,6 +47,17 @@ func VerifyEmail(code string) (int64, error) {
 	return id, nil
 }
 
+func SendEmailToAdmin(adminEmails []string, name string) error {
+	subject := "New member request"
+	body := "New member request from " + name + ".\n" + "Please check your admin panel."
+	err := SendEmail(subject, body, adminEmails)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+	return nil
+}
+
 func SendEmailForUpcomingEvents(email string, events []*event.Event) error {
 	subject := "Upcoming Events"
 	body := "Upcoming Events:\n\n"
@@ -54,6 +65,18 @@ func SendEmailForUpcomingEvents(email string, events []*event.Event) error {
 		date := event.StartDate
 		body += "Event: " + event.Title + "\n" + "When: " + date.Format("Mon, 02 Jan 2006 15:04:05") + "\n" + "Where: " + event.Location + "\n" + "Description: " + event.Description + "\n\n"
 	}
+
+	err := SendEmail(subject, body, []string{email})
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+	return nil
+}
+
+func SendEmailForRoleUpdate(email string, role string) error {
+	subject := "Role Changed"
+	body := "Your role has been changed to " + role + " on Club Management System."
 
 	err := SendEmail(subject, body, []string{email})
 	if err != nil {

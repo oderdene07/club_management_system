@@ -95,6 +95,23 @@ func getMemberByEmail(email string) (*Member, error) {
 	return member, nil
 }
 
+func getAdminEmails() (emails []string, err error) {
+	rows, err := app.DB.Query("SELECT email FROM members WHERE role = 'admin'")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var email string
+		err := rows.Scan(&email)
+		if err != nil {
+			return nil, err
+		}
+		emails = append(emails, email)
+	}
+	return emails, err
+}
+
 // func getMemberEmailByID(id int64) (string, error) {
 // 	var email string
 // 	err := app.DB.QueryRow("SELECT email FROM members WHERE id = $1", id).Scan(&email)
