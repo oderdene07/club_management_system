@@ -19,6 +19,7 @@ import {
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+import { keyframes } from "styled-components";
 
 export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, refresh }) => {
   const { user } = useAuth();
@@ -205,6 +206,17 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
             transform: "translate(-50%, -50%)",
             minWidth: 350,
             maxWidth: 550,
+            animation: "fade 0.3s ease-in-out",
+            "@keyframes fade": {
+              "0%": {
+                opacity: 0,
+                transition: "opacity 0.3s ease-in-out",
+              },
+              "100%": {
+                opacity: 1,
+                transition: "opacity 0.3s ease-in-out",
+              },
+            },
           }}
         >
           {isAdmin && (

@@ -37,6 +37,11 @@ export const EventCard = ({ event, refresh }) => {
           color: "neutral.400",
           minWidth: 270,
           cursor: "pointer",
+          transition: "transform .3s ease-in-out",
+          ":hover": {
+            backgroundColor: "transparent",
+            transform: "scale(1.04)",
+          },
         }}
         onClick={() => handleEventClick(event)}
       >
