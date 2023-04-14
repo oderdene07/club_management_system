@@ -17,7 +17,7 @@ const formatDate = (date) => {
   })}, ${d.getFullYear()}`;
 };
 
-export const MembersTable = ({ members, loading, refresh }) => {
+export const MembersTable = ({ members, refresh }) => {
   const isAdmin = useAuth().user?.role === "admin";
   const [isLoading, setIsLoading] = useState(false);
 

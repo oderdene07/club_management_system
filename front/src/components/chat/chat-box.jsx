@@ -1,10 +1,10 @@
 import db from "@/firebase/config";
 import { collection, limit, onSnapshot, orderBy, query } from "@firebase/firestore";
 import { CircularProgress, Stack } from "@mui/material";
+import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { ChatInput } from "./chat-input";
 import { ChatMessage } from "./chat-message";
-import { Box } from "@mui/system";
 
 export const ChatBox = () => {
   const [messages, setMessages] = useState([]);

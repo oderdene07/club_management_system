@@ -7,10 +7,10 @@ function usePagination(data, itemsPerPage) {
   function currentData() {
     const begin = (currentPage - 1) * itemsPerPage;
     const end = begin + itemsPerPage;
-    data.slice(begin, end);
-    data.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
-    data.reverse();
-    return data;
+    const result = data.slice(begin, end);
+    result.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
+    result.reverse();
+    return result;
   }
 
   function next() {

@@ -8,13 +8,10 @@ import { useEffect, useState } from "react";
 
 const Page = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const getMembers = async () => {
-    setLoading(true);
     const res = await apiClient.get("/members");
     setData(res.data);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -22,7 +19,14 @@ const Page = () => {
   }, []);
 
   const handleSearch = (value) => {
-    console.log(value);
+    if (value === "") {
+      getMembers();
+      return;
+    }
+    const filteredData = data.filter((member) =>
+      member.first_name.toLowerCase().includes(value.toLowerCase())
+    );
+    setData(filteredData);
   };
 
   return (
@@ -47,7 +51,7 @@ const Page = () => {
                 <MembersSearch onChange={(value) => handleSearch(value)} />
               </Stack>
             </Stack>
-            <MembersTable members={data} loading={loading} refresh={getMembers} />
+            <MembersTable members={data} refresh={getMembers} />
           </Stack>
         </Container>
       </Box>

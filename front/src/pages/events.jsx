@@ -87,7 +87,14 @@ const Page = () => {
   };
 
   const handleSearch = (value) => {
-    console.log(value);
+    if (!value) {
+      getEvents();
+      return;
+    }
+    const filteredData = data.filter((event) =>
+      event.title.toLowerCase().includes(value.toLowerCase())
+    );
+    setData(filteredData);
   };
 
   return (
