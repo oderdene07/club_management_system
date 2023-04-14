@@ -22,15 +22,20 @@ func SendEmailForUpcomingEvents() {
 		return
 	}
 
-	events, err := event.ServiceGetUpcomingEvents()
+	upcomingEvents, err := event.ServiceGetUpcomingEvents()
 	if err != nil {
 		app.ErrorLogger.Println(err)
 		return
 	}
 
+	if upcomingEvents == nil {
+		app.InfoLogger.Println("No upcoming events")
+		return
+	}
+
 	for _, member := range members {
 		if member.Email != "" {
-			err = email.SendEmailForUpcomingEvents(member.Email, events)
+			err = email.SendEmailForUpcomingEvents(member.Email, upcomingEvents)
 			if err != nil {
 				app.ErrorLogger.Println(err)
 				return

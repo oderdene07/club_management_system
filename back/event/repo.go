@@ -2,6 +2,7 @@ package event
 
 import (
 	"cms/app"
+	"database/sql"
 )
 
 func getEvents() ([]*Event, error) {
@@ -79,6 +80,9 @@ func getUpcomingEvents() ([]*Event, error) {
 		event := &Event{}
 		err := rows.Scan(&event.ID, &event.Title, &event.StartDate, &event.EndDate, &event.Location, &event.Description, &event.Image)
 		if err != nil {
+			if err == sql.ErrNoRows {
+				return nil, nil
+			}
 			return nil, err
 		}
 		events = append(events, event)

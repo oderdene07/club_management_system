@@ -10,12 +10,18 @@ import (
 )
 
 func main() {
+	loc, err := time.LoadLocation("Asia/Ulaanbaatar")
+	if err != nil {
+		app.ErrorLogger.Println(err)
+	}
+	time.Local = loc
+
 	app.InitDB()
 	app.InitLog()
 	app.InfoLogger.Println("connected to database")
 
 	scheduler := gocron.NewScheduler(time.UTC)
-	_, err := scheduler.Every(1).Day().At("18:00").Do(member.SendEmailForUpcomingEvents)
+	_, err = scheduler.Every(1).Day().At("18:00").Do(member.SendEmailForUpcomingEvents)
 	if err != nil {
 		app.ErrorLogger.Println(err)
 	}
