@@ -1,4 +1,5 @@
 import { apiClient } from "@/api/apiClient";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   Card,
@@ -8,11 +9,13 @@ import {
   Divider,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useCallback, useState } from "react";
 
 export const AccountPassword = ({ member }) => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
   const [values, setValues] = useState({
     password: "",
     confirm: "",
@@ -34,9 +37,20 @@ export const AccountPassword = ({ member }) => {
   const handleSubmit = async () => {
     if (values.password !== values.confirm) {
       setError(true);
+      setErrorMessage("Passwords do not match");
       return;
     }
-    await apiClient.post(`/member/password`, changePasswordData);
+    try {
+      await apiClient.post(`/member/password`, changePasswordData);
+      setValues({
+        password: "",
+        confirm: "",
+      });
+    } catch (error) {
+      console.log(error.response.data.message);
+      setError(true);
+      setErrorMessage(error.response.data.message);
+    }
   };
 
   return (
@@ -46,6 +60,11 @@ export const AccountPassword = ({ member }) => {
         <Divider />
         <CardContent>
           <Stack spacing={3} sx={{ maxWidth: 400 }}>
+            {error && errorMessage && (
+              <Typography color="error" variant="body2">
+                {errorMessage}
+              </Typography>
+            )}
             <TextField
               fullWidth
               autoComplete="off"
@@ -67,9 +86,14 @@ export const AccountPassword = ({ member }) => {
             />
           </Stack>
         </CardContent>
-        <Divider />
+        <Divider sx={{ borderColor: "primary.light" }} />
         <CardActions sx={{ padding: 3, paddingTop: 1, justifyContent: "flex-end" }}>
-          <Button onClick={handleSubmit} variant="contained">
+          <Button
+            disabled={values.confirm.length === 0}
+            startIcon={<PencilSquareIcon width={20} />}
+            onClick={handleSubmit}
+            variant="contained"
+          >
             Update
           </Button>
         </CardActions>

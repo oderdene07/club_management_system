@@ -32,6 +32,7 @@ const Page = () => {
     await apiClient.put("/member/" + user?.id, member);
     refresh();
     setIsLoading(false);
+    setIsChanged(false);
   };
 
   return (
