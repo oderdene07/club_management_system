@@ -24,7 +24,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -124,7 +124,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
       return;
     }
     if (selectedEvent)
-      updateEvent({
+      await updateEvent({
         id: selectedEvent.id,
         title: values.title,
         description: values.description,
@@ -133,7 +133,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
         end_date: values.end_date,
         image: values.image,
       });
-    else addEvent(values);
+    else await addEvent(values);
     handleCloseModal();
     setValues({
       title: "",
@@ -433,20 +433,32 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                     }}
                   />
                 </IconButton>
-                <MultiInputDateTimeRangeField
-                  slotProps={{
-                    textField: ({ position }) => ({
-                      label: position === "start" ? "Check-in" : "Check-out",
-                    }),
-                  }}
+                <DateTimePicker
+                  value={values.start_date}
+                  label="Check-in"
                   readOnly={!isAdmin}
-                  value={[values.start_date, values.end_date]}
                   format="dd/MM/yyyy HH:mm"
                   onChange={(newValue) => {
+                    setIsChanged(true);
                     setValues((prevState) => ({
                       ...prevState,
-                      start_date: newValue[0],
-                      end_date: newValue[1],
+                      start_date: newValue,
+                    }));
+                  }}
+                />
+                <Typography mx={1} variant="body1" color="neutral.600">
+                  to
+                </Typography>
+                <DateTimePicker
+                  value={values.end_date}
+                  label="Check-out"
+                  readOnly={!isAdmin}
+                  format="dd/MM/yyyy HH:mm"
+                  onChange={(newValue) => {
+                    setIsChanged(true);
+                    setValues((prevState) => ({
+                      ...prevState,
+                      end_date: newValue,
                     }));
                   }}
                 />
