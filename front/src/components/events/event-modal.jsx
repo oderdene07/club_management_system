@@ -412,56 +412,65 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
               </Grid>
             )}
             <Grid item xs={12}>
-              <Stack direction="row" alignItems="center">
-                <IconButton
-                  color="warning"
-                  disableRipple
-                  sx={{
-                    bgcolor: "warning.light",
-                    marginRight: 2,
-                    cursor: "default",
-                    "&:hover": {
+              <Stack direction="row" flexWrap={{ xs: "wrap", lg: "nowrap" }}>
+                <Stack direction="row" alignItems="center">
+                  <IconButton
+                    color="warning"
+                    disableRipple
+                    sx={{
                       bgcolor: "warning.light",
-                    },
-                  }}
-                >
-                  <ClockIcon
-                    style={{
-                      width: 28,
-                      height: 28,
-                      color: "warning.main",
+                      marginRight: 2,
+                      cursor: "default",
+                      "&:hover": {
+                        bgcolor: "warning.light",
+                      },
+                    }}
+                  >
+                    <ClockIcon
+                      style={{
+                        width: 28,
+                        height: 28,
+                        color: "warning.main",
+                      }}
+                    />
+                  </IconButton>
+                  <DateTimePicker
+                    value={values.start_date}
+                    label="Check-in"
+                    readOnly={!isAdmin}
+                    format="dd/MM/yyyy HH:mm"
+                    onChange={(newValue) => {
+                      setIsChanged(true);
+                      setValues((prevState) => ({
+                        ...prevState,
+                        start_date: newValue,
+                      }));
                     }}
                   />
-                </IconButton>
-                <DateTimePicker
-                  value={values.start_date}
-                  label="Check-in"
-                  readOnly={!isAdmin}
-                  format="dd/MM/yyyy HH:mm"
-                  onChange={(newValue) => {
-                    setIsChanged(true);
-                    setValues((prevState) => ({
-                      ...prevState,
-                      start_date: newValue,
-                    }));
+                  <Typography mx={2} variant="body1" color="neutral.600">
+                    -
+                  </Typography>
+                </Stack>
+                <Stack
+                  ml={{
+                    xs: 7.5,
+                    lg: 0,
                   }}
-                />
-                <Typography mx={1} variant="body1" color="neutral.600">
-                  to
-                </Typography>
-                <DateTimePicker
-                  value={values.end_date}
-                  label="Check-out"
-                  readOnly={!isAdmin}
-                  format="dd/MM/yyyy HH:mm"
-                  onChange={(newValue) => {
-                    setIsChanged(true);
-                    setValues((prevState) => ({
-                      ...prevState,
-                      end_date: newValue,
-                    }));
-                  }}
-                />
+                >
+                  <DateTimePicker
+                    value={values.end_date}
+                    label="Check-out"
+                    readOnly={!isAdmin}
+                    format="dd/MM/yyyy HH:mm"
+                    onChange={(newValue) => {
+                      setIsChanged(true);
+                      setValues((prevState) => ({
+                        ...prevState,
+                        end_date: newValue,
+                      }));
+                    }}
+                  />
+                </Stack>
               </Stack>
             </Grid>
           </Grid>
