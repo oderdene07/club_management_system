@@ -7,6 +7,7 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  Grid,
   Stack,
   SvgIcon,
 } from "@mui/material";
@@ -24,9 +25,9 @@ export const OverviewEventsList = (props) => {
       <CardContent>
         <Stack spacing={3} direction="row" alignItems="center" overflow="auto" padding={1}>
           {events.map((event) => (
-            <Box key={event.id}>
+            <Grid width={320} item key={event.id}>
               <EventCard event={event} />
-            </Box>
+            </Grid>
           ))}
         </Stack>
       </CardContent>

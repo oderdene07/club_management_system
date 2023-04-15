@@ -121,7 +121,9 @@ const Page = () => {
               ? "warning.main"
               : params.row.status === "going"
               ? "success.main"
-              : "error.main"
+              : params.row.status === "not going"
+              ? "error.main"
+              : "neutral.400"
           }
         >
           {params.row.status}
@@ -161,7 +163,7 @@ const Page = () => {
                 <Typography fontSize="1.2rem" variant="overline">
                   Event: <i>{event?.title}</i>
                 </Typography>
-                <Typography fontSize="1.2rem" variant="caption">
+                <Typography fontSize="1.2rem" variant="caption" color="neutral.600">
                   Date: <i>{dateFormatter(event?.start_date, event?.end_date)}</i>
                 </Typography>
               </Stack>

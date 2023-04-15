@@ -1,6 +1,14 @@
 import { apiClient } from "@/api/apiClient";
 import { useAuth } from "@/contexts/auth-context";
-import { CameraIcon, ClockIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowTopRightOnSquareIcon,
+  CameraIcon,
+  ClockIcon,
+  DocumentCheckIcon,
+  MapPinIcon,
+  TrashIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
 import {
   Button,
   Card,
@@ -18,8 +26,7 @@ import {
 } from "@mui/material";
 import { MultiInputDateTimeRangeField } from "@mui/x-date-pickers-pro/MultiInputDateTimeRangeField";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
-import { keyframes } from "styled-components";
+import { useEffect, useState } from "react";
 
 export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, refresh }) => {
   const { user } = useAuth();
@@ -30,6 +37,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
   const [votes, setVotes] = useState({});
   const [membersCount, setMembersCount] = useState(0);
   const [memberVoteStatus, setMemberVoteStatus] = useState("");
+  const [isChanged, setIsChanged] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -58,6 +66,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
   }, [selectedEvent, isModalVisible, user]);
 
   const handleImageChange = async (event) => {
+    setIsChanged(true);
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
@@ -72,15 +81,14 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
     }));
   };
 
-  const handleChange = useCallback(
-    (event) => {
-      setValues((prevState) => ({
-        ...prevState,
-        [event.target.name]: event.target.value,
-      }));
-    },
-    [setValues]
-  );
+  const handleChange = (event) => {
+    setIsChanged(true);
+    const { name, value } = event.target;
+    setValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const addEvent = async (event) => {
     try {
@@ -110,6 +118,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
   };
 
   const handleSubmit = async () => {
+    setIsChanged(false);
     if (values.title === "") {
       setError("Title is required");
       return;
@@ -144,17 +153,18 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
 
   const handleVote = async (vote) => {
     if (selectedEvent === null) return;
+    if (memberVoteStatus === vote) vote = "not responded";
     try {
       await apiClient.post("/event/vote", {
         member_id: user.id,
         event_id: selectedEvent.id,
         status: vote,
       });
-      await refresh();
+      await getVoteStatus(selectedEvent.id);
+      await getMemberVoteStatus(selectedEvent.id, user.id);
     } catch (err) {
       console.error("Error voting for event: ", err);
     }
-    handleCloseModal();
   };
 
   const getVoteStatus = async (id) => {
@@ -201,7 +211,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
               md: 4,
             },
             position: "absolute",
-            top: "45%",
+            top: "47%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             minWidth: 350,
@@ -223,11 +233,16 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
             <CardHeader
               title={selectedEvent ? "Edit Event" : "Create Event"}
               action={
-                selectedEvent && (
-                  <Button onClick={handleDelete} color="error">
-                    Delete
-                  </Button>
-                )
+                <>
+                  {selectedEvent && (
+                    <IconButton onClick={handleDelete} color="error">
+                      <TrashIcon width={28} />
+                    </IconButton>
+                  )}
+                  <IconButton onClick={handleSubmit} color="primary" disabled={!isChanged}>
+                    <DocumentCheckIcon width={28} />
+                  </IconButton>
+                </>
               }
               sx={{
                 padding: 0,
@@ -235,20 +250,19 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
               }}
             />
           )}
+
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
                 error={error === "Title is required"}
-                required
                 fullWidth
                 label="Title"
                 name="title"
                 onChange={handleChange}
                 value={values.title}
                 {...(isAdmin ? {} : { focused: false })}
-                InputProps={{
-                  readOnly: !isAdmin,
-                }}
+                inputProps={{ style: { fontSize: 24 } }}
+                InputProps={{ readOnly: !isAdmin }}
               />
               {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
             </Grid>
@@ -272,7 +286,6 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                       <input hidden accept="image/*" type="file" onChange={handleImageChange} />
                       <CardMedia
                         component="img"
-                        height={250}
                         image={process.env.NEXT_PUBLIC_API_URL + values.image}
                         alt="Event Image"
                       />
@@ -350,24 +363,13 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
             </Grid>
             {selectedEvent && (
               <Grid item xs={12} md={8}>
-                <Stack
-                  onClick={handleAttendanceClick}
-                  direction="row"
-                  alignItems="center"
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": {
-                      opacity: 0.7,
-                    },
-                  }}
-                >
+                <Stack onClick={handleAttendanceClick} direction="row" alignItems="center">
                   <IconButton
                     color="warning"
                     disableRipple
                     sx={{
                       bgcolor: "warning.light",
-                      marginRight: 3,
-                      cursor: "default",
+                      marginRight: 2,
                       "&:hover": {
                         bgcolor: "warning.light",
                       },
@@ -381,9 +383,27 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                       }}
                     />
                   </IconButton>
-                  <Stack>
-                    <Typography variant="body1">{membersCount} members</Typography>
-                    <Typography variant="caption">
+                  <Stack
+                    spacing={0.5}
+                    p="6px 12px 8px 12px"
+                    border="1px solid"
+                    borderRadius={1}
+                    borderColor="neutral.200"
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": {
+                        bgcolor: "action.hover",
+                      },
+                    }}
+                  >
+                    <Stack direction="row" alignItems="center" justifyContent="space-between">
+                      <Typography variant="body2" color="neutral.500" fontWeight={500}>
+                        {membersCount} Members
+                      </Typography>
+                      <ArrowTopRightOnSquareIcon width={15} />
+                    </Stack>
+
+                    <Typography variant="text" fontSize={14} fontWeight={500}>
                       {votes.going} yes, {votes.not_going} no, {votes.maybe} maybe,{" "}
                       {membersCount - votes.going - votes.not_going - votes.maybe} awaiting
                     </Typography>
@@ -435,46 +455,33 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
           </Grid>
           <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
 
-          {isAdmin ? (
-            <CardActions sx={{ p: 0, pt: 2, justifyContent: "flex-end" }}>
-              <Stack direction="row" spacing={2}>
-                <Button onClick={handleCloseModal} variant="outlined">
-                  Close
-                </Button>
-                <Button onClick={handleSubmit} variant="contained">
-                  Save details
-                </Button>
-              </Stack>
-            </CardActions>
-          ) : (
-            <CardActions sx={{ p: 0, pt: 2, justifyContent: "space-between" }}>
-              <Stack spacing={2}>
-                <Typography variant="body1" color="neutral.600">
-                  Going?
-                </Typography>
-              </Stack>
-              <Stack direction="row" spacing={2}>
-                <Button
-                  onClick={() => handleVote("going")}
-                  variant={memberVoteStatus === "going" ? "contained" : "outlined"}
-                >
-                  Yes
-                </Button>
-                <Button
-                  onClick={() => handleVote("not going")}
-                  variant={memberVoteStatus === "not going" ? "contained" : "outlined"}
-                >
-                  No
-                </Button>
-                <Button
-                  onClick={() => handleVote("maybe")}
-                  variant={memberVoteStatus === "maybe" ? "contained" : "outlined"}
-                >
-                  Maybe
-                </Button>
-              </Stack>
-            </CardActions>
-          )}
+          <CardActions sx={{ p: 0, pt: 2, justifyContent: "space-between" }}>
+            <Stack spacing={2}>
+              <Typography variant="body1" color="neutral.600">
+                Going?
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing={2}>
+              <Button
+                onClick={() => handleVote("going")}
+                variant={memberVoteStatus === "going" ? "contained" : "outlined"}
+              >
+                Yes
+              </Button>
+              <Button
+                onClick={() => handleVote("not going")}
+                variant={memberVoteStatus === "not going" ? "contained" : "outlined"}
+              >
+                No
+              </Button>
+              <Button
+                onClick={() => handleVote("maybe")}
+                variant={memberVoteStatus === "maybe" ? "contained" : "outlined"}
+              >
+                Maybe
+              </Button>
+            </Stack>
+          </CardActions>
         </Card>
       </Modal>
     </>

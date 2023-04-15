@@ -31,8 +31,7 @@ export const NewsCard = (props) => {
   return (
     <Button
       sx={{
-        paddingX: 1,
-        margin: 1,
+        padding: 0,
         minWidth: 270,
         width: "100%",
         transition: "transform .3s ease-in-out",
