@@ -16,12 +16,13 @@ const Page = () => {
 
   const getEvents = async () => {
     const res = await apiClient.get("/events");
+    res?.data?.sort((a, b) => new Date(a?.start_date) - new Date(b?.start_date));
     setEvents(res.data);
   };
 
   const getNews = async () => {
     const res = await apiClient.get("/news");
-    setNews(res.data);
+    setNews(res.data.reverse());
   };
 
   const getUpcomingEventsCount = async () => {
