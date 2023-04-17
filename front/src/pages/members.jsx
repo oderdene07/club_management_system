@@ -11,6 +11,7 @@ const Page = () => {
 
   const getMembers = async () => {
     const res = await apiClient.get("/members");
+    res?.data?.sort((a, b) => a?.first_name.localeCompare(b?.first_name));
     setData(res.data);
   };
 
@@ -24,7 +25,7 @@ const Page = () => {
       return;
     }
     const filteredData = data.filter((member) =>
-      member.first_name.toLowerCase().includes(value.toLowerCase())
+      member?.first_name?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
   };

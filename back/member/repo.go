@@ -112,15 +112,6 @@ func getAdminEmails() (emails []string, err error) {
 	return emails, err
 }
 
-// func getMemberEmailByID(id int64) (string, error) {
-// 	var email string
-// 	err := app.DB.QueryRow("SELECT email FROM members WHERE id = $1", id).Scan(&email)
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	return email, nil
-// }
-
 func updateMemberRole(id int64, memberRole string) error {
 	query := "UPDATE members SET role = $1 WHERE id = $2"
 	_, err := app.DB.Exec(query, memberRole, id)
@@ -133,6 +124,22 @@ func updateMemberRole(id int64, memberRole string) error {
 func updateMemberPassword(id int64, password string) error {
 	query := "UPDATE members SET password = $1 WHERE id = $2"
 	_, err := app.DB.Exec(query, password, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func deleteAttendanceByMemberID(id int64) error {
+	_, err := app.DB.Exec("DELETE FROM event_attendance WHERE member_id = $1", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func deleteNewsByMemberID(id int64) error {
+	_, err := app.DB.Exec("DELETE FROM news WHERE member_id = $1", id)
 	if err != nil {
 		return err
 	}

@@ -447,7 +447,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                       }));
                     }}
                   />
-                  <Typography mx={2} variant="body1" color="neutral.600">
+                  <Typography mx={1} variant="body1" color="neutral.600">
                     -
                   </Typography>
                 </Stack>

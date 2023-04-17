@@ -113,6 +113,20 @@ func DeleteMember(c *gin.Context) {
 		return
 	}
 
+	err = deleteAttendanceByMemberID(idInt)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
+	err = deleteNewsByMemberID(idInt)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
 	err = deleteMember(idInt)
 	if err != nil {
 		app.ErrorLogger.Println(err)
