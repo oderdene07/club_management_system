@@ -29,8 +29,24 @@ const Page = () => {
   const [event, setEvent] = useState({});
 
   const getEventAttendance = async (id) => {
-    const response = await apiClient.get(`/event/${id}/attendance`);
-    response.data.sort((a, b) => {
+    const attendanceData = await apiClient.get(`/event/${id}/attendance`);
+    const membersData = await apiClient.get("/members");
+
+    const attendance = membersData?.data?.map((member) => {
+      const attendanceRow = attendanceData?.data?.find(
+        (attendanceRow) => attendanceRow.member.id === member.id
+      );
+      return {
+        id: member?.id,
+        member: member,
+        status: attendanceRow?.status ? attendanceRow?.status : "not responded",
+        attended: attendanceRow?.attended ? attendanceRow?.attended : false,
+      };
+    });
+
+    console.log(attendance);
+
+    attendance.sort((a, b) => {
       const nameA = a.member.first_name.toUpperCase();
       const nameB = b.member.first_name.toUpperCase();
       if (nameA < nameB) {
@@ -42,7 +58,7 @@ const Page = () => {
       return 0;
     });
 
-    setAttendance(response.data);
+    setAttendance(attendance);
   };
 
   const getEventByID = async (id) => {
@@ -58,10 +74,16 @@ const Page = () => {
         status,
         attended,
       } = attendance.find((row) => row.id === id);
-      return { id: rowId, eventID, memberID, status, attended: !attended };
+      return {
+        id: rowId,
+        event_id: parseInt(eventID),
+        member_id: memberID,
+        status,
+        attended: !attended,
+      };
     });
 
-    console.log(data);
+    console.log("data", data);
 
     await apiClient.put(`/event/${eventID}/attendance`, data);
     await refresh();

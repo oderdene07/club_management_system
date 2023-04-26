@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 import { EventCard } from "../events/events-card";
 
 export const OverviewEventsList = (props) => {
-  const { events } = props;
+  const { events, refresh } = props;
   const router = useRouter();
 
   return (
@@ -26,7 +26,7 @@ export const OverviewEventsList = (props) => {
         <Stack spacing={3} direction="row" alignItems="center" overflow="auto" padding={1}>
           {events.map((event) => (
             <Grid width={320} item key={event.id}>
-              <EventCard event={event} />
+              <EventCard event={event} refresh={refresh} />
             </Grid>
           ))}
         </Stack>

@@ -24,7 +24,7 @@ func getEventAttendance(eventID int64) ([]*EventAttendance, error) {
 }
 
 func updateEventAttendanceByEventID(eventAttendance EventAttendance) error {
-	_, err := app.DB.Exec("UPDATE event_attendance SET attended = $1 WHERE id = $2", eventAttendance.Attended, eventAttendance.ID)
+	_, err := app.DB.Exec("UPDATE event_attendance SET attended = $1 WHERE event_id = $2 AND member_id = $3", eventAttendance.Attended, eventAttendance.EventID, eventAttendance.MemberID)
 	if err != nil {
 		return err
 	}
@@ -43,7 +43,7 @@ func getMemberEventAttendance(eventID, memberID int64) (string, error) {
 }
 
 func createEventAttendance(eventAttendance EventAttendance) error {
-	_, err := app.DB.Exec("INSERT INTO event_attendance (member_id, event_id, status, attended) VALUES ($1, $2, $3, $4)", eventAttendance.MemberID, eventAttendance.EventID, eventAttendance.Status, false)
+	_, err := app.DB.Exec("INSERT INTO event_attendance (member_id, event_id, status, attended) VALUES ($1, $2, $3, $4)", eventAttendance.MemberID, eventAttendance.EventID, eventAttendance.Status, eventAttendance.Attended)
 	if err != nil {
 		return err
 	}

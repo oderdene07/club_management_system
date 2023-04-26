@@ -54,11 +54,24 @@ func UpdateEventAttendanceByEventID(c *gin.Context) {
 	}
 
 	for _, ea := range eventAttendances {
-		err = updateEventAttendanceByEventID(ea)
+		// check if row exists
+		_, err := getMemberEventAttendance(ea.EventID, ea.MemberID)
 		if err != nil {
-			app.ErrorLogger.Println(err)
-			app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
-			return
+			// row does not exist, create
+			err = createEventAttendance(ea)
+			if err != nil {
+				app.ErrorLogger.Println(err)
+				app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+				return
+			}
+		} else {
+			// row exists, update
+			err = updateEventAttendanceByEventID(ea)
+			if err != nil {
+				app.ErrorLogger.Println(err)
+				app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+				return
+			}
 		}
 	}
 
@@ -77,6 +90,7 @@ func VoteEvent(c *gin.Context) {
 	_, err = getMemberEventAttendance(eventAttendance.EventID, eventAttendance.MemberID)
 	if err != nil {
 		// vote does not exist, create
+		eventAttendance.Attended = false
 		err = createEventAttendance(eventAttendance)
 		if err != nil {
 			app.ErrorLogger.Println(err)

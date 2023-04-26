@@ -58,8 +58,8 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
         title: "",
         description: "",
         location: "",
-        start_date: null,
-        end_date: null,
+        start_date: new Date(),
+        end_date: new Date(),
         image: "",
       });
     }
@@ -121,6 +121,10 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
     setIsChanged(false);
     if (values.title === "") {
       setError("Title is required");
+      return;
+    }
+    if (values.start_date > values.end_date) {
+      setError("Start date must be before end date");
       return;
     }
     if (selectedEvent)
@@ -250,6 +254,11 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
               }}
             />
           )}
+          {error && (
+            <Typography mb={2} color="error.main">
+              {error}
+            </Typography>
+          )}
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -264,7 +273,6 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                 inputProps={{ style: { fontSize: 24 } }}
                 InputProps={{ readOnly: !isAdmin }}
               />
-              {error === "Title is required" && <Typography color="error.main">{error}</Typography>}
             </Grid>
             <Grid item xs={12}>
               {values.image ? (
@@ -460,6 +468,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                   <DateTimePicker
                     value={values.end_date}
                     label="Check-out"
+                    error={error}
                     readOnly={!isAdmin}
                     format="dd/MM/yyyy HH:mm"
                     onChange={(newValue) => {
@@ -474,35 +483,39 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
               </Stack>
             </Grid>
           </Grid>
-          <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
 
-          <CardActions sx={{ p: 0, pt: 2, justifyContent: "space-between" }}>
-            <Stack spacing={2}>
-              <Typography variant="body1" color="neutral.600">
-                Going?
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing={2}>
-              <Button
-                onClick={() => handleVote("going")}
-                variant={memberVoteStatus === "going" ? "contained" : "outlined"}
-              >
-                Yes
-              </Button>
-              <Button
-                onClick={() => handleVote("not going")}
-                variant={memberVoteStatus === "not going" ? "contained" : "outlined"}
-              >
-                No
-              </Button>
-              <Button
-                onClick={() => handleVote("maybe")}
-                variant={memberVoteStatus === "maybe" ? "contained" : "outlined"}
-              >
-                Maybe
-              </Button>
-            </Stack>
-          </CardActions>
+          {selectedEvent && (
+            <>
+              <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
+              <CardActions sx={{ p: 0, pt: 2, justifyContent: "space-between" }}>
+                <Stack spacing={2}>
+                  <Typography variant="body1" color="neutral.600">
+                    Going?
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={2}>
+                  <Button
+                    onClick={() => handleVote("going")}
+                    variant={memberVoteStatus === "going" ? "contained" : "outlined"}
+                  >
+                    Yes
+                  </Button>
+                  <Button
+                    onClick={() => handleVote("not going")}
+                    variant={memberVoteStatus === "not going" ? "contained" : "outlined"}
+                  >
+                    No
+                  </Button>
+                  <Button
+                    onClick={() => handleVote("maybe")}
+                    variant={memberVoteStatus === "maybe" ? "contained" : "outlined"}
+                  >
+                    Maybe
+                  </Button>
+                </Stack>
+              </CardActions>
+            </>
+          )}
         </Card>
       </Modal>
     </>

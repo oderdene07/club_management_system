@@ -35,6 +35,10 @@ const Page = () => {
     setMembersCount(res.data);
   };
 
+  const refreshEvents = async () => {
+    await getEvents();
+  };
+
   useEffect(() => {
     getEvents();
     getNews();
@@ -63,7 +67,7 @@ const Page = () => {
               <OverviewTotalMembers value={membersCount + ""} />
             </Grid>
             <Grid xs={12}>
-              <OverviewEventsList events={events} />
+              <OverviewEventsList events={events} refresh={refreshEvents} />
             </Grid>
             <Grid xs={12}>
               <OverviewNewsList news={news} />
