@@ -106,7 +106,7 @@ const Page = () => {
     {
       field: "Avatar",
       headerName: "Avatar",
-      width: 60,
+      width: 80,
       renderCell: (params) => (
         <Avatar
           src={
@@ -120,16 +120,14 @@ const Page = () => {
       ),
     },
     {
-      field: "first_name",
-      headerName: "First name",
+      field: "full_name",
+      headerName: "Full name",
       flex: 1,
-      valueGetter: (params) => params.row.member.first_name,
-    },
-    {
-      field: "last_name",
-      headerName: "Last name",
-      flex: 1,
-      valueGetter: (params) => params.row.member.last_name,
+      renderCell: (params) => (
+        <Typography fontSize={16} variant="caption">
+          {params.row.member.first_name} {params.row.member.last_name}
+        </Typography>
+      ),
     },
     {
       field: "status",
@@ -137,6 +135,7 @@ const Page = () => {
       flex: 1,
       renderCell: (params) => (
         <Typography
+          fontSize={14}
           variant="overline"
           color={
             params.row.status === "maybe"
@@ -159,7 +158,9 @@ const Page = () => {
       type: "boolean",
       renderCell: (params) => (
         <Typography variant="overline" color={params.row.attended ? "primary.main" : "text.card"}>
-          {params.row.attended ? <CheckCircleIcon width={24} /> : <XCircleIcon width={24} />}
+          <Stack>
+            {params.row.attended ? <CheckCircleIcon width={28} /> : <XCircleIcon width={28} />}
+          </Stack>
         </Typography>
       ),
     },
@@ -205,7 +206,6 @@ const Page = () => {
             <DataGrid
               autoHeight
               checkboxSelection={isAdmin}
-              disableRowSelectionOnClick
               rows={attendance}
               columns={columns}
               rowSelectionModel={selectedRows}
@@ -240,7 +240,7 @@ const Page = () => {
                 "& .MuiDataGrid-row:hover": {
                   cursor: "pointer",
                   color: "primary.main",
-                  bgcolor: "primary.light",
+                  bgcolor: "action.hover",
                 },
               }}
             />
