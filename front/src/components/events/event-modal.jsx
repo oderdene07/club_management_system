@@ -243,9 +243,14 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                       <TrashIcon width={28} />
                     </IconButton>
                   )}
-                  <IconButton onClick={handleSubmit} color="primary" disabled={!isChanged}>
-                    <DocumentCheckIcon width={28} />
-                  </IconButton>
+                  <Button
+                    startIcon={<DocumentCheckIcon width={28} />}
+                    onClick={handleSubmit}
+                    color="primary"
+                    disabled={!isChanged}
+                  >
+                    <Typography variant="h6">{selectedEvent ? "Save" : "Create"}</Typography>
+                  </Button>
                 </>
               }
               sx={{
