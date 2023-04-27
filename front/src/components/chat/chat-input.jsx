@@ -44,10 +44,10 @@ export const ChatInput = () => {
         },
         bottom: 0,
         right: 0,
-        bgcolor: "neutral.50",
+        bgcolor: "background.paper",
         p: 2,
         borderTop: "1px solid",
-        borderColor: "neutral.200",
+        borderColor: "action.focus",
       }}
     >
       <Stack direction="row" alignItems="center">
@@ -70,6 +70,9 @@ export const ChatInput = () => {
             type="text"
             value={message}
             onChange={handleChange}
+            sx={{
+              padding: "10px 16px",
+            }}
           />
         </Stack>
         <Button

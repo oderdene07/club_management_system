@@ -8,11 +8,14 @@ import { useEffect, useState } from "react";
 
 const Page = () => {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getMembers = async () => {
+    setIsLoading(true);
     const res = await apiClient.get("/members");
     res?.data?.sort((a, b) => a?.first_name.localeCompare(b?.first_name));
     setData(res.data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -52,7 +55,7 @@ const Page = () => {
                 <MembersSearch onChange={(value) => handleSearch(value)} />
               </Stack>
             </Stack>
-            <MembersTable members={data} refresh={getMembers} />
+            <MembersTable members={data} refresh={getMembers} loading={isLoading} />
           </Stack>
         </Container>
       </Box>

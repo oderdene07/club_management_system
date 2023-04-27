@@ -16,7 +16,7 @@ export const MembersSearch = (props) => {
           </SvgIcon>
         </InputAdornment>
       }
-      sx={{ maxWidth: 400, height: 40 }}
+      sx={{ maxWidth: 400, height: 44, minWidth: 300 }}
       onChange={(e) => onChange(e.target.value)}
     />
   );

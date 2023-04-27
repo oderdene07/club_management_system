@@ -145,7 +145,7 @@ const Page = () => {
               ? "success.main"
               : params.row.status === "not going"
               ? "error.main"
-              : "neutral.400"
+              : "text.card"
           }
         >
           {params.row.status}
@@ -158,7 +158,7 @@ const Page = () => {
       flex: 1,
       type: "boolean",
       renderCell: (params) => (
-        <Typography variant="overline" color={params.row.attended ? "primary.main" : "neutral.400"}>
+        <Typography variant="overline" color={params.row.attended ? "primary.main" : "text.card"}>
           {params.row.attended ? <CheckCircleIcon width={24} /> : <XCircleIcon width={24} />}
         </Typography>
       ),

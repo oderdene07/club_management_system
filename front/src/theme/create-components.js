@@ -54,7 +54,7 @@ export function createComponents(config) {
         root: {
           borderRadius: 20,
           [`&.${paperClasses.elevation1}`]: {
-            boxShadow: "0px 5px 22px rgba(0, 0, 0, 0.04), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.03)",
+            boxShadow: "0px 5px 22px rgba(0, 0, 0, 0.1), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.05)",
           },
         },
       },
@@ -154,7 +154,7 @@ export function createComponents(config) {
           borderStyle: "solid",
           borderWidth: 1,
           overflow: "hidden",
-          borderColor: palette.neutral[200],
+          borderColor: palette.divider,
           transition: muiTheme.transitions.create(["border-color", "box-shadow"]),
           "&:hover": {
             backgroundColor: palette.action.hover,
@@ -212,9 +212,9 @@ export function createComponents(config) {
           fontSize: 14,
           fontWeight: 500,
           lineHeight: "24px",
+          borderColor: palette.divider,
         },
         notchedOutline: {
-          borderColor: palette.neutral[200],
           transition: muiTheme.transitions.create(["border-color", "box-shadow"]),
         },
       },

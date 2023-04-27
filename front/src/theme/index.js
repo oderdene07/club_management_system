@@ -4,8 +4,8 @@ import { createPalette } from "./create-palette";
 import { createShadows } from "./create-shadows";
 import { createTypography } from "./create-typography";
 
-export function createTheme() {
-  const palette = createPalette();
+export function createTheme({ mode }) {
+  const palette = createPalette({ mode });
   const components = createComponents({ palette });
   const shadows = createShadows();
   const typography = createTypography();

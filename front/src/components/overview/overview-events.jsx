@@ -18,6 +18,7 @@ export const OverviewEvents = (props) => {
           <Avatar
             sx={{
               backgroundColor: "primary.main",
+              color: "neutral.100",
               height: 56,
               width: 56,
             }}

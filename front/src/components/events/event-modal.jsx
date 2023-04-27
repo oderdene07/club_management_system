@@ -396,7 +396,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                     p="6px 12px 8px 12px"
                     border="1px solid"
                     borderRadius={1}
-                    borderColor="neutral.200"
+                    borderColor="divider"
                     sx={{
                       cursor: "pointer",
                       "&:hover": {
@@ -405,7 +405,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
                     }}
                   >
                     <Stack direction="row" alignItems="center" justifyContent="space-between">
-                      <Typography variant="body2" color="neutral.500" fontWeight={500}>
+                      <Typography variant="body2" color="text.menu" fontWeight={500}>
                         {membersCount} Members
                       </Typography>
                       <ArrowTopRightOnSquareIcon width={15} />
@@ -486,7 +486,7 @@ export const EventModal = ({ selectedEvent, isModalVisible, handleCloseModal, re
 
           {selectedEvent && (
             <>
-              <Divider sx={{ mt: 3, borderColor: "primary.light" }} />
+              <Divider sx={{ mt: 3 }} />
               <CardActions sx={{ p: 0, pt: 2, justifyContent: "space-between" }}>
                 <Stack spacing={2}>
                   <Typography variant="body1" color="neutral.600">

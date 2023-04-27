@@ -16,6 +16,7 @@ export const OverviewTotalMembers = ({ value }) => {
           <Avatar
             sx={{
               backgroundColor: "success.main",
+              color: "neutral.100",
               height: 56,
               width: 56,
             }}

@@ -97,7 +97,7 @@ export const AccountProfileDetails = ({
             </Grid>
           </Box>
         </CardContent>
-        <Divider sx={{ borderColor: "primary.light" }} />
+        <Divider />
         <CardActions sx={{ py: 2, px: 3, justifyContent: "flex-end" }}>
           <Button
             disabled={!isChanged}

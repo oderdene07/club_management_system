@@ -4,12 +4,13 @@ import { createTheme } from "@/theme";
 import { createEmotionCache } from "@/utils/create-emotion-cache";
 import { CacheProvider } from "@emotion/react";
 import { Box, CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@/contexts/theme-context";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Head from "next/head";
 
 import "@/styles/editor-content-styles.css";
+import { useMemo, useState } from "react";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -24,19 +25,16 @@ const SplashScreen = () => {
         width: "100%",
       }}
     >
-      <img width="250px" src="/assets/hackum-logo-dark.png" alt="Club Management System" />
+      <img width="250px" src="/assets/hackum-logo-white.png" alt="Club Management System" />
     </Box>
   );
 };
 
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
   useNProgress();
 
   const getLayout = Component.getLayout ?? ((page) => page);
-
-  const theme = createTheme();
 
   return (
     <CacheProvider value={emotionCache}>
@@ -46,7 +44,7 @@ const App = (props) => {
       </Head>
 
       <AuthProvider>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <CssBaseline />
             <AuthConsumer>

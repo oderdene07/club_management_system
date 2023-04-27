@@ -86,8 +86,10 @@ export const AccountPassword = ({ member }) => {
             />
           </Stack>
         </CardContent>
-        <Divider sx={{ borderColor: "primary.light" }} />
-        <CardActions sx={{ padding: 3, paddingTop: 1, justifyContent: "flex-end" }}>
+        <Divider />
+        <CardActions
+          sx={{ paddingX: 3, paddingTop: 2, paddingBottom: 2, justifyContent: "flex-end" }}
+        >
           <Button
             disabled={values.confirm.length === 0}
             startIcon={<PencilSquareIcon width={20} />}

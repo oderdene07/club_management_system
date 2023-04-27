@@ -1,7 +1,11 @@
+import { useTheme } from "@/contexts/theme-context";
 import { Box, CardMedia, Unstable_Grid2 as Grid } from "@mui/material";
 import PropTypes from "prop-types";
 
 export const Layout = ({ children }) => {
+  const { state } = useTheme();
+  const mode = state.mode === "dark" ? "white" : "dark";
+  console.log(mode);
   return (
     <Box component="main" display="flex" flex="1 1 auto">
       <Grid container sx={{ flex: "1 1 auto" }}>
@@ -23,7 +27,7 @@ export const Layout = ({ children }) => {
               width: 150,
             }}
           >
-            <CardMedia component="img" image="/assets/hackum-logo-dark.png" />
+            <CardMedia component="img" image={`/assets/hackum-logo-${mode}.png`} />
           </Box>
           {children}
         </Grid>

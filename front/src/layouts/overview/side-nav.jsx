@@ -5,11 +5,15 @@ import { usePathname } from "next/navigation";
 import PropTypes from "prop-types";
 import { items } from "./config";
 import { SideNavItem } from "./side-nav-item";
+import { useTheme } from "@/contexts/theme-context";
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+
+  const { state } = useTheme();
+  const mode = state.mode === "dark" ? "white" : "dark";
 
   const content = (
     <Box
@@ -22,11 +26,11 @@ export const SideNav = (props) => {
       <Box sx={{ p: 3 }}>
         <Stack>
           <Box component={NextLink} href="/" width="50%">
-            <CardMedia component="img" image="/assets/hackum-logo-dark.png" />
+            <CardMedia component="img" image={`/assets/hackum-logo-${mode}.png`} />
           </Box>
         </Stack>
       </Box>
-      <Divider sx={{ borderColor: "primary.light" }} />
+      <Divider />
       <Box
         component="nav"
         sx={{
@@ -68,8 +72,8 @@ export const SideNav = (props) => {
         open
         PaperProps={{
           sx: {
-            color: "neutral.800",
-            backgroundColor: "common.white",
+            color: "text.primary",
+            backgroundColor: "background.common",
             width: 280,
           },
         }}
@@ -87,8 +91,8 @@ export const SideNav = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          color: "neutral.800",
-          backgroundColor: "common.white",
+          color: "text.primary",
+          backgroundColor: "background.common",
           width: 280,
         },
       }}

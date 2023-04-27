@@ -80,13 +80,13 @@ export const NewsCard = (props) => {
                   WebkitBoxOrient: "vertical",
                 }}
                 align="left"
-                color="neutral.700"
+                color="text.secondary"
                 gutterBottom
                 variant="h6"
               >
                 {newsItem.title}
               </Typography>
-              <Typography color="neutral.500" gutterBottom variant="body2">
+              <Typography color="text.card" gutterBottom variant="body2">
                 Continue reading...
               </Typography>
             </Stack>

@@ -41,21 +41,21 @@ export const AccountProfile = ({ member, setMember, setIsChanged }) => {
           <Avatar
             src={member.profile_picture && process.env.NEXT_PUBLIC_API_URL + member.profile_picture}
             sx={{
-              height: 80,
+              height: 100,
               mb: 2,
-              width: 80,
+              width: 100,
               fontSize: "1.5rem",
             }}
           >
             {getInitials(member.first_name + " " + member.last_name)}
           </Avatar>
-          <Typography gutterBottom variant="h6">
+          <Typography gutterBottom variant="h5">
             {member.first_name} {member.last_name}
           </Typography>
-          <Typography color="text.secondary" variant="body2">
+          <Typography color="text.secondary" variant="body1">
             {member.occupation}
           </Typography>
-          <Typography color="text.secondary" variant="body2">
+          <Typography color="text.secondary" variant="body1">
             {member.profile_description}
           </Typography>
         </Box>

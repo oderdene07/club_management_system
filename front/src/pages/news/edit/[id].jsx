@@ -96,7 +96,7 @@ const Page = () => {
                   handleChangeEditor={handleChangeEditor}
                 />
               </CardContent>
-              <Divider sx={{ borderColor: "primary.light" }} />
+              <Divider />
               <CardActions sx={{ padding: 3, justifyContent: "flex-end" }}>
                 <Stack direction="row" spacing={2}>
                   <Button onClick={() => router.back()} variant="outlined">

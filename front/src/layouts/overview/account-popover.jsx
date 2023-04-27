@@ -30,6 +30,7 @@ export const AccountPopover = (props) => {
         sx={{
           py: 1.5,
           px: 2,
+          bgcolor: "background.common",
         }}
       >
         <Typography variant="overline">Account</Typography>
@@ -42,6 +43,7 @@ export const AccountPopover = (props) => {
         dense
         sx={{
           p: 1,
+          bgcolor: "background.common",
         }}
       >
         <MenuItem

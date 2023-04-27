@@ -1,5 +1,14 @@
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/outline";
-import { Box, Card, CardContent, CardMedia, Stack, SvgIcon, Typography } from "@mui/material";
+import {
+  Box,
+  ButtonBase,
+  Card,
+  CardContent,
+  CardMedia,
+  Stack,
+  SvgIcon,
+  Typography,
+} from "@mui/material";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { EventModal } from "./event-modal";
@@ -30,18 +39,23 @@ export const EventCard = ({ event, refresh }) => {
   };
 
   return (
-    <>
+    <ButtonBase
+      sx={{
+        borderRadius: 2,
+        margin: 0,
+        padding: 0,
+        transition: "transform .3s ease-in-out",
+        ":hover": {
+          transform: "scale(1.04)",
+        },
+      }}
+    >
       <Card
         sx={{
           height: "100%",
-          color: "neutral.400",
+          color: "text.card",
           minWidth: 270,
-          cursor: "pointer",
-          transition: "transform .3s ease-in-out",
-          ":hover": {
-            backgroundColor: "transparent",
-            transform: "scale(1.04)",
-          },
+          bgcolor: "background.common",
         }}
         onClick={() => handleEventClick(event)}
       >
@@ -66,7 +80,7 @@ export const EventCard = ({ event, refresh }) => {
             <CardMedia
               sx={{
                 borderRadius: 1,
-                backgroundColor: "neutral.400",
+                backgroundColor: "text.card",
               }}
               component="img"
               image="https://picsum.photos/300/200"
@@ -74,7 +88,14 @@ export const EventCard = ({ event, refresh }) => {
           )}
         </Box>
         <CardContent>
-          <Typography mb="1rem" mt="0.5rem" color="neutral.500" gutterBottom variant="h6">
+          <Typography
+            textAlign="left"
+            mb="1rem"
+            mt="0.5rem"
+            color="text.menu"
+            gutterBottom
+            variant="h6"
+          >
             {event.title}
           </Typography>
           <Stack alignItems="flex-start" direction="column" justifyContent="center" spacing={1.5}>
@@ -103,7 +124,7 @@ export const EventCard = ({ event, refresh }) => {
         handleCloseModal={() => setIsModalVisible(false)}
         refresh={refresh}
       />
-    </>
+    </ButtonBase>
   );
 };
 

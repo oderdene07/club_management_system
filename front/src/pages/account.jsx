@@ -47,12 +47,12 @@ const Page = () => {
           py: 5,
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Stack spacing={3}>
             <Typography variant="h4">Account</Typography>
             <div>
               <Grid container spacing={3}>
-                <Grid xs={12} md={6} lg={5}>
+                <Grid padding={0} xs={12} md={6} lg={5}>
                   <Grid xs={12}>
                     <AccountProfile
                       setIsChanged={setIsChanged}

@@ -30,7 +30,7 @@ export const SideNavItem = (props) => {
             backgroundColor: "rgba(96, 91, 255, 0.1)",
           }),
           "&:hover": {
-            backgroundColor: "rgba(96, 91, 255, 0.05)",
+            backgroundColor: "rgba(96, 91, 255, 0.07)",
           },
         }}
         {...linkProps}
@@ -39,7 +39,7 @@ export const SideNavItem = (props) => {
           component="span"
           sx={{
             alignItems: "center",
-            color: "neutral.400",
+            color: "text.menu",
             display: "inline-flex",
             justifyContent: "center",
             mr: 2,
@@ -53,14 +53,15 @@ export const SideNavItem = (props) => {
         <Box
           component="span"
           sx={{
-            color: "neutral.400",
+            color: "text.menu",
             flexGrow: 1,
             fontFamily: (theme) => theme.typography.fontFamily,
-            fontSize: 14,
-            fontWeight: 600,
+            fontSize: 15,
+            fontWeight: 500,
             lineHeight: "24px",
             whiteSpace: "nowrap",
             ...(active && {
+              fontWeight: 600,
               color: "primary.main",
             }),
           }}

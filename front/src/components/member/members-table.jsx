@@ -17,9 +17,9 @@ const formatDate = (date) => {
   })}, ${d.getFullYear()}`;
 };
 
-export const MembersTable = ({ members, refresh }) => {
+export const MembersTable = ({ members, refresh, loading }) => {
   const isAdmin = useAuth().user?.role === "admin";
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(loading);
 
   const [selectedMember, setSelectedMember] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -64,14 +64,14 @@ export const MembersTable = ({ members, refresh }) => {
         field: "full_name",
         headerName: "Full name",
         flex: 1,
-        minWidth: 180,
+        minWidth: 200,
         valueGetter: (params) => `${params.row.first_name} ${params.row.last_name}`,
       },
       {
         field: "email",
         headerName: "Email",
         flex: 1,
-        minWidth: 220,
+        minWidth: 230,
       },
       {
         field: "phone_number",
@@ -167,6 +167,7 @@ export const MembersTable = ({ members, refresh }) => {
         autoHeight
         disableRowSelectionOnClick
         rows={members}
+        rowHeight={60}
         columns={isAdmin ? columns : columns.filter((col) => col.field !== "actions")}
         initialState={{
           pagination: {
@@ -181,6 +182,7 @@ export const MembersTable = ({ members, refresh }) => {
         sx={{
           border: "none",
           marginX: 2,
+          fontSize: 16,
           "& .MuiDataGrid-iconSeparator": {
             display: "none",
           },
@@ -200,7 +202,7 @@ export const MembersTable = ({ members, refresh }) => {
           "& .MuiDataGrid-row:hover": {
             cursor: "pointer",
             color: "primary.main",
-            bgcolor: "primary.light",
+            bgcolor: "action.hover",
           },
         }}
       />
