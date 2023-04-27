@@ -20,8 +20,6 @@
   --ck-image-style-spacing: 1.5em;
   --ck-inline-image-style-spacing: calc(var(--ck-image-style-spacing) / 2);
   --ck-todo-list-checkmark-size: 16px;
-  /* --ck-color-base-background: #2d3748 !important;
-  --ck-color-text: #fff !important; */
 }
 
 /* ckeditor5-basic-styles/theme/code.css */
@@ -57,7 +55,6 @@
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  color: #fff;
 }
 /* ckeditor5-font/theme/fontsize.css */
 .ck-content .text-tiny {
