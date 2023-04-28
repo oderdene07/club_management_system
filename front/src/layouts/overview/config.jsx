@@ -13,7 +13,7 @@ export const items = [
     title: "Overview",
     path: "/",
     icon: (
-      <SvgIcon fontSize="medium">
+      <SvgIcon>
         <ChartBarIcon />
       </SvgIcon>
     ),
@@ -22,7 +22,7 @@ export const items = [
     title: "Events",
     path: "/events",
     icon: (
-      <SvgIcon fontSize="medium">
+      <SvgIcon>
         <CalendarDaysIcon />
       </SvgIcon>
     ),
@@ -31,7 +31,7 @@ export const items = [
     title: "Members",
     path: "/members",
     icon: (
-      <SvgIcon fontSize="medium">
+      <SvgIcon>
         <UserGroupIcon />
       </SvgIcon>
     ),
@@ -40,7 +40,7 @@ export const items = [
     title: "Chat",
     path: "/chat",
     icon: (
-      <SvgIcon fontSize="medium">
+      <SvgIcon>
         <ChatBubbleOvalLeftEllipsisIcon />
       </SvgIcon>
     ),
@@ -49,7 +49,7 @@ export const items = [
     title: "News",
     path: "/news",
     icon: (
-      <SvgIcon fontSize="medium">
+      <SvgIcon>
         <NewspaperIcon />
       </SvgIcon>
     ),
@@ -58,7 +58,7 @@ export const items = [
     title: "Account",
     path: "/account",
     icon: (
-      <SvgIcon fontSize="medium">
+      <SvgIcon>
         <UserIcon />
       </SvgIcon>
     ),

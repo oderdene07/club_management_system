@@ -30,7 +30,7 @@ export const SideNavItem = (props) => {
             backgroundColor: "rgba(96, 91, 255, 0.1)",
           }),
           "&:hover": {
-            backgroundColor: "rgba(96, 91, 255, 0.07)",
+            backgroundColor: "rgba(96, 91, 255, 0.06)",
           },
         }}
         {...linkProps}
@@ -56,7 +56,7 @@ export const SideNavItem = (props) => {
             color: "text.menu",
             flexGrow: 1,
             fontFamily: (theme) => theme.typography.fontFamily,
-            fontSize: 15,
+            fontSize: 16,
             fontWeight: 500,
             lineHeight: "24px",
             whiteSpace: "nowrap",
