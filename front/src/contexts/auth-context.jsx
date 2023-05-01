@@ -1,6 +1,8 @@
 import { apiClient } from "@/api/apiClient";
 import PropTypes from "prop-types";
 import { createContext, useContext, useEffect, useReducer, useRef } from "react";
+import { auth } from "@/firebase/config";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 
 const HANDLERS = {
   INITIALIZE: "INITIALIZE",
@@ -90,32 +92,34 @@ export const AuthProvider = ({ children }) => {
   );
 
   const signIn = async (email, password) => {
-    let response = {};
     try {
-      response = await apiClient.post("/login", {
+      await apiClient.post("/login", {
         email,
         password,
       });
     } catch (err) {
+      console.log(err);
       throw new Error(err?.response?.data?.message);
     }
 
     try {
-      window.sessionStorage.setItem("authenticated", "true");
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const token = await userCredential.user.getIdToken();
+
+      window.sessionStorage.setItem("authenticated", true);
+      localStorage.setItem("token", token);
+
+      apiClient.defaults.headers.common["Authorization"] = token;
+      const response = await apiClient.get("/member");
+
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: response?.data,
+      });
     } catch (err) {
-      console.error(err);
+      console.log(err);
+      throw new Error(err.message);
     }
-
-    const user = response.data.member;
-
-    apiClient.defaults.headers.common["Authorization"] = response.data.token;
-
-    localStorage.setItem("token", response.data.token);
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user,
-    });
   };
 
   const signUp = async (email, first_name, last_name, password) => {

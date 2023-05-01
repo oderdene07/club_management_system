@@ -35,6 +35,7 @@ type Member struct {
 	DateJoined         string `json:"date_joined"`
 	ProfilePicture     string `json:"profile_picture"`
 	ProfileDescription string `json:"profile_description"`
+	FirebaseUID        string `json:"uid"`
 }
 
 type LoginResponse struct {

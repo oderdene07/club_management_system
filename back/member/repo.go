@@ -39,8 +39,23 @@ func getMembersCount() (int, error) {
 
 func getMemberByID(id int64) (*Member, error) {
 	member := &Member{}
-	query := "SELECT id, first_name, last_name, email, phone_number, occupation, role, date_joined, profile_picture, profile_description FROM members WHERE id = $1"
-	err := app.DB.QueryRow(query, id).Scan(&member.ID, &member.FirstName, &member.LastName, &member.Email, &member.PhoneNumber, &member.Occupation, &member.Role, &member.DateJoined, &member.ProfilePicture, &member.ProfileDescription)
+	query := "SELECT id, first_name, last_name, email, phone_number, occupation, role, date_joined, profile_picture, profile_description, uid FROM members WHERE id = $1"
+	err := app.DB.QueryRow(query, id).Scan(&member.ID, &member.FirstName, &member.LastName, &member.Email, &member.PhoneNumber, &member.Occupation, &member.Role, &member.DateJoined, &member.ProfilePicture, &member.ProfileDescription, &member.FirebaseUID)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return member, nil
+}
+
+func getMemberByUID(uid string) (*Member, error) {
+	member := &Member{}
+	query := "SELECT id, first_name, last_name, email, phone_number, occupation, role, date_joined, profile_picture, profile_description FROM members WHERE uid = $1"
+	err := app.DB.QueryRow(query, uid).Scan(&member.ID, &member.FirstName, &member.LastName, &member.Email, &member.PhoneNumber, &member.Occupation, &member.Role, &member.DateJoined, &member.ProfilePicture, &member.ProfileDescription)
 
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -140,6 +155,15 @@ func deleteAttendanceByMemberID(id int64) error {
 
 func deleteNewsByMemberID(id int64) error {
 	_, err := app.DB.Exec("DELETE FROM news WHERE member_id = $1", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func updateFirebaseUID(email, uid string) error {
+	query := "UPDATE members SET uid = $1 WHERE email = $2"
+	_, err := app.DB.Exec(query, uid, email)
 	if err != nil {
 		return err
 	}

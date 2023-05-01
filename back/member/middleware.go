@@ -2,45 +2,33 @@ package member
 
 import (
 	"cms/app"
-	"errors"
+	"context"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
 )
 
 func ValidateToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tokenStr := c.GetHeader("Authorization")
-		if tokenStr == "" {
-			app.ErrorLogger.Println("token is empty")
-			app.Responce(c, http.StatusUnauthorized, "token is empty", nil)
-			c.Abort()
+		authHeader := c.GetHeader("Authorization")
+		if authHeader == "" {
+			app.ErrorLogger.Println("Authorization header is empty")
+			app.Responce(c, http.StatusUnauthorized, "Authorization header is empty", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is empty"})
 			return
 		}
-		c.Set("token", tokenStr)
+		idToken := strings.TrimPrefix(authHeader, "Bearer ")
 
-		var claims AuthenticateClaims
-		token, err := jwt.ParseWithClaims(tokenStr, &claims, func(token *jwt.Token) (interface{}, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, errors.New("invalid token")
-			}
-			return []byte("my-secret-key"), nil
-		})
+		token, err := app.AuthClient.VerifyIDToken(context.Background(), idToken)
 		if err != nil {
 			app.ErrorLogger.Println(err)
-			app.Responce(c, http.StatusUnauthorized, "invalid token", nil)
-			c.Abort()
-			return
-		}
-		if !token.Valid {
-			app.ErrorLogger.Println("invalid token")
-			app.Responce(c, http.StatusUnauthorized, "invalid token", nil)
-			c.Abort()
+			app.Responce(c, http.StatusUnauthorized, err.Error(), nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			return
 		}
 
-		member, err := getMemberByID(claims.MemberID)
+		member, err := getMemberByUID(token.UID)
 		if err != nil {
 			app.ErrorLogger.Println(err)
 			app.Responce(c, http.StatusInternalServerError, err.Error(), nil)

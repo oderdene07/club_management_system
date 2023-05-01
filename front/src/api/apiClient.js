@@ -1,3 +1,4 @@
+import { auth } from "@/firebase/config";
 import axios from "axios";
 
 const apiClient = axios.create({
@@ -12,8 +13,10 @@ const apiClient = axios.create({
 
 // Add a request interceptor
 apiClient.interceptors.request.use(
-  function (config) {
+  async function (config) {
     // Do something before request is sent
+    const token = (await auth?.currentUser?.getIdToken()) || window.localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   function (error) {

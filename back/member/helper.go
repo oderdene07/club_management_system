@@ -3,9 +3,10 @@ package member
 import (
 	"cms/app"
 	"cms/email"
+	"context"
 	"regexp"
 
-	"github.com/golang-jwt/jwt"
+	"firebase.google.com/go/auth"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -23,13 +24,6 @@ func hashPassword(password string) (string, error) {
 func verifyPassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
-}
-
-func generateToken(member *Member) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"member_id": member.ID,
-	})
-	return token.SignedString([]byte("my-secret-key"))
 }
 
 func isDuplicateEmail(email string) bool {
@@ -86,4 +80,25 @@ func sendEmailForRoleUpdate(id int64, role string) {
 	if err != nil {
 		app.ErrorLogger.Println(err)
 	}
+}
+
+func createFirebaseUser(email, password string) error {
+	params := (&auth.UserToCreate{}).
+		Email(email).
+		Password(password)
+
+	firebaseUser, err := app.AuthClient.CreateUser(context.Background(), params)
+
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+
+	err = updateFirebaseUID(email, firebaseUser.UID)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+
+	return nil
 }

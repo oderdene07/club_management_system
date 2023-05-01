@@ -18,6 +18,7 @@ func main() {
 
 	app.InitDB()
 	app.InitLog()
+	app.FirebaseInit()
 	app.InfoLogger.Println("connected to database")
 
 	scheduler := gocron.NewScheduler(time.UTC)

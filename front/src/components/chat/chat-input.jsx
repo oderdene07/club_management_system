@@ -1,5 +1,5 @@
 import { useAuth } from "@/contexts/auth-context";
-import db from "@/firebase/config";
+import { db } from "@/firebase/config";
 import { getInitials } from "@/utils/get-initials";
 import { addDoc, collection } from "@firebase/firestore";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";

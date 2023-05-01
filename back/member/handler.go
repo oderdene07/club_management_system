@@ -157,6 +157,7 @@ func SignUp(c *gin.Context) {
 		return
 	}
 
+	passwordStr := signUpData.Password
 	hashedPassword, err := hashPassword(signUpData.Password)
 	if err != nil {
 		app.ErrorLogger.Println(err)
@@ -175,6 +176,13 @@ func SignUp(c *gin.Context) {
 	}
 
 	err = email.SendVerificationEmail(id, signUpData.Email)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
+	err = createFirebaseUser(signUpData.Email, passwordStr)
 	if err != nil {
 		app.ErrorLogger.Println(err)
 		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
@@ -224,19 +232,7 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
-	token, err := generateToken(member)
-	if err != nil {
-		app.ErrorLogger.Println(err)
-		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
-		return
-	}
-
-	loginResponse := LoginResponse{
-		Token:  token,
-		Member: member,
-	}
-
-	app.Responce(c, http.StatusOK, "Success", loginResponse)
+	app.Responce(c, http.StatusOK, "Success", member)
 }
 
 func VerifyEmail(c *gin.Context) {

@@ -1,4 +1,4 @@
-import db from "@/firebase/config";
+import { db } from "@/firebase/config";
 import { collection, limit, onSnapshot, orderBy, query } from "@firebase/firestore";
 import { CircularProgress, Stack } from "@mui/material";
 import { Box } from "@mui/system";

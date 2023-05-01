@@ -1,20 +1,38 @@
 package app
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"os"
 
+	firebase "firebase.google.com/go"
+	"firebase.google.com/go/auth"
 	_ "github.com/lib/pq"
+	"google.golang.org/api/option"
 )
 
 var DB *sql.DB
+var AuthClient *auth.Client
 
 var (
 	WarningLogger *log.Logger
 	InfoLogger    *log.Logger
 	ErrorLogger   *log.Logger
 )
+
+func FirebaseInit() {
+	opt := option.WithCredentialsFile("./app/serviceAccountKey.json")
+	app, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		log.Fatalf("error initializing app: %v\n", err)
+	}
+
+	AuthClient, err = app.Auth(context.Background())
+	if err != nil {
+		log.Fatalf("error initializing firebase auth: %v\n", err)
+	}
+}
 
 func InitDB() {
 	var err error
