@@ -47,7 +47,6 @@ export const AccountPassword = ({ member }) => {
         confirm: "",
       });
     } catch (error) {
-      console.log(error.response.data.message);
       setError(true);
       setErrorMessage(error.response.data.message);
     }

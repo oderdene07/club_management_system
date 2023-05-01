@@ -97,8 +97,8 @@ func deleteMember(id int64) error {
 
 func getMemberByEmail(email string) (*Member, error) {
 	member := &Member{}
-	query := "SELECT id, first_name, last_name, email, password, phone_number, occupation, role, date_joined, profile_picture, profile_description FROM members WHERE email = $1"
-	err := app.DB.QueryRow(query, email).Scan(&member.ID, &member.FirstName, &member.LastName, &member.Email, &member.Password, &member.PhoneNumber, &member.Occupation, &member.Role, &member.DateJoined, &member.ProfilePicture, &member.ProfileDescription)
+	query := "SELECT id, first_name, last_name, email, password, phone_number, occupation, role, date_joined, profile_picture, profile_description, uid FROM members WHERE email = $1"
+	err := app.DB.QueryRow(query, email).Scan(&member.ID, &member.FirstName, &member.LastName, &member.Email, &member.Password, &member.PhoneNumber, &member.Occupation, &member.Role, &member.DateJoined, &member.ProfilePicture, &member.ProfileDescription, &member.FirebaseUID)
 
 	if err != nil {
 		if err == sql.ErrNoRows {

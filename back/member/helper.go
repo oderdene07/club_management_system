@@ -85,6 +85,7 @@ func sendEmailForRoleUpdate(id int64, role string) {
 func createFirebaseUser(email, password string) error {
 	params := (&auth.UserToCreate{}).
 		Email(email).
+		EmailVerified(false).
 		Password(password)
 
 	firebaseUser, err := app.AuthClient.CreateUser(context.Background(), params)
@@ -100,5 +101,43 @@ func createFirebaseUser(email, password string) error {
 		return err
 	}
 
+	return nil
+}
+
+func deleteMemberFromFirebase(uid string) error {
+	err := app.AuthClient.DeleteUser(context.Background(), uid)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+	return nil
+}
+
+func updateFirebaseUserVerify(id int64) error {
+	member, err := getMemberByID(id)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+
+	uid := member.FirebaseUID
+	params := (&auth.UserToUpdate{}).EmailVerified(true)
+
+	_, err = app.AuthClient.UpdateUser(context.Background(), uid, params)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
+	return nil
+}
+
+func updateFirebaseUserPassword(uid, password string) error {
+	params := (&auth.UserToUpdate{}).Password(password)
+
+	_, err := app.AuthClient.UpdateUser(context.Background(), uid, params)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		return err
+	}
 	return nil
 }

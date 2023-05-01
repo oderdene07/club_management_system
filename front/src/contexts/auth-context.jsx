@@ -123,9 +123,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signUp = async (email, first_name, last_name, password) => {
-    let response = {};
     try {
-      response = await apiClient.post("/register", {
+      await apiClient.post("/register", {
         email,
         first_name,
         last_name,
@@ -134,7 +133,6 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       throw new Error(err.response.data.message);
     }
-    console.log(response);
   };
 
   const signOut = () => {

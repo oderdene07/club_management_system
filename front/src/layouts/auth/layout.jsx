@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 export const Layout = ({ children }) => {
   const { state } = useTheme();
   const mode = state.mode === "dark" ? "white" : "dark";
-  console.log(mode);
   return (
     <Box component="main" display="flex" flex="1 1 auto">
       <Grid container sx={{ flex: "1 1 auto" }}>

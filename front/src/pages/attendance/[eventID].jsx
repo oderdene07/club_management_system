@@ -44,8 +44,6 @@ const Page = () => {
       };
     });
 
-    console.log(attendance);
-
     attendance.sort((a, b) => {
       const nameA = a.member.first_name.toUpperCase();
       const nameB = b.member.first_name.toUpperCase();
@@ -82,8 +80,6 @@ const Page = () => {
         attended: !attended,
       };
     });
-
-    console.log("data", data);
 
     await apiClient.put(`/event/${eventID}/attendance`, data);
     await refresh();

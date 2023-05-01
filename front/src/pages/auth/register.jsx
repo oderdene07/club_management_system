@@ -20,20 +20,26 @@ const Page = () => {
       first_name: "",
       last_name: "",
       password: "",
+      password_confirm: "",
       submit: null,
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
       first_name: Yup.string().max(255).required("First name is required"),
       last_name: Yup.string().max(255).required("Last name is required"),
-      password: Yup.string().max(255).required("Password is required"),
+      password: Yup.string()
+        .min(6, "Password is too short at least 6 characters")
+        .max(255)
+        .required("Password is required"),
+      password_confirm: Yup.string().oneOf([Yup.ref("password"), null], "Passwords must match"),
     }),
     onSubmit: async (values, helpers) => {
       setIsLoading(true);
       try {
         await auth.signUp(values.email, values.first_name, values.last_name, values.password);
         setIsLoading(false);
-        router.push("/verify");
+        router.query.email = values.email;
+        router.push(`/verify?email=${values.email}`);
       } catch (err) {
         setIsLoading(false);
         helpers.setStatus({ success: false });
@@ -118,6 +124,18 @@ const Page = () => {
                   onChange={formik.handleChange}
                   type="password"
                   value={formik.values.password}
+                />
+                <TextField
+                  autoComplete="off"
+                  error={!!(formik.touched.password_confirm && formik.errors.password_confirm)}
+                  fullWidth
+                  helperText={formik.touched.password_confirm && formik.errors.password_confirm}
+                  label="Confirm Password"
+                  name="password_confirm"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="password"
+                  value={formik.values.password_confirm}
                 />
               </Stack>
               {formik.errors.submit && (

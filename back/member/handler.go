@@ -133,6 +133,14 @@ func DeleteMember(c *gin.Context) {
 		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
 		return
 	}
+
+	err = deleteMemberFromFirebase(member.FirebaseUID)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+		return
+	}
+
 	app.Responce(c, http.StatusOK, "Success", nil)
 }
 
@@ -300,6 +308,15 @@ func UpdateMemberRole(c *gin.Context) {
 		return
 	}
 
+	if role == "admin" || role == "member" {
+		err = updateFirebaseUserVerify(idInt)
+		if err != nil {
+			app.ErrorLogger.Println(err)
+			app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
+			return
+		}
+	}
+
 	err = updateMemberRole(idInt, role)
 	if err != nil {
 		app.ErrorLogger.Println(err)
@@ -337,6 +354,13 @@ func ChangeMemberPassword(c *gin.Context) {
 	if verifyPassword(signInData.Password, member.Password) {
 		app.ErrorLogger.Println("Cannot use same password")
 		app.Responce(c, http.StatusBadRequest, "Cannot use same password", nil)
+		return
+	}
+
+	err = updateFirebaseUserPassword(member.FirebaseUID, signInData.Password)
+	if err != nil {
+		app.ErrorLogger.Println(err)
+		app.Responce(c, http.StatusInternalServerError, err.Error(), nil)
 		return
 	}
 

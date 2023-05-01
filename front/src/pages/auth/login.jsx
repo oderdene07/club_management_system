@@ -101,6 +101,15 @@ const Page = () => {
                   type="password"
                   autoComplete="current-password"
                 />
+                {/* <Typography
+                  color="text.secondary"
+                  component={NextLink}
+                  href="/auth/forgot-password"
+                  variant="subtitle2"
+                  textAlign="right"
+                >
+                  Forgot password?
+                </Typography> */}
               </Stack>
               {formik.errors.submit && (
                 <Typography color="error" sx={{ mt: 3 }} variant="body2">
@@ -120,9 +129,7 @@ const Page = () => {
                 Continue
               </LoadingButton>
               <Alert color="primary" severity="info" sx={{ mt: 3 }}>
-                <div>
-                  Email: <b>oderdene07@gmail.com</b> password <b>password</b>
-                </div>
+                <div>Please enter your email and password to login.</div>
               </Alert>
             </form>
           </div>
