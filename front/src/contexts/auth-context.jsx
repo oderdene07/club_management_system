@@ -59,6 +59,7 @@ export const AuthContext = createContext({ undefined });
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
+  let response;
 
   const initialize = async () => {
     if (initialized.current) {
@@ -70,7 +71,11 @@ export const AuthProvider = ({ children }) => {
 
     if (token) {
       apiClient.defaults.headers.common["Authorization"] = token;
-      const response = await apiClient.get("/member");
+      try {
+        response = await apiClient.get("/member");
+      } catch (err) {
+        console.log(err);
+      }
 
       dispatch({
         type: HANDLERS.INITIALIZE,
@@ -152,10 +157,15 @@ export const AuthProvider = ({ children }) => {
 
   const refresh = async () => {
     const token = localStorage.getItem("token");
+    let response;
 
     if (token) {
       apiClient.defaults.headers.common["Authorization"] = token;
-      const response = await apiClient.get("/member");
+      try {
+        response = await apiClient.get("/member");
+      } catch (err) {
+        console.log(err);
+      }
 
       dispatch({
         type: HANDLERS.INITIALIZE,
