@@ -37,7 +37,7 @@ func FirebaseInit() {
 func InitDB() {
 	var err error
 
-	DB, err = sql.Open("postgres", "postgres://odko:password@localhost/cms?sslmode=disable")
+	DB, err = sql.Open("postgres", "")
 	if err != nil {
 		panic(err)
 	}
