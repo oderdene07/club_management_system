@@ -21,8 +21,8 @@ func CodeGenerator() string {
 }
 
 func SendEmail(subject, body string, to []string) error {
-	from := "oderdene.dev@gmail.com"
-	password := "zxtzrqgofuddwemj"
+	from := ""
+	password := ""
 
 	smtpServer := smtpServer{host: "smtp.gmail.com", port: "587"}
 
